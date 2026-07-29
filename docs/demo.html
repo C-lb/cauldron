@@ -30,6 +30,7 @@
   --tr-body:0; --tr-cap:.006em; --tr-eyebrow:.012em;
   --measure:68ch;
   --btn-py:12px; --btn-px:calc(var(--btn-py)*2);
+  --z-menu:30;
 }
 @media (min-width:1024px){ :root{ --fs-base:13px } }
 
@@ -132,16 +133,40 @@ section{margin-top:var(--s7)}
 .badge-warn{background:var(--warn-soft); color:var(--warn)}
 .badge-danger{background:var(--danger-soft); color:var(--danger)}
 
+/* kit dropdown */
+.kitdd{position:relative}
+.strip{display:flex; width:64px; height:14px; border-radius:6px; overflow:hidden; flex:none}
+.strip i{flex:1 1 0}
+.chev{width:.85em; height:.85em; flex:none; color:var(--ink-2);
+  transition:transform .15s ease}
+[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.ddmenu{position:absolute; right:0; top:calc(100% + var(--s2)); min-width:240px;
+  background:var(--surface-2); border-radius:var(--r-md); box-shadow:var(--shadow-pop);
+  padding:var(--s1); display:flex; flex-direction:column; gap:2px; z-index:var(--z-menu)}
+.ddmenu[hidden]{display:none}
+.ddopt{font:inherit; font-size:var(--t-cap); line-height:var(--lh-flat); font-weight:500;
+  color:var(--ink-2); background:transparent; border:0; cursor:pointer;
+  padding:10px var(--s3); border-radius:var(--r-sm); display:flex; align-items:center;
+  justify-content:space-between; gap:var(--s4); white-space:nowrap; text-align:left;
+  transition:background .15s ease, color .15s ease}
+.ddopt:hover{background:var(--surface-3); color:var(--ink)}
+.ddopt[aria-selected="true"]{color:var(--ink); font-weight:600}
+.ddopt:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
 /* pantone chips */
 .chips{display:grid; grid-template-columns:repeat(2,1fr); gap:var(--s4)}
 @media (min-width:640px){ .chips{grid-template-columns:repeat(3,1fr)} }
 @media (min-width:1024px){ .chips{grid-template-columns:repeat(5,1fr)} }
 .chips>*{min-width:0}
-.pchip{border-radius:var(--r-md); overflow:hidden; background:var(--surface-1);
+.pchip{border-radius:var(--r-md); overflow:hidden; background:#101013;
   box-shadow:var(--shadow); display:flex; flex-direction:column;
-  border:0; padding:0; font:inherit; text-align:left; cursor:pointer}
+  border:0; padding:0; font:inherit; text-align:left; cursor:pointer;
+  transition:background .15s ease}
+.pchip .nm{color:#f4f4f5}
+.pchip .hx{color:#9a9aa3}
 .pchip:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
 .pchip .field{aspect-ratio:1/1.18; transition:opacity .15s ease}
+.pchip[aria-pressed="false"]{background:var(--surface-1)}
 .pchip[aria-pressed="false"] .field{opacity:.22}
 .pchip[aria-pressed="false"] .nm,
 .pchip[aria-pressed="false"] .hx{color:var(--ink-3)}
@@ -152,8 +177,6 @@ section{margin-top:var(--s7)}
   .pchip.deny{animation:chip-deny .22s ease}
 }
 .pchip .band{padding:var(--s3) var(--s3) var(--s4); display:flex; flex-direction:column; gap:var(--s2)}
-.pchip .idx{font-size:var(--t-cap); line-height:var(--lh-tight);
-  letter-spacing:var(--tr-eyebrow); color:var(--ink-3); font-weight:500}
 .pchip .nm{font-size:var(--t-body); line-height:var(--lh-tight); font-weight:700}
 .pchip .hx{font-family:var(--mono); font-size:var(--t-cap); line-height:var(--lh-tight);
   color:var(--ink-2); text-transform:uppercase; letter-spacing:.04em}
@@ -163,9 +186,25 @@ section{margin-top:var(--s7)}
 }
 
 /* gradient */
-.stagewrap{border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--shadow); background:var(--surface-2)}
-canvas.stage{display:block; width:100%; height:340px}
+.stagewrap{position:relative; border-radius:var(--r-lg); overflow:hidden;
+  box-shadow:var(--shadow); background:var(--surface-2)}
+canvas.stage{display:block; width:100%; height:340px; transform-origin:50% 50%;
+  transition:transform .12s ease}
 @media (min-width:1024px){ canvas.stage{height:440px} }
+.zoomctl{position:absolute; top:var(--s3); right:var(--s3); display:flex; gap:var(--s1);
+  align-items:center; background:var(--surface-1); padding:var(--s1);
+  border-radius:var(--r-sm); box-shadow:var(--shadow-pop)}
+.zoomctl button{font:inherit; font-size:var(--t-cap); line-height:var(--lh-flat);
+  font-weight:600; color:var(--ink-2); background:transparent; border:0; cursor:pointer;
+  width:28px; height:28px; border-radius:var(--r-sm); display:inline-flex;
+  align-items:center; justify-content:center; transition:background .15s ease, color .15s ease}
+.zoomctl button:hover{background:var(--on-card); color:var(--ink)}
+.zoomctl button:active{background:var(--on-card-hover)}
+.zoomctl button:disabled{opacity:.45; cursor:not-allowed; background:transparent}
+.zoomctl button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.zoomctl button svg{width:1em; height:1em}
+.zoomlvl{font-size:var(--t-cap); line-height:var(--lh-flat); color:var(--ink-3);
+  font-variant-numeric:tabular-nums; min-width:4ch; text-align:center}
 
 .presets{display:grid; grid-template-columns:repeat(2,1fr); gap:var(--s3)}
 @media (min-width:640px){ .presets{grid-template-columns:repeat(4,1fr)} }
@@ -225,16 +264,11 @@ tr:last-child td{border-bottom:0}
 
   <div class="card">
     <span class="eyebrow">cauldron reference</span>
-    <h1>Kits, chips, and how they move</h1>
+    <h1>Try a kit before you commit</h1>
     <p class="lead measure">
-      Every kit next to the engine that moves it. Tap a chip to pull that colour from
-      the preview.
+      Pick a kit from the dropdown, tap a chip to pull that colour out of the mix,
+      and scroll on the preview to zoom.
     </p>
-    <div class="row">
-      <span class="badge badge-new">2 kits</span>
-      <span class="badge badge-info">7 Neat presets</span>
-      <span class="badge badge-warn">Runs @firecms/neat</span>
-    </div>
   </div>
 
   <!-- ── KITS: chips + gradient in one view ─────────────────────────── -->
@@ -245,13 +279,18 @@ tr:last-child td{border-bottom:0}
     <div class="grid">
       <div class="card col-12">
         <div class="row between">
-          <div class="stack g2">
-            <span class="eyebrow">Kit</span>
-            <h3 id="kit-name">Lemnian Hollow</h3>
-          </div>
-          <div class="seg" role="group" aria-label="Kit">
-            <button type="button" data-kit="lemnian" aria-pressed="true" title="Five named swatches, cool sweep">Lemnian Hollow</button>
-            <button type="button" data-kit="ember" aria-pressed="false" title="Warm accent over a cold neutral ramp">Ember Hollow</button>
+          <h3 id="kit-name">Lemnian Hollow</h3>
+          <div class="kitdd" id="kitdd">
+            <button type="button" class="btn btn-grey" id="kitdd-btn"
+                    aria-haspopup="listbox" aria-expanded="false" title="Change kit">
+              <span class="strip" id="kitdd-strip" aria-hidden="true"></span>
+              <span>Change kit</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </button>
+            <div class="ddmenu" id="kitdd-menu" role="listbox" aria-label="Kit" hidden></div>
           </div>
         </div>
         <div class="chips filterable" id="chips"></div>
@@ -260,8 +299,23 @@ tr:last-child td{border-bottom:0}
       <div class="col-12 stack g4">
         <div class="presets" id="presets" role="group" aria-label="Gradient preset"></div>
 
-        <div class="stagewrap">
+        <div class="stagewrap" id="stagewrap">
           <canvas class="stage" id="stage" aria-label="Animated gradient preview"></canvas>
+          <div class="zoomctl" role="group" aria-label="Preview zoom">
+            <button type="button" id="zoom-out" title="Zoom out" aria-label="Zoom out">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14"/>
+              </svg>
+            </button>
+            <span class="zoomlvl" id="zoom-lvl" aria-live="polite">100%</span>
+            <button type="button" id="zoom-in" title="Zoom in" aria-label="Zoom in">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 5v14"/><path d="M5 12h14"/>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div class="row between">
@@ -1091,8 +1145,7 @@ function renderChips(){
     d.setAttribute("aria-pressed",String(on));
     d.title=chipTitle(on, s.name);
     d.innerHTML='<div class="field" style="background:'+s.hex+'"></div>'+
-      '<div class="band"><span class="idx">'+k.name+' '+(i+1)+' of '+k.swatches.length+'</span>'+
-      '<span class="nm"></span><span class="hx">'+s.hex+'</span></div>';
+      '<div class="band"><span class="nm"></span><span class="hx">'+s.hex+'</span></div>';
     d.querySelector(".nm").textContent=s.name;
     d.addEventListener("click",function(){
       var isOn = !off[kitId][i];
@@ -1173,16 +1226,66 @@ document.getElementById("engine-note").innerHTML = NG
   : 'The Neat engine did not load in this browser, so the gradient cannot render. '+
     'The preset values below are still accurate and safe to copy.';
 
-/* kit switch */
-Array.prototype.forEach.call(document.querySelectorAll("[data-kit]"),function(b){
-  b.addEventListener("click",function(){
-    kitId=b.dataset.kit;
-    Array.prototype.forEach.call(document.querySelectorAll("[data-kit]"),function(o){
-      o.setAttribute("aria-pressed",String(o.dataset.kit===kitId));
+/* kit dropdown: trigger shows the current kit's colour mix, options show every kit's */
+var ddBtn=document.getElementById("kitdd-btn");
+var ddMenu=document.getElementById("kitdd-menu");
+var ddStrip=document.getElementById("kitdd-strip");
+
+function stripHTML(id){
+  return KITS[id].swatches.map(function(s){
+    return '<i style="background:'+s.hex+'"></i>';
+  }).join("");
+}
+function renderDD(){
+  ddStrip.innerHTML=stripHTML(kitId);
+  ddMenu.innerHTML="";
+  Object.keys(KITS).forEach(function(id){
+    var o=document.createElement("button");
+    o.type="button"; o.className="ddopt"; o.setAttribute("role","option");
+    o.setAttribute("aria-selected",String(id===kitId));
+    o.title="Preview "+KITS[id].name;
+    o.innerHTML='<span></span><span class="strip" aria-hidden="true">'+stripHTML(id)+'</span>';
+    o.querySelector("span").textContent=KITS[id].name;
+    o.addEventListener("click",function(){
+      closeDD();
+      if(id===kitId) return;
+      kitId=id;
+      renderDD(); renderChips(); renderCfg(); rebuildStage(); rebuildThumbs();
     });
-    renderChips(); renderCfg(); rebuildStage(); rebuildThumbs();
+    ddMenu.appendChild(o);
   });
+}
+function openDD(){ ddMenu.hidden=false; ddBtn.setAttribute("aria-expanded","true"); }
+function closeDD(){ ddMenu.hidden=true; ddBtn.setAttribute("aria-expanded","false"); }
+ddBtn.addEventListener("click",function(e){
+  e.stopPropagation();
+  if(ddMenu.hidden) openDD(); else closeDD();
 });
+document.addEventListener("click",function(e){
+  if(!ddMenu.hidden && !ddMenu.contains(e.target)) closeDD();
+});
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape" && !ddMenu.hidden){ closeDD(); ddBtn.focus(); }
+});
+
+/* preview zoom: scroll on the stage, or the buttons */
+var zoom=1, ZMIN=1, ZMAX=4;
+var zoomIn=document.getElementById("zoom-in"), zoomOut=document.getElementById("zoom-out");
+var zoomLvl=document.getElementById("zoom-lvl");
+function applyZoom(){
+  stageEl.style.transform = zoom===1 ? "" : "scale("+zoom+")";
+  zoomLvl.textContent=Math.round(zoom*100)+"%";
+  zoomOut.disabled = zoom<=ZMIN;
+  zoomIn.disabled = zoom>=ZMAX;
+}
+function setZoom(z){ zoom=Math.min(ZMAX,Math.max(ZMIN,z)); applyZoom(); }
+zoomIn.addEventListener("click",function(){ setZoom(zoom*1.25); });
+zoomOut.addEventListener("click",function(){ setZoom(zoom/1.25); });
+document.getElementById("stagewrap").addEventListener("wheel",function(e){
+  e.preventDefault();
+  setZoom(zoom * (e.deltaY<0 ? 1.08 : 1/1.08));
+},{passive:false});
+applyZoom();
 
 /* pause: drop speed to zero rather than tearing the context down */
 var toggle=document.getElementById("toggle"), tLabel=document.getElementById("toggle-label");
@@ -1225,7 +1328,7 @@ Array.prototype.forEach.call(vBtns,function(b){
   });
 });
 
-renderChips(); renderCfg(); rebuildStage(); rebuildThumbs();
+renderDD(); renderChips(); renderCfg(); rebuildStage(); rebuildThumbs();
 if(reduce){
   playing=false; tLabel.textContent="Play";
   if(stageGrad) stageGrad.speed=0;

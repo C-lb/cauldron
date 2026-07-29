@@ -382,12 +382,7 @@ pre.cfg[hidden],.notice[hidden]{display:none}
           </div>
         </div>
 
-        <div class="row between">
-          <div class="stack g2" style="flex:1 1 320px; min-width:0">
-            <span class="eyebrow">Preset</span>
-            <span id="preset-name" style="font-weight:600">Flame</span>
-          </div>
-          <div class="row">
+        <div class="row">
             <button class="btn btn-grey" id="toggle" type="button" title="Pause or resume the animation">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -419,7 +414,6 @@ pre.cfg[hidden],.notice[hidden]{display:none}
               </svg>
               <span id="copy-label">Copy config</span>
             </button>
-          </div>
         </div>
 
         <pre class="cfg" id="cfg" aria-live="polite" hidden></pre>
@@ -1405,7 +1399,6 @@ ORDER.forEach(function(id){
 
 function renderCfg(){
   document.getElementById("cfg").textContent=cfgText();
-  document.getElementById("preset-name").textContent=PRESET_DATA[presetId]._label;
 }
 
 /* engine note, written from what actually loaded */

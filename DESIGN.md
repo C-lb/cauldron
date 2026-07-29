@@ -1,9 +1,10 @@
 # cauldron — design (approved 2026-07-29, not yet built)
 
-> **Superseded on naming.** The skill was built and then renamed to `potions` on
-> 2026-07-30. This document is kept verbatim as provenance, including the decision table
-> below that rejects "potion" — that reasoning was overruled, not retracted. Everything
-> else here still describes the built skill. Live paths are `~/.claude/skills/potions/`.
+> **Superseded on naming.** Built as `cauldron`, renamed to `potions`, then renamed again
+> to **`skittles`** on 2026-07-30. This document is kept verbatim as provenance, including
+> the decision table below that rejects "potion" — that reasoning was overruled, not
+> retracted, and has since been overtaken entirely. Everything else here still describes
+> the built skill. Live paths are `~/.claude/skills/skittles/`.
 
 A Claude Code skill holding a curated library of brand colour palettes. At the start of
 any new project or brand/visual work, Claude picks one outright, prints an item-get ASCII

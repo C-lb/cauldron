@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render potions' ASCII art with ANSI truecolor swatches.
+"""Render skittles' ASCII art with ANSI truecolor swatches.
 
 The art is the point of the skill, so it lives here rather than being pasted into
 SKILL.md — one copy, no drift.
@@ -88,17 +88,17 @@ def load():
         with open(PALETTES) as f:
             return json.load(f)
     except FileNotFoundError:
-        sys.exit(f"potions: no shelf at {PALETTES}")
+        sys.exit(f"skittles: no shelf at {PALETTES}")
     except json.JSONDecodeError as e:
         # This file is hand-edited, so a stray comma is the likeliest failure.
-        sys.exit(f"potions: {PALETTES.name} is not valid JSON — {e}")
+        sys.exit(f"skittles: {PALETTES.name} is not valid JSON — {e}")
 
 
 def find(slug):
     for p in load():
         if p["slug"] == slug:
             return p
-    sys.exit(f"potions: no palette '{slug}'. Try --list.")
+    sys.exit(f"skittles: no palette '{slug}'. Try --list.")
 
 
 def step(neutrals, want):
@@ -114,7 +114,7 @@ def step(neutrals, want):
     # extra named keys, and those must be skipped rather than crash int().
     numeric = {k: v for k, v in neutrals.items() if k.isdigit()}
     if not numeric:
-        sys.exit("potions: palette neutrals have no numbered steps.")
+        sys.exit("skittles: palette neutrals have no numbered steps.")
     w = int(want)
 
     # Step 0 is the dark extreme, not a point on the 50-900 light-to-dark run.
@@ -132,14 +132,27 @@ def step(neutrals, want):
     return k, numeric[k]
 
 
+def swatches(palette):
+    """Named swatches of a kind:kit palette, as (name, hex) pairs."""
+    sw = palette["colors"].get("swatches", [])
+    if not sw:
+        sys.exit(f"skittles: '{palette['slug']}' is kind:kit with no swatches.")
+    return [(s["name"], s["hex"]) for s in sw]
+
+
 def samples(palette):
-    """The five (label, hex) pairs the art shows, per palette kind."""
+    """The (label, hex) pairs the art shows, per palette kind."""
     c = palette["colors"]
     n = c.get("neutrals", {})
+    if palette.get("kind") == "kit":
+        # Kit names are far too long to sit under a swatch block without
+        # blowing the row past 80 columns, so the row is numbered and the
+        # names go in a legend underneath.
+        return [(str(i + 1), h) for i, (_, h) in enumerate(swatches(palette)[:6])]
     if palette.get("kind") == "data":
         cats = c.get("categorical", [])
         if not cats:
-            sys.exit(f"potions: '{palette['slug']}' is kind:data with no categorical colours.")
+            sys.exit(f"skittles: '{palette['slug']}' is kind:data with no categorical colours.")
         return [(str(i + 1), h) for i, h in enumerate(cats[:5])]
     return [
         ("accent", c["accent"]),
@@ -151,10 +164,10 @@ def samples(palette):
 # --- art ------------------------------------------------------------------
 
 BANNER = r"""                .-.
-                |{fill}|         ___  ___ _____ ___ ___  _  _ ___
-               (___)       | _ \/ _ \_   _|_ _/ _ \| \| / __|
-              \  |  /      |  _/ (_) || |  | | (_) | .` \__ \
-               \ | /       |_|  \___/ |_| |___\___/|_|\_|___/
+                |{fill}|         ___ _  _____ _____ _____ _    ___ ___
+               (___)       / __| |/ /_ _|_   _|_   _| |  | __/ __|
+              \  |  /      \__ \ ' < | |  | |   | | | |__| _|\__ \
+               \ | /       |___/_|\_\___| |_|   |_| |____|___|___/
                 (o o)
                  \_/
                  /|\
@@ -207,6 +220,16 @@ def item_get(palette):
         f"                /   \\      {sw[0]}",
     ]
     lines += [INDENT + extra for extra in sw[1:]]
+    if palette.get("kind") == "kit":
+        lines.append("")
+        named = swatches(palette)
+        width = max(len(n) for n, _ in named)
+        for i, (nm, h) in enumerate(named, 1):
+            marker = f"{i}" if i <= 6 else " "
+            lines.append(f"{INDENT}{marker:>2}  {fg(h, '██')}  {nm:<{width}}  {h}")
+        if len(named) > 6:
+            # Never let a truncated row read as the whole kit.
+            lines.append(f"{INDENT}     ({len(named) - 6} more not shown in the row above)")
     print("\n".join(lines))
     print()
 
@@ -217,6 +240,33 @@ def check(palette):
     c = palette["colors"]
     n = c.get("neutrals", {})
     print(f"{palette['name']} — measured contrast\n")
+
+    if palette.get("kind") == "kit":
+        named = swatches(palette)
+        dark = min(named, key=lambda s: luminance(s[1]))
+        light = max(named, key=lambda s: luminance(s[1]))
+        for nm, h in named:
+            if nm != dark[0]:
+                r = contrast(h, dark[1])
+                print(f"  {nm + ' on ' + dark[0]:<34} {r:5.2f}:1   {rating(r)}")
+        print(f"\n  lightest: {light[0]} ({light[1]})   darkest: {dark[0]} ({dark[1]})")
+
+        # A kit lives or dies on whether its members are tellable apart. Two
+        # swatches at the same lightness read as one colour in greyscale, to
+        # many colour-blind viewers, and to anyone glancing at a small chip.
+        print("\n  separation between neighbours")
+        weak = []
+        for (an, ah), (bn, bh) in zip(named, named[1:]):
+            r = contrast(ah, bh)
+            if r < 1.5:
+                weak.append((an, bn))
+            print(f"    {an + ' / ' + bn:<34} {r:5.2f}:1"
+                  f"{'' if r >= 1.5 else '   <- near-isoluminant'}")
+        if weak:
+            print(f"\n  {len(weak)} neighbouring pair(s) under 1.5:1. Separate those by role,")
+            print("  position or shape — colour alone will not carry the distinction.")
+        print()
+        return
 
     if palette.get("kind") == "data":
         # Categorical sets aren't text, so what matters is that every series
@@ -261,10 +311,10 @@ def main():
         return
     if args[0] == "--check":
         if len(args) < 2:
-            sys.exit("potions: --check needs a slug.")
+            sys.exit("skittles: --check needs a slug.")
         return check(find(args[1]))
     if args[0].startswith("-"):
-        sys.exit(f"potions: unknown option '{args[0]}'. Try --help.")
+        sys.exit(f"skittles: unknown option '{args[0]}'. Try --help.")
     item_get(find(args[0]))
 
 

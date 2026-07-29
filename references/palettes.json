@@ -32,5 +32,25 @@
     },
     "theory": "ember-hollow.md",
     "contrast_notes": "accent on neutral-50 = 4.87:1 (AA body). accent_ink on accent = 4.88:1 (AA body). accent on neutral-0 = 3.82:1 — large text and UI chrome only, use neutral-100 for body on dark."
+  },
+  {
+    "slug": "lemnian-hollow",
+    "name": "Lemnian Hollow",
+    "tagline": "a cool sweep from mint to mauve over gunmetal",
+    "kind": "kit",
+    "mood": ["cool", "muted", "atmospheric", "quiet"],
+    "fits": ["illustration", "editorial", "ambient interfaces", "maps and diagrams", "album and poster work"],
+    "avoid": ["dense data tables", "status and alerting UI", "anything needing hierarchy from colour alone"],
+    "colors": {
+      "swatches": [
+        { "name": "Fairy Dust", "hex": "#8BE8CB" },
+        { "name": "Cool Steel", "hex": "#7EA2AA" },
+        { "name": "Lavender Grey", "hex": "#888DA7" },
+        { "name": "Dusty Mauve", "hex": "#9C7A97" },
+        { "name": "Gunmetal", "hex": "#303633" }
+      ]
+    },
+    "theory": "lemnian-hollow.md",
+    "contrast_notes": "On Gunmetal: Fairy Dust 8.53:1 (AAA body), Cool Steel 4.49:1 (large text / UI only, a hair under AA), Lavender Grey 3.77:1, Dusty Mauve 3.32:1 — all three mid-tones are large-text-and-chrome only. The three mid-tones sit within 1.14–1.35:1 of each other, so they are effectively isoluminant and must never be the only thing distinguishing two elements. Fairy Dust is 1.45:1 on white and unusable as a light-surface text colour."
   }
 ]

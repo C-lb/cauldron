@@ -1,4 +1,4 @@
-# potions
+# skittles
 
 A Claude Code skill. A shelf of hand-curated brand colour palettes: given a brief, Claude
 picks **one** outright, hands it over with item-get ASCII art, and explains the colour
@@ -6,10 +6,10 @@ theory behind the choice.
 
 ```
                 .-.
-                |≈|         ___  ___ _____ ___ ___  _  _ ___
-               (___)       | _ \/ _ \_   _|_ _/ _ \| \| / __|
-              \  |  /      |  _/ (_) || |  | | (_) | .` \__ \
-               \ | /       |_|  \___/ |_| |___\___/|_|\_|___/
+                |≈|         ___ _  _____ _____ _____ _    ___ ___
+               (___)       / __| |/ /_ _|_   _|_   _| |  | __/ __|
+              \  |  /      \__ \ ' < | |  | |   | | | |__| _|\__ \
+               \ | /       |___/_|\_\___| |_|   |_| |____|___|___/
                 (o o)
                  \_/
                  /|\
@@ -49,13 +49,13 @@ Claude reads only the one it picked.
 Clone into your Claude Code skills directory:
 
 ```bash
-git clone https://github.com/C-lb/potions.git ~/.claude/skills/potions
+git clone https://github.com/C-lb/skittles.git ~/.claude/skills/skittles
 ```
 
 That's it. No dependencies. `brew.py` is Python 3 standard library only.
 
 Note that the skill's documented commands use the absolute path
-`~/.claude/skills/potions/scripts/brew.py`. If you install elsewhere, update the paths in
+`~/.claude/skills/skittles/scripts/brew.py`. If you install elsewhere, update the paths in
 `SKILL.md` and `references/SCHEMA.md`. A relative path fails silently from a project
 working directory, which is exactly when the skill runs.
 
@@ -72,9 +72,9 @@ Short version:
    estimate them.
 
 ```bash
-python3 ~/.claude/skills/potions/scripts/brew.py --list            # what's on the shelf
-python3 ~/.claude/skills/potions/scripts/brew.py <slug>            # render the item-get
-python3 ~/.claude/skills/potions/scripts/brew.py --check <slug>    # measured WCAG ratios
+python3 ~/.claude/skills/skittles/scripts/brew.py --list            # what's on the shelf
+python3 ~/.claude/skills/skittles/scripts/brew.py <slug>            # render the item-get
+python3 ~/.claude/skills/skittles/scripts/brew.py --check <slug>    # measured WCAG ratios
 ```
 
 `--check` output:
@@ -89,9 +89,22 @@ Ember Hollow — measured contrast
   neutral-100 on neutral-0     17.05:1   AAA body
 ```
 
-Two kinds of entry are supported. `kind: "ui"` is one accent over a neutral ramp plus
-semantics. `kind: "data"` is a categorical set for charts. Claude filters on `kind`, so a
-chart colour set never gets offered as a brand accent.
+Three kinds of entry are supported:
+
+| `kind` | shape | for |
+|---|---|---|
+| `ui` | one accent + neutral ramp + semantics | interfaces and brands |
+| `data` | ordered categorical array | charts |
+| `kit` | named swatches, no accent or ramp | swatch sets collected as-is |
+
+Claude filters on `kind`, so a chart colour set never gets offered as a brand accent.
+
+`kit` exists because most palettes people actually collect are five colours with names and
+no declared opinion about which one is the button. Forcing those into the `ui` shape means
+inventing a neutral ramp and nominating an accent, which is generation dressed up as
+curation. For kits, `--check` additionally reports the contrast between neighbouring
+swatches and flags any pair under 1.5:1 as near-isoluminant — colours that differ only in
+hue collapse in greyscale, at small sizes, and for red-green colour-blind viewers.
 
 ## How it picks
 
@@ -121,7 +134,7 @@ flourish; the text is the contract.
 
 ## Relationship to anti-vibecode
 
-`potions` chooses **which** colours. [`anti-vibecode`](https://github.com/C-lb/anti-vibecode)
+`skittles` chooses **which** colours. [`anti-vibecode`](https://github.com/C-lb/anti-vibecode)
 governs **how they're applied**: flat buttons, one accent, no gradients, semantic colours
 carrying meaning only.
 

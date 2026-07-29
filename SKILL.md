@@ -1,9 +1,9 @@
 ---
-name: potions
+name: skittles
 description: Picks a brand colour palette from a curated library and explains the colour theory behind the pick. Use this when a project needs a colour direction it does not have yet — starting a new app, site, brand or UI from scratch — and use it even when the user doesn't say "palette", including phrasings like "what colours should this use", "pick a scheme", "give it a look", or "how should this feel". Do NOT use it when colours are already chosen: restyling an existing UI, making a built screen feel more premium, or changing one specific colour is anti-vibecode's job, not this one.
 ---
 
-# potions
+# skittles
 
 A shelf of curated brand palettes. Given a brief, pick **one** outright, hand it over with
 the item-get art, and explain why it's right. No candidate menus — an argued pick the user
@@ -14,10 +14,10 @@ generation.
 
 ```
                 .-.
-                |≈|         ___  ___ _____ ___ ___  _  _ ___
-               (___)       | _ \/ _ \_   _|_ _/ _ \| \| / __|
-              \  |  /      |  _/ (_) || |  | | (_) | .` \__ \
-               \ | /       |_|  \___/ |_| |___\___/|_|\_|___/
+                |≈|         ___ _  _____ _____ _____ _    ___ ___
+               (___)       / __| |/ /_ _|_   _|_   _| |  | __/ __|
+              \  |  /      \__ \ ' < | |  | |   | | | |__| _|\__ \
+               \ | /       |___/_|\_\___| |_|   |_| |____|___|___/
                 (o o)
                  \_/
                  /|\
@@ -26,10 +26,10 @@ generation.
 
 ## Boundary with anti-vibecode
 
-`potions` chooses **which** colours. `anti-vibecode` governs **how they're applied** —
+`skittles` chooses **which** colours. `anti-vibecode` governs **how they're applied** —
 flat buttons, one accent, no gradients, semantic colours carrying meaning only.
 
-They don't overlap and shouldn't argue. If both are active, potions supplies the hexes
+They don't overlap and shouldn't argue. If both are active, skittles supplies the hexes
 and then gets out of the way. Every `kind: "ui"` palette here is already shaped to
 anti-vibecode's rules (exactly one accent over a neutral ramp), so handing one over never
 puts the two skills in conflict.
@@ -45,8 +45,14 @@ need it to pick one.
 
 **2. Filter on `kind`, then match `mood` / `fits` / `avoid`.**
 
-`kind: "ui"` for interfaces and brands, `kind: "data"` for chart colour sets. A categorical
-chart set is not a brand accent and must never be offered as one.
+`kind: "ui"` for interfaces and brands, `kind: "data"` for chart colour sets, `kind: "kit"`
+for named swatch sets with no declared accent or ramp. A categorical chart set is not a
+brand accent and must never be offered as one.
+
+A kit needs more from you than a `ui` palette does. It carries no `accent`, no neutral
+ramp and no semantics, so handing one over means saying which swatch should act as the
+accent, what surface to build on, and what the kit doesn't contain. Its theory file makes
+that argument; don't improvise it from the hexes.
 
 `avoid` is a hard exclusion, not a penalty. If the project type is on a palette's `avoid`
 list, that palette is out however well the mood fits — those lists were written by someone
@@ -66,7 +72,7 @@ the actual harmony, the perceptual reasoning, and the failure modes.
 **5. Render the art.**
 
 ```bash
-python3 ~/.claude/skills/potions/scripts/brew.py <slug>
+python3 ~/.claude/skills/skittles/scripts/brew.py <slug>
 ```
 
 Absolute path on purpose — the working directory during a project kickoff is the project,
@@ -86,7 +92,8 @@ After running `brew.py`, write in the reply:
 
 - **Name and tagline**, in plain text. Not only inside the art.
 - **The CSS custom properties**, ready to paste, with the values read from the palette's
-  `colors` object:
+  `colors` object. For a `kit`, name the variables after the swatch names
+  (`--fairy-dust`) rather than inventing role names the kit doesn't claim:
 
 ```css
 :root {
@@ -128,6 +135,6 @@ point at `references/SCHEMA.md` for adding one.
 the shelf, `--check` prints measured contrast ratios for a new entry:
 
 ```bash
-python3 ~/.claude/skills/potions/scripts/brew.py --list
-python3 ~/.claude/skills/potions/scripts/brew.py --check <slug>
+python3 ~/.claude/skills/skittles/scripts/brew.py --list
+python3 ~/.claude/skills/skittles/scripts/brew.py --check <slug>
 ```

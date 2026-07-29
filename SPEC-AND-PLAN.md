@@ -1,8 +1,8 @@
-# potions — spec + implementation plan
+# skittles — spec + implementation plan
 
-> Renamed from `cauldron` to `potions` on 2026-07-30 at Caleb's call. DESIGN.md's original
-> rejection of "potion" (it collided with the item in the art) is left standing as
-> provenance; the rename overrides it.
+> Renamed twice on 2026-07-30 at Caleb's call: `cauldron` → `potions` → **`skittles`**.
+> DESIGN.md's original rejection of "potion" is left standing as provenance; both renames
+> override it.
 
 Written 2026-07-29, off the approved `DESIGN.md`. Read DESIGN.md first; this file only
 adds what DESIGN.md left unspecified, plus the build order.
@@ -60,7 +60,7 @@ would silently turn a curated library into a generator.
 
 Fires on new-project kickoff and brand/visual work needing a colour direction. Does *not*
 fire when a palette already exists in the project, or when the user asks to change one
-specific colour. Restyling an existing app is anti-vibecode's job, not potions'.
+specific colour. Restyling an existing app is anti-vibecode's job, not skittles'.
 
 ## File manifest
 

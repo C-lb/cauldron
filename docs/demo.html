@@ -239,6 +239,7 @@ tr:last-child td{border-bottom:0}
 .dot{display:inline-block; width:.75em; height:.75em; border-radius:var(--r-pill);
   margin-right:var(--s2); vertical-align:middle}
 
+pre.cfg[hidden],.notice[hidden]{display:none}
 .notice{background:var(--info-soft); box-shadow:inset 0 0 0 1px var(--info-line);
   border-radius:var(--r-md); padding:var(--s4); display:flex; gap:var(--s3); align-items:flex-start}
 .notice svg{width:1.15em; height:1.15em; color:var(--info); flex:none; margin-top:.15em}
@@ -294,9 +295,7 @@ tr:last-child td{border-bottom:0}
           </div>
         </div>
         <div class="chips filterable" id="chips"></div>
-      </div>
 
-      <div class="col-12 stack g4">
         <div class="presets" id="presets" role="group" aria-label="Gradient preset"></div>
 
         <div class="stagewrap" id="stagewrap">
@@ -331,6 +330,22 @@ tr:last-child td{border-bottom:0}
               </svg>
               <span id="toggle-label">Pause</span>
             </button>
+            <button class="btn btn-grey" id="show-cfg" type="button" aria-expanded="false"
+                    aria-controls="cfg" title="Show or hide the NeatConfig for this preset">
+              <span>Config</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </button>
+            <button class="btn btn-grey" id="show-note" type="button" aria-expanded="false"
+                    aria-controls="engine-notice" title="Show or hide the engine and licensing note">
+              <span>Disclaimer</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </button>
             <button class="btn btn-accent" id="copy-cfg" type="button" title="Copy this preset as a NeatConfig object">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -342,9 +357,9 @@ tr:last-child td{border-bottom:0}
           </div>
         </div>
 
-        <pre class="cfg" id="cfg" aria-live="polite"></pre>
+        <pre class="cfg" id="cfg" aria-live="polite" hidden></pre>
 
-        <div class="notice">
+        <div class="notice" id="engine-notice" hidden>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
@@ -1303,6 +1318,18 @@ toggle.addEventListener("click",function(){
     t.g.speed = playing ? buildConfig(t.id).speed : 0;
   });
 });
+
+/* disclosure toggles: config and disclaimer stay parked until asked for */
+function disclosure(btnId, panelId){
+  var b=document.getElementById(btnId), p=document.getElementById(panelId);
+  b.addEventListener("click",function(){
+    var show=p.hidden;
+    p.hidden=!show;
+    b.setAttribute("aria-expanded",String(show));
+  });
+}
+disclosure("show-cfg","cfg");
+disclosure("show-note","engine-notice");
 
 /* copy */
 var copyBtn=document.getElementById("copy-cfg"), cLabel=document.getElementById("copy-label");

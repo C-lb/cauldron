@@ -1,0 +1,36 @@
+[
+  {
+    "slug": "ember-hollow",
+    "name": "Ember Hollow",
+    "tagline": "a warm editorial burn over cold ash",
+    "kind": "ui",
+    "mood": ["warm", "editorial", "premium", "grounded"],
+    "fits": ["portfolio", "hospitality", "long-form reading", "food and drink", "craft brands"],
+    "avoid": ["fintech", "medical", "high-density dashboards", "enterprise admin"],
+    "colors": {
+      "accent": "#C2410C",
+      "accent_ink": "#FFF7ED",
+      "neutrals": {
+        "0": "#0A0A0B",
+        "50": "#F7F8F9",
+        "100": "#EDEEF0",
+        "200": "#DCDEE2",
+        "300": "#BFC3C9",
+        "400": "#9AA0A8",
+        "500": "#71777F",
+        "600": "#565C64",
+        "700": "#3D4248",
+        "800": "#26292E",
+        "900": "#15171A"
+      },
+      "semantic": {
+        "info": "#2563EB",
+        "success": "#15803D",
+        "warning": "#B45309",
+        "danger": "#B91C1C"
+      }
+    },
+    "theory": "ember-hollow.md",
+    "contrast_notes": "accent on neutral-50 = 4.87:1 (AA body). accent_ink on accent = 4.88:1 (AA body). accent on neutral-0 = 3.82:1 — large text and UI chrome only, use neutral-100 for body on dark."
+  }
+]

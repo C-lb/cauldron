@@ -1,0 +1,1233 @@
+<title>skittles reference</title>
+
+<style>
+:root{
+  --accent:#6c8cff; --accent-2:#8aa2ff; --accent-ink:#0b0d16;
+  --bg:#0c0c0e; --surface-1:#161618; --surface-2:#202023; --surface-3:#2a2a2e;
+  --line:rgba(255,255,255,.06);
+  --ink:#f4f4f5; --ink-2:#a1a1aa; --ink-3:#6b6b73;
+  --info:#4a9bff;    --info-soft:rgba(74,155,255,.14);    --info-line:rgba(74,155,255,.34);
+  --success:#3ecf8e; --success-soft:rgba(62,207,142,.14); --success-line:rgba(62,207,142,.34);
+  --warn:#e3b341;    --warn-soft:rgba(227,179,65,.14);    --warn-line:rgba(227,179,65,.34);
+  --danger:#f4607a;  --danger-soft:rgba(244,96,122,.14);  --danger-line:rgba(244,96,122,.34);
+  --shadow:0 14px 34px -18px rgba(0,0,0,.55);
+  --shadow-pop:0 24px 50px -18px rgba(0,0,0,.72);
+  --on-card:var(--surface-2); --on-card-hover:var(--surface-3);
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px;
+  --gap:24px; --card-pad:24px;
+  --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:999px;
+  --fs-base:17px;
+  --font:'Plus Jakarta Sans','DM Sans','Geist',-apple-system,system-ui,sans-serif;
+  --mono:'Geist Mono','SF Mono',ui-monospace,Menlo,monospace;
+  --t-cap:calc(var(--fs-base)*.80); --t-body:var(--fs-base);
+  --t-lead:calc(var(--fs-base)*1.18); --t-h3:calc(var(--fs-base)*1.45);
+  --t-h2:calc(var(--fs-base)*1.95); --t-h1:calc(var(--fs-base)*2.60);
+  --lh-display:1.05; --lh-h2:1.12; --lh-h3:1.22; --lh-lead:1.45;
+  --lh-body:1.55; --lh-tight:1.30; --lh-flat:1;
+  --tr-display:-.032em; --tr-h2:-.026em; --tr-h3:-.02em; --tr-lead:-.01em;
+  --tr-body:0; --tr-cap:.006em; --tr-eyebrow:.012em;
+  --measure:68ch;
+  --btn-py:12px; --btn-px:calc(var(--btn-py)*2);
+}
+@media (min-width:1024px){ :root{ --fs-base:13px } }
+
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#f5f5f4; --surface-1:#fff; --surface-2:#fafafa; --surface-3:#f0f0ef;
+    --line:rgba(17,17,19,.08);
+    --ink:#15151a; --ink-2:#52525b; --ink-3:#9a9aa3;
+    --shadow:0 14px 34px -18px rgba(17,17,19,.16);
+    --shadow-pop:0 24px 50px -18px rgba(17,17,19,.28);
+    --accent-ink:#fff; --on-card:#eeeeec; --on-card-hover:#e4e4e1;
+    --info:#1f6fe0;    --info-soft:rgba(31,111,224,.10);  --info-line:rgba(31,111,224,.30);
+    --success:#1f9d63; --success-soft:rgba(31,157,99,.10);--success-line:rgba(31,157,99,.30);
+    --warn:#a9701b;    --warn-soft:rgba(169,112,27,.10);  --warn-line:rgba(169,112,27,.30);
+    --danger:#d83a52;  --danger-soft:rgba(216,58,82,.10); --danger-line:rgba(216,58,82,.30);
+  }
+}
+:root[data-theme="light"]{
+  --bg:#f5f5f4; --surface-1:#fff; --surface-2:#fafafa; --surface-3:#f0f0ef;
+  --line:rgba(17,17,19,.08);
+  --ink:#15151a; --ink-2:#52525b; --ink-3:#9a9aa3;
+  --shadow:0 14px 34px -18px rgba(17,17,19,.16);
+  --shadow-pop:0 24px 50px -18px rgba(17,17,19,.28);
+  --accent-ink:#fff; --on-card:#eeeeec; --on-card-hover:#e4e4e1;
+  --info:#1f6fe0;    --info-soft:rgba(31,111,224,.10);  --info-line:rgba(31,111,224,.30);
+  --success:#1f9d63; --success-soft:rgba(31,157,99,.10);--success-line:rgba(31,157,99,.30);
+  --warn:#a9701b;    --warn-soft:rgba(169,112,27,.10);  --warn-line:rgba(169,112,27,.30);
+  --danger:#d83a52;  --danger-soft:rgba(216,58,82,.10); --danger-line:rgba(216,58,82,.30);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+img,svg,canvas{max-width:100%}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:var(--font); font-size:var(--t-body);
+  line-height:var(--lh-body); letter-spacing:var(--tr-body);
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px; margin:0 auto; padding:var(--s5) var(--s4) var(--s8)}
+@media (min-width:1024px){ .wrap{padding:var(--s7) var(--s6) var(--s8)} }
+
+h1,h2,h3{text-wrap:balance}
+h1{font-size:var(--t-h1); line-height:var(--lh-display); letter-spacing:var(--tr-display); font-weight:600}
+h3{font-size:var(--t-h3); line-height:var(--lh-h3); letter-spacing:var(--tr-h3); font-weight:600}
+.eyebrow{display:block; font-size:var(--t-cap); line-height:var(--lh-tight);
+  letter-spacing:var(--tr-eyebrow); color:var(--ink-3); font-weight:500}
+.lead{font-size:var(--t-lead); line-height:var(--lh-lead); letter-spacing:var(--tr-lead); color:var(--ink-2)}
+.cap,.rule-note{font-size:var(--t-cap); line-height:var(--lh-tight); letter-spacing:var(--tr-cap); color:var(--ink-3)}
+.measure{max-width:var(--measure)}
+code{font-family:var(--mono); font-size:.92em; color:var(--ink-2)}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+
+section{margin-top:var(--s7)}
+@media (max-width:1023px){ section{margin-top:var(--s8)} }
+.sec-head{display:flex; flex-direction:column; gap:var(--s3); margin-bottom:var(--s5)}
+.sec-head .rule-note{max-width:var(--measure)}
+
+.grid{display:grid; grid-template-columns:repeat(2,1fr); gap:var(--gap)}
+@media (min-width:640px){ .grid{grid-template-columns:repeat(4,1fr)} }
+@media (min-width:1024px){ .grid{grid-template-columns:repeat(12,1fr)} }
+.col-12{grid-column:1/-1}
+.grid>*{min-width:0}
+
+.card{background:var(--surface-1); border-radius:var(--r-lg); padding:var(--card-pad);
+  box-shadow:var(--shadow); display:flex; flex-direction:column; gap:var(--s4)}
+.card>*{min-width:0}
+.row{display:flex; flex-wrap:wrap; gap:var(--s3); align-items:center}
+.row.between{justify-content:space-between}
+.stack{display:flex; flex-direction:column}
+.g2{gap:var(--s2)} .g3{gap:var(--s3)} .g4{gap:var(--s4)}
+
+.seg{display:flex; flex-wrap:wrap; gap:var(--s1); background:var(--surface-1);
+  padding:var(--s1); border-radius:var(--r-md); box-shadow:var(--shadow)}
+.seg button{font:inherit; font-size:var(--t-cap); line-height:var(--lh-flat); font-weight:500;
+  color:var(--ink-2); background:transparent; border:0; cursor:pointer;
+  padding:10px 20px; border-radius:var(--r-sm); white-space:nowrap;
+  transition:background .15s ease, color .15s ease}
+.seg button:hover{background:var(--on-card); color:var(--ink)}
+.seg button:active{background:var(--on-card-hover)}
+.seg button[aria-pressed="true"]{background:var(--surface-3); color:var(--ink); font-weight:600}
+.seg button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+.btn{font:inherit; font-size:var(--t-cap); line-height:var(--lh-flat); font-weight:600;
+  padding:var(--btn-py) var(--btn-px); border-radius:var(--r-sm); border:0;
+  cursor:pointer; white-space:nowrap; display:inline-flex; align-items:center;
+  gap:.55em; transition:background .15s ease, color .15s ease}
+.btn-grey{background:var(--on-card); color:var(--ink)}
+.btn-grey:hover{background:var(--on-card-hover)}
+.btn-accent{background:var(--accent); color:var(--accent-ink)}
+.btn-accent:hover{background:var(--accent-2)}
+.btn:active{filter:brightness(.94)}
+.btn:disabled{opacity:.45; cursor:not-allowed}
+.btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.btn svg{width:1em; height:1em; flex:none}
+
+.badge{display:inline-block; font-size:var(--t-cap); line-height:var(--lh-flat);
+  font-weight:600; padding:6px var(--s2); border-radius:var(--r-sm)}
+.badge-new{background:var(--success-soft); color:var(--success)}
+.badge-info{background:var(--info-soft); color:var(--info)}
+.badge-warn{background:var(--warn-soft); color:var(--warn)}
+.badge-danger{background:var(--danger-soft); color:var(--danger)}
+
+/* pantone chips */
+.chips{display:grid; grid-template-columns:repeat(2,1fr); gap:var(--s4)}
+@media (min-width:640px){ .chips{grid-template-columns:repeat(3,1fr)} }
+@media (min-width:1024px){ .chips{grid-template-columns:repeat(5,1fr)} }
+.chips>*{min-width:0}
+.pchip{border-radius:var(--r-md); overflow:hidden; background:var(--surface-1);
+  box-shadow:var(--shadow); display:flex; flex-direction:column}
+.pchip .field{aspect-ratio:1/1.18}
+.pchip .band{padding:var(--s3) var(--s3) var(--s4); display:flex; flex-direction:column; gap:var(--s2)}
+.pchip .idx{font-size:var(--t-cap); line-height:var(--lh-tight);
+  letter-spacing:var(--tr-eyebrow); color:var(--ink-3); font-weight:500}
+.pchip .nm{font-size:var(--t-body); line-height:var(--lh-tight); font-weight:700}
+.pchip .hx{font-family:var(--mono); font-size:var(--t-cap); line-height:var(--lh-tight);
+  color:var(--ink-2); text-transform:uppercase; letter-spacing:.04em}
+@media (prefers-reduced-motion:no-preference){
+  .pchip{transition:transform .18s ease, box-shadow .18s ease}
+  .pchip:hover{transform:translateY(-2px); box-shadow:var(--shadow-pop)}
+}
+
+/* gradient */
+.stagewrap{border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--shadow); background:var(--surface-2)}
+canvas.stage{display:block; width:100%; height:340px}
+@media (min-width:1024px){ canvas.stage{height:440px} }
+
+.presets{display:grid; grid-template-columns:repeat(2,1fr); gap:var(--s3)}
+@media (min-width:640px){ .presets{grid-template-columns:repeat(4,1fr)} }
+@media (min-width:1024px){ .presets{grid-template-columns:repeat(7,1fr)} }
+.presets>*{min-width:0}
+.pbtn{padding:0; border:0; background:var(--surface-1); border-radius:var(--r-md);
+  overflow:hidden; cursor:pointer; display:flex; flex-direction:column;
+  box-shadow:var(--shadow); font:inherit; text-align:left; transition:background .15s ease}
+.pbtn canvas{display:block; width:100%; height:76px}
+.pbtn .plabel{padding:var(--s3); font-size:var(--t-cap); line-height:var(--lh-flat);
+  font-weight:600; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.pbtn:hover{background:var(--on-card)}
+.pbtn:hover .plabel{color:var(--ink)}
+.pbtn[aria-pressed="true"]{background:var(--surface-3)}
+.pbtn[aria-pressed="true"] .plabel{color:var(--ink)}
+.pbtn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+pre.cfg{background:var(--surface-2); border-radius:var(--r-md); padding:var(--s4);
+  overflow-x:auto; font-family:var(--mono); font-size:var(--t-cap);
+  line-height:1.6; color:var(--ink-2); max-height:300px; overflow-y:auto}
+
+.ramp{display:flex; border-radius:var(--r-md); overflow:hidden; min-height:56px}
+.ramp div{flex:1 1 0; min-width:0}
+
+.scroll{overflow-x:auto}
+table{border-collapse:collapse; width:100%; min-width:480px}
+th,td{text-align:left; padding:var(--s3) var(--s4); font-size:var(--t-cap);
+  line-height:var(--lh-tight); border-bottom:1px solid var(--line); white-space:nowrap}
+th{color:var(--ink-3); font-weight:500; letter-spacing:var(--tr-eyebrow)}
+td.num{font-family:var(--mono); font-variant-numeric:tabular-nums; text-align:right}
+tr:last-child td{border-bottom:0}
+.dot{display:inline-block; width:.75em; height:.75em; border-radius:var(--r-pill);
+  margin-right:var(--s2); vertical-align:middle}
+
+.notice{background:var(--info-soft); box-shadow:inset 0 0 0 1px var(--info-line);
+  border-radius:var(--r-md); padding:var(--s4); display:flex; gap:var(--s3); align-items:flex-start}
+.notice svg{width:1.15em; height:1.15em; color:var(--info); flex:none; margin-top:.15em}
+.notice p{font-size:var(--t-cap); line-height:var(--lh-tight); color:var(--ink-2)}
+
+.filterable{transition:filter .2s ease}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important} }
+</style>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <filter id="f-grey" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0 .2126 .7152 .0722 0 0 .2126 .7152 .0722 0 0 0 0 0 1 0"/>
+  </filter>
+  <filter id="f-deut" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".625 .375 0 0 0 .700 .300 0 0 0 0 .300 .700 0 0 0 0 0 1 0"/>
+  </filter>
+  <filter id="f-prot" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".567 .433 0 0 0 .558 .442 0 0 0 0 .242 .758 0 0 0 0 0 1 0"/>
+  </filter>
+</svg>
+
+<div class="wrap">
+
+  <div class="card">
+    <span class="eyebrow">skittles reference</span>
+    <h1>Kits, chips, and how they move</h1>
+    <p class="lead measure">
+      Every kit on the shelf as Pantone-format chips, then the same colours driven through
+      the real Neat gradient engine with its seven named presets. Resize the window to watch
+      the grid go from 12 columns to 4, then to 2.
+    </p>
+    <div class="row">
+      <span class="badge badge-new">2 kits</span>
+      <span class="badge badge-info">7 Neat presets</span>
+      <span class="badge badge-warn">Runs @firecms/neat</span>
+    </div>
+  </div>
+
+  <!-- ── 1 · CHIPS ──────────────────────────────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Section 1</span>
+      <h3>Chips</h3>
+      <p class="rule-note">
+        Pantone format: a tall colour field over a label band, name and code left-aligned,
+        nothing centred. The band takes the surface token so it works in both themes.
+      </p>
+    </div>
+    <div class="grid">
+      <div class="card col-12">
+        <div class="row between">
+          <div class="stack g2">
+            <span class="eyebrow">Kit</span>
+            <h3 id="kit-name">Lemnian Hollow</h3>
+          </div>
+          <div class="seg" role="group" aria-label="Kit">
+            <button type="button" data-kit="lemnian" aria-pressed="true" title="Five named swatches, cool sweep">Lemnian Hollow</button>
+            <button type="button" data-kit="ember" aria-pressed="false" title="Warm accent over a cold neutral ramp">Ember Hollow</button>
+          </div>
+        </div>
+        <p class="rule-note measure" id="kit-note"></p>
+        <div class="chips filterable" id="chips"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 2 · GRADIENT ───────────────────────────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Section 2</span>
+      <h3>How the colours move</h3>
+      <p class="rule-note">
+        The kit above, running through Neat itself. Every preset parameter is carried over
+        unchanged, including the flow field, camera and geometry. Only the colours are
+        swapped, so switching kit re-skins all seven without changing how they behave.
+      </p>
+    </div>
+
+    <div class="grid">
+      <div class="col-12 stack g4">
+        <div class="presets" id="presets" role="group" aria-label="Gradient preset"></div>
+
+        <div class="stagewrap">
+          <canvas class="stage" id="stage" aria-label="Animated gradient preview"></canvas>
+        </div>
+
+        <div class="row between">
+          <div class="stack g2" style="flex:1 1 320px; min-width:0">
+            <span class="eyebrow">Preset</span>
+            <span id="preset-name" style="font-weight:600">Flame</span>
+            <p class="rule-note" id="preset-feel"></p>
+          </div>
+          <div class="row">
+            <button class="btn btn-grey" id="toggle" type="button" title="Pause or resume the animation">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>
+              </svg>
+              <span id="toggle-label">Pause</span>
+            </button>
+            <button class="btn btn-accent" id="copy-cfg" type="button" title="Copy this preset as a NeatConfig object">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span id="copy-label">Copy config</span>
+            </button>
+          </div>
+        </div>
+
+        <pre class="cfg" id="cfg" aria-live="polite"></pre>
+
+        <div class="notice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+          </svg>
+          <p id="engine-note"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3 · VISION ─────────────────────────────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <span class="eyebrow">Section 3</span>
+      <h3>What survives without hue</h3>
+      <p class="rule-note">
+        Chips and swatches run through this filter. Lemnian Hollow's three mid-tones sit
+        within 1.19:1 of each other, so they vanish into one swatch the moment lightness is
+        all that is left.
+      </p>
+    </div>
+    <div class="grid">
+      <div class="card col-12">
+        <div class="row between">
+          <span class="eyebrow">Vision simulation</span>
+          <div class="seg" role="group" aria-label="Vision simulation">
+            <button type="button" data-mode="none" aria-pressed="true" title="Colour as authored">Normal</button>
+            <button type="button" data-mode="f-grey" aria-pressed="false" title="Lightness only, hue removed">Greyscale</button>
+            <button type="button" data-mode="f-deut" aria-pressed="false" title="Red-green deficiency, most common form">Deuteranopia</button>
+            <button type="button" data-mode="f-prot" aria-pressed="false" title="Red-green deficiency, red-blind form">Protanopia</button>
+          </div>
+        </div>
+        <div class="ramp filterable">
+          <div style="background:#8BE8CB"></div><div style="background:#7EA2AA"></div>
+          <div style="background:#888DA7"></div><div style="background:#9C7A97"></div>
+          <div style="background:#303633"></div>
+        </div>
+        <div class="scroll">
+          <table>
+            <thead><tr><th scope="col">Neighbouring pair</th><th scope="col">Ratio</th><th scope="col">Reading</th></tr></thead>
+            <tbody>
+              <tr><td><span class="dot" style="background:#8BE8CB"></span>Fairy Dust / Cool Steel</td>
+                  <td class="num">1.90:1</td><td><span class="badge badge-new">Separable</span></td></tr>
+              <tr><td><span class="dot" style="background:#7EA2AA"></span>Cool Steel / Lavender Grey</td>
+                  <td class="num">1.19:1</td><td><span class="badge badge-danger">Near-isoluminant</span></td></tr>
+              <tr><td><span class="dot" style="background:#888DA7"></span>Lavender Grey / Dusty Mauve</td>
+                  <td class="num">1.14:1</td><td><span class="badge badge-danger">Near-isoluminant</span></td></tr>
+              <tr><td><span class="dot" style="background:#9C7A97"></span>Dusty Mauve / Gunmetal</td>
+                  <td class="num">3.32:1</td><td><span class="badge badge-new">Separable</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>"use strict";var NeatLib=(()=>{var J=Object.defineProperty;var St=Object.getOwnPropertyDescriptor;var Tt=Object.getOwnPropertyNames;var Et=Object.prototype.hasOwnProperty;var Ft=(l,e,i)=>e in l?J(l,e,{enumerable:!0,configurable:!0,writable:!0,value:i}):l[e]=i;var Ct=(l,e)=>{for(var i in e)J(l,i,{get:e[i],enumerable:!0})},Pt=(l,e,i,s)=>{if(e&&typeof e=="object"||typeof e=="function")for(let o of Tt(e))!Et.call(l,o)&&o!==i&&J(l,o,{get:()=>e[o],enumerable:!(s=St(e,o))||s.enumerable});return l};var Mt=l=>Pt(J({},"__esModule",{value:!0}),l);var r=(l,e,i)=>Ft(l,typeof e!="symbol"?e+"":e,i);var Wt={};Ct(Wt,{NeatGradient:()=>te});var pe=`void main() {
+    vUv = uv;
+    vPosition = position;
+
+    // SCROLLING LOGIC
+    // Separate multipliers for wave, color, and flow offsets
+    float waveOffset = -u_y_offset * u_y_offset_wave_multiplier;
+    float colorOffset = -u_y_offset * u_y_offset_color_multiplier;
+    float flowOffset = -u_y_offset * u_y_offset_flow_multiplier;
+
+    // 1. DISPLACEMENT (WAVES)
+    // We add waveOffset to Y to scroll the wave pattern
+    v_displacement_amount = cnoise( vec3(
+        u_wave_frequency_x * position.x + u_time,
+        u_wave_frequency_y * (position.y + waveOffset) + u_time,
+        u_time
+    ));
+
+    // 2. FLOW FIELD
+    // Apply flow offset to scroll the flow field mask
+    vec2 baseUv = vUv;
+    baseUv.y += flowOffset / u_plane_height; // Scale to match wave speed
+    vec2 flowUv = baseUv;
+
+    if (u_flow_enabled > 0.5) {
+        if (u_flow_ease > 0.0 || u_flow_distortion_a > 0.0) {
+            vec2 ppp = -1.0 + 2.0 * baseUv;
+            ppp += 0.1 * cos((1.5 * u_flow_scale) * ppp.yx + 1.1 * u_time + vec2(0.1, 1.1));
+            ppp += 0.1 * cos((2.3 * u_flow_scale) * ppp.yx + 1.3 * u_time + vec2(3.2, 3.4));
+            ppp += 0.1 * cos((2.2 * u_flow_scale) * ppp.yx + 1.7 * u_time + vec2(1.8, 5.2));
+            ppp += u_flow_distortion_a * cos((u_flow_distortion_b * u_flow_scale) * ppp.yx + 1.4 * u_time + vec2(6.3, 3.9));
+
+            float r = length(ppp);
+            flowUv = mix(baseUv, vec2(baseUv.x * (1.0 - u_flow_ease) + r * u_flow_ease, baseUv.y), u_flow_ease);
+        }
+    }
+
+    // Pass the standard flow UV to fragment shader (for texture)
+    vFlowUv = flowUv;
+
+    // 3. COLOR MIXING
+    // We take the computed flow UVs and apply the color offset
+    // Scale by plane height to match wave offset speed (world space vs UV space)
+    vec3 color = u_colors[0].color;
+
+    vec3 distortedPos = position;
+    if (u_flat_shading < 0.5) {
+        if (u_flow_enabled > 0.5) {
+            if (u_flow_ease > 0.0 || u_flow_distortion_a > 0.0) {
+                vec3 ppp = position / 25.0;
+                ppp.xyz += 0.1 * cos((1.5 * u_flow_scale) * ppp.yxz + 1.1 * u_time + vec3(0.1, 1.1, 2.1));
+                ppp.xyz += 0.1 * cos((2.3 * u_flow_scale) * ppp.zxy + 1.3 * u_time + vec3(3.2, 3.4, 1.2));
+                ppp.xyz += 0.1 * cos((2.2 * u_flow_scale) * ppp.yxz + 1.7 * u_time + vec3(1.8, 5.2, 3.1));
+                ppp.xyz += u_flow_distortion_a * cos((u_flow_distortion_b * u_flow_scale) * ppp.zxy + 1.4 * u_time + vec3(6.3, 3.9, 4.5));
+
+                float r = length(ppp);
+                distortedPos = mix(position, vec3(
+                    position.x * (1.0 - u_flow_ease) + r * u_flow_ease * 25.0,
+                    position.y,
+                    position.z * (1.0 - u_flow_ease) + r * u_flow_ease * 25.0
+                ), u_flow_ease);
+            }
+        }
+    }
+
+    vec3 noise_cord;
+    if (u_flat_shading < 0.5) {
+        noise_cord = vec3(distortedPos.x / 50.0, (distortedPos.y + colorOffset) / 50.0, distortedPos.z / 50.0);
+    } else {
+        vec2 adjustedUv = flowUv;
+        adjustedUv.y += colorOffset / u_plane_height;
+        noise_cord = vec3(adjustedUv, 0.0);
+    }
+
+    const float minNoise = .0;
+    const float maxNoise = .9;
+
+    for (int i = 1; i < 6; i++) {
+        if (i < u_colors_count) {
+            if (u_colors[i].is_active > 0.5) {
+                float noiseFlow = (1. + float(i)) / 30.;
+                float noiseSpeed = (1. + float(i)) * 0.11;
+                float noiseSeed = 13. + float(i) * 7.;
+
+                float noise_z = u_time * noiseSpeed;
+                if (u_flat_shading < 0.5) {
+                    noise_z = noise_cord.z * u_color_pressure.x * u_color_pressure.x + u_time * noiseSpeed;
+                }
+
+                float noise = snoise(
+                    vec3(
+                        noise_cord.x * u_color_pressure.x * u_color_pressure.x + u_time * noiseFlow * 2.,
+                        noise_cord.y * u_color_pressure.y * u_color_pressure.y,
+                        noise_z
+                    ) + noiseSeed
+                ) - (.1 * float(i)) + (.5 * u_color_blending);
+
+                noise = clamp(noise, minNoise, maxNoise + float(i) * 0.02);
+                color = mix(color, u_colors[i].color, smoothstep(0.0, u_color_blending, noise));
+            }
+        }
+    }
+
+    v_color = color;
+
+    // 4. FRESNEL (rim glow)
+    // (Calculated in fragment shader using displacement slope approximation)
+
+    // 5. VERTEX POSITION
+    vec3 newPosition = position + normal * v_displacement_amount * u_wave_amplitude;
+    vec4 mvPosition = modelViewMatrix * vec4(newPosition, 1.0);
+    vViewPosition = mvPosition.xyz;
+    vNormal = normalize((modelViewMatrix * vec4(normal, 0.0)).xyz);
+    gl_Position = projectionMatrix * mvPosition;
+    v_new_position = gl_Position;
+}
+`,be=`float random(vec2 p) {
+    return fract(sin(dot(p, vec2(12.9898,78.233))) * 43758.5453);
+}
+
+float fbm(vec3 x) {
+    float value = 0.0;
+    float amplitude = 0.5;
+    float frequency = 1.0;
+    for (int i = 0; i < 2; i++) {
+        value += amplitude * snoise(x * frequency);
+        frequency *= 2.0;
+        amplitude *= 0.5;
+    }
+    return value;
+}
+
+// Branchless HSL to RGB for iridescence
+vec3 hsl2rgb(float h, float s, float l) {
+    vec3 rgb = clamp(abs(mod(h * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0);
+    return l + s * (rgb - 0.5) * (1.0 - abs(2.0 * l - 1.0));
+}
+
+void main() {
+    vec2 finalUv = vFlowUv;
+    
+    vec3 baseColor;
+    float texAlpha = 1.0;
+
+    if (u_enable_procedural_texture > 0.5) {
+        if (u_flat_shading < 0.5) {
+            float parallaxFactor = 0.25;
+            float scrollOffset = (u_y_offset * u_y_offset_color_multiplier) * parallaxFactor;
+            vec3 scrolledPos = vPosition;
+            scrolledPos.y -= scrollOffset;
+            
+            vec3 p = (scrolledPos * 1.5) / 50.0;
+            vec2 uvX = p.yz + vec2(0.5);
+            vec2 uvY = p.zx + vec2(0.5);
+            vec2 uvZ = p.xy + vec2(0.5);
+            
+            vec4 colX = texture2D(u_procedural_texture, uvX);
+            vec4 colY = texture2D(u_procedural_texture, uvY);
+            vec4 colZ = texture2D(u_procedural_texture, uvZ);
+            
+            vec3 n = normalize(vNormal);
+            vec3 blendWeights = abs(n);
+            blendWeights = blendWeights / (blendWeights.x + blendWeights.y + blendWeights.z + 0.0001);
+            
+            vec4 texSample = colX * blendWeights.x + colY * blendWeights.y + colZ * blendWeights.z;
+            baseColor = texSample.rgb;
+            if (u_transparent_texture_void > 0.5) {
+                texAlpha = texSample.a;
+            }
+        } else {
+            vec2 ppp = -1.0 + 2.0 * finalUv;
+            ppp += 0.1 * cos((1.5 * u_flow_scale) * ppp.yx + 1.1 * u_time + vec2(0.1, 1.1));
+            ppp += 0.1 * cos((2.3 * u_flow_scale) * ppp.yx + 1.3 * u_time + vec2(3.2, 3.4));
+            ppp += 0.1 * cos((2.2 * u_flow_scale) * ppp.yx + 1.7 * u_time + vec2(1.8, 5.2));
+            ppp += u_flow_distortion_a * cos((u_flow_distortion_b * u_flow_scale) * ppp.yx + 1.4 * u_time + vec2(6.3, 3.9));
+            float r = length(ppp);
+            
+            float vx = (finalUv.x * u_texture_ease) + (r * (1.0 - u_texture_ease));
+            float vy = (finalUv.y * u_texture_ease) + (0.0 * (1.0 - u_texture_ease));
+            vec2 texUv = vec2(vx, vy);
+
+            float parallaxFactor = 0.25;
+            texUv.y -= (u_y_offset * u_y_offset_color_multiplier / u_plane_height) * parallaxFactor;
+            texUv *= 1.5;
+
+            vec4 texSample = texture2D(u_procedural_texture, texUv);
+            baseColor = texSample.rgb;
+            if (u_transparent_texture_void > 0.5) {
+                texAlpha = texSample.a;
+            }
+        }
+    } else {
+        baseColor = v_color;
+    }
+
+    vec3 color = baseColor;
+
+    // === DOMAIN WARPING (simplified: 3 fbm calls instead of 5) ===
+    if (u_domain_warp_enabled > 0.5) {
+        vec3 p;
+        if (u_flat_shading < 0.5) {
+            p = vec3((vPosition / 50.0 + vec3(0.5)) * u_domain_warp_scale);
+            p.z += u_time * 0.15;
+        } else {
+            p = vec3(finalUv * u_domain_warp_scale, u_time * 0.15);
+        }
+        vec2 q = vec2(fbm(p), fbm(p + vec3(5.2, 1.3, 0.0)));
+        float f = fbm(p + vec3(4.0 * q, 0.0));
+        vec3 warpColor = color * (1.0 + f * 0.8 * u_domain_warp_intensity);
+        float pattern = clamp(f * f * f + 0.6 * f * f + 0.5 * f, 0.0, 1.0);
+        color = mix(color, warpColor * (0.6 + pattern * 0.8), u_domain_warp_intensity * 0.7);
+    }
+
+    // Post-processing
+    // Compute dynamic pixel-perfect normal using smooth normal
+    vec3 normal = normalize(vNormal);
+    vec3 viewDir = vec3(0.0, 0.0, 1.0);
+    float ndotv = dot(normal, viewDir);
+    
+    // Cull back-faces for closed 3D shapes (Sphere=1, Torus=2, Cylinder=3)
+    if (u_shape_type > 0.5 && u_shape_type < 3.5) {
+        if (ndotv < 0.0) {
+            discard;
+        }
+    } else {
+        // Double-sided shapes (Plane, Ribbon): flip normal if back-facing
+        if (ndotv < 0.0) {
+            normal = -normal;
+            ndotv = -ndotv;
+        }
+    }
+    vec3 lightDir = normalize(vec3(1.0, 1.0, 1.0));
+    float diffuse = max(dot(normal, lightDir), 0.0);
+    vec3 halfDir = normalize(lightDir + viewDir);
+    float specular = pow(max(dot(normal, halfDir), 0.0), 32.0);
+
+    // Blend smooth 3D shading with smooth height-based wave shading
+    if (u_flat_shading > 0.5) {
+        // Flat / height-based wave shading (plane style)
+        color += v_displacement_amount * u_highlights;
+        float heightShadow = 1.0 - v_displacement_amount;
+        color -= heightShadow * heightShadow * u_shadows;
+    } else {
+        // 3D shading
+        color += specular * u_highlights;
+        color += v_displacement_amount * u_highlights * 0.5;
+        float heightShadow = 1.0 - v_displacement_amount;
+        color -= heightShadow * heightShadow * u_shadows * 0.5;
+        color -= (1.0 - diffuse) * u_shadows * 0.5;
+    }
+    color = saturation(color, 1.0 + u_saturation);
+    color = color * u_brightness;
+
+    // === IRIDESCENCE ===
+    if (u_iridescence_enabled > 0.5) {
+        float hue = fract(v_displacement_amount * 0.5 + 0.5 + u_time * u_iridescence_speed * 0.05);
+        vec3 iriColor = hsl2rgb(hue, 0.8, 0.6);
+        color = mix(color, iriColor, u_iridescence_intensity * abs(v_displacement_amount) * 0.6);
+    }
+
+    // === FRESNEL (Rim glow) ===
+    if (u_fresnel_enabled > 0.5) {
+        float slope = 1.0 - abs(v_displacement_amount);
+        float fresnel = pow(max(slope, 0.0), u_fresnel_power);
+        color += u_fresnel_color * fresnel * u_fresnel_intensity;
+    }
+
+    // === VIGNETTE ===
+    if (u_vignette_intensity > 0.0) {
+        vec2 vigUv = vUv;
+        if (u_flat_shading < 0.5) {
+            vigUv = (v_new_position.xy / v_new_position.w) * 0.5 + vec2(0.5);
+        }
+        float dist = length(vigUv - vec2(0.5));
+        float vig = smoothstep(u_vignette_radius, u_vignette_radius * 0.3, dist);
+        color *= mix(1.0, vig, u_vignette_intensity);
+    }
+
+    // === FAKE BLOOM ===
+    if (u_bloom_intensity > 0.0) {
+        float luma = dot(color, vec3(0.2126, 0.7152, 0.0722));
+        float bloomMask = smoothstep(u_bloom_threshold, 1.0, luma);
+        color += color * bloomMask * u_bloom_intensity;
+    }
+
+    // === CHROMATIC ABERRATION ===
+    if (u_chromatic_aberration > 0.0) {
+        float caAmount = u_chromatic_aberration * 0.008;
+        vec2 caUv = vUv;
+        if (u_flat_shading < 0.5) {
+            caUv = (v_new_position.xy / v_new_position.w) * 0.5 + vec2(0.5);
+        }
+        float dist = length(caUv - vec2(0.5));
+        float rShift = v_displacement_amount + caAmount * dist;
+        float bShift = v_displacement_amount - caAmount * dist;
+        color.r *= 1.0 + rShift * caAmount * 10.0;
+        color.b *= 1.0 - bShift * caAmount * 10.0;
+    }
+
+    // Grain (use cheap hash noise instead of expensive fbm when static)
+    float grain = 0.0;
+    if (u_grain_intensity > 0.0) {
+        vec2 noiseCoords = gl_FragCoord.xy / u_grain_scale;
+        if (u_grain_speed != 0.0 || u_flat_shading > 0.5) {
+            grain = fbm(vec3(noiseCoords, u_time * u_grain_speed));
+        } else {
+            // Static grain: use cheap hash instead of fbm
+            grain = random(noiseCoords) - 0.5;
+        }
+
+        grain = grain * 0.5 + 0.5;
+        grain -= 0.5;
+        grain = (grain > u_grain_sparsity) ? grain : 0.0;
+        grain *= u_grain_intensity;
+    }
+
+    color += vec3(grain);
+
+    float edgeAlpha = 1.0;
+    
+    // Silhouette falloff for 3D shapes (skip when flat shading or fade is zero)
+    if (u_silhouette_fade > 0.0 && u_flat_shading < 0.5) {
+        edgeAlpha = smoothstep(0.0, u_silhouette_fade, ndotv);
+    }
+    
+    // UV boundary falloff for open shapes
+    if (u_shape_type == 3.0) { // Cylinder: fade top/bottom ends
+        float vFade = smoothstep(0.0, u_cylinder_fade, vUv.y) * smoothstep(1.0, 1.0 - u_cylinder_fade, vUv.y);
+        edgeAlpha *= vFade;
+    } else if (u_shape_type == 4.0) { // Ribbon: fade all 4 borders
+        float uFade = smoothstep(0.0, u_ribbon_fade, vUv.x) * smoothstep(1.0, 1.0 - u_ribbon_fade, vUv.x);
+        float vFade = smoothstep(0.0, u_ribbon_fade, vUv.y) * smoothstep(1.0, 1.0 - u_ribbon_fade, vUv.y);
+        edgeAlpha *= uFade * vFade;
+    }
+
+    edgeAlpha *= texAlpha;
+    gl_FragColor = vec4(color, edgeAlpha);
+}
+`;function ve(){return`precision highp float;
+
+attribute vec3 position;
+attribute vec3 normal;
+attribute vec2 uv;
+
+uniform mat4 modelViewMatrix;
+uniform mat4 projectionMatrix;
+
+varying vec2 vUv;
+varying vec2 vFlowUv;
+varying vec4 v_new_position;
+varying vec3 v_color;
+varying float v_displacement_amount;
+varying vec3 vViewPosition;
+varying vec3 vNormal;
+varying vec3 vPosition;
+
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_color_pressure;
+uniform float u_wave_frequency_x;
+uniform float u_wave_frequency_y;
+uniform float u_wave_amplitude;
+uniform float u_plane_width;
+uniform float u_plane_height;
+uniform float u_color_blending;
+
+uniform int u_colors_count;
+struct ColorStop {
+    float is_active;
+    vec3 color;
+    float influence;
+};
+uniform ColorStop u_colors[6];
+
+uniform float u_y_offset;
+uniform float u_y_offset_wave_multiplier;
+uniform float u_y_offset_color_multiplier;
+uniform float u_y_offset_flow_multiplier;
+
+// Flow field uniforms
+uniform float u_flow_distortion_a;
+uniform float u_flow_distortion_b;
+uniform float u_flow_scale;
+uniform float u_flow_ease;
+uniform float u_flow_enabled;
+
+// Fresnel uniforms
+uniform float u_fresnel_enabled;
+uniform float u_fresnel_power;
+uniform float u_fresnel_intensity;
+uniform vec3 u_fresnel_color;
+
+uniform float u_shape_type;
+uniform float u_flat_shading;
+`}function ge(){return`precision highp float;
+
+varying vec2 vUv;
+varying vec2 vFlowUv;
+varying vec4 v_new_position;
+varying vec3 v_color;
+varying float v_displacement_amount;
+varying vec3 vViewPosition;
+varying vec3 vNormal;
+varying vec3 vPosition;
+
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform float u_plane_height;
+
+uniform float u_shadows;
+uniform float u_highlights;
+uniform float u_saturation;
+uniform float u_brightness;
+uniform float u_grain_intensity; 
+uniform float u_grain_sparsity; 
+uniform float u_grain_scale; 
+uniform float u_grain_speed; 
+
+uniform float u_y_offset;
+uniform float u_y_offset_color_multiplier;
+
+// Flow field uniforms
+uniform float u_flow_distortion_a;
+uniform float u_flow_distortion_b;
+uniform float u_flow_scale;
+
+// Procedural texture uniforms
+uniform sampler2D u_procedural_texture;
+uniform float u_enable_procedural_texture;
+uniform float u_texture_ease;
+
+// Domain warping uniforms
+uniform float u_domain_warp_enabled;
+uniform float u_domain_warp_intensity;
+uniform float u_domain_warp_scale;
+
+// Vignette uniforms
+uniform float u_vignette_intensity;
+uniform float u_vignette_radius;
+
+// Fresnel uniforms (fragment side)
+uniform float u_fresnel_enabled;
+uniform float u_fresnel_power;
+uniform float u_fresnel_intensity;
+uniform vec3 u_fresnel_color;
+
+
+
+// Iridescence uniforms
+uniform float u_iridescence_enabled;
+uniform float u_iridescence_intensity;
+uniform float u_iridescence_speed;
+
+// Bloom uniforms
+uniform float u_bloom_intensity;
+uniform float u_bloom_threshold;
+
+// Chromatic aberration
+uniform float u_chromatic_aberration;
+uniform float u_shape_type;
+uniform float u_transparent_texture_void;
+uniform float u_silhouette_fade;
+uniform float u_cylinder_fade;
+uniform float u_ribbon_fade;
+uniform float u_flat_shading;
+`}function oe(){return`
+// 1. REPLACEMENT PERMUTE: 
+// Uses a hash function (fract/sin) instead of a modular lookup table.
+vec4 permute(vec4 x) {
+    return floor(fract(sin(x) * 43758.5453123) * 289.0);
+}
+
+// Taylor Inverse Sqrt
+vec4 taylorInvSqrt(vec4 r) {
+  return 1.79284291400159 - 0.85373472095314 * r;
+}
+
+// Fade function
+vec3 fade(vec3 t) {
+  return t*t*t*(t*(t*6.0-15.0)+10.0);
+}
+
+// 3D Simplex Noise
+float snoise(vec3 v) {
+  const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+  const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+
+  // First corner
+  vec3 i  = floor(v + dot(v, C.yyy) );
+  vec3 x0 =   v - i + dot(i, C.xxx) ;
+
+  // Other corners
+  vec3 g = step(x0.yzx, x0.xyz);
+  vec3 l = 1.0 - g;
+  vec3 i1 = min( g.xyz, l.zxy );
+  vec3 i2 = max( g.xyz, l.zxy );
+
+  vec3 x1 = x0 - i1 + C.xxx;
+  vec3 x2 = x0 - i2 + C.yyy;
+  vec3 x3 = x0 - D.yyy;
+
+  // Permutations
+  vec4 p = permute( permute( permute(
+            i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+          + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
+          + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+
+  // Gradients
+  float n_ = 0.142857142857; // 1.0/7.0
+  vec3  ns = n_ * D.wyz - D.xzx;
+
+  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+
+  vec4 x_ = floor(j * ns.z);
+  vec4 y_ = floor(j - 7.0 * x_ );
+
+  vec4 x = x_ *ns.x + ns.yyyy;
+  vec4 y = y_ *ns.x + ns.yyyy;
+  vec4 h = 1.0 - abs(x) - abs(y);
+
+  vec4 b0 = vec4( x.xy, y.xy );
+  vec4 b1 = vec4( x.zw, y.zw );
+
+  vec4 s0 = floor(b0)*2.0 + 1.0;
+  vec4 s1 = floor(b1)*2.0 + 1.0;
+  vec4 sh = -step(h, vec4(0.0));
+
+  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+  vec3 p0 = vec3(a0.xy,h.x);
+  vec3 p1 = vec3(a0.zw,h.y);
+  vec3 p2 = vec3(a1.xy,h.z);
+  vec3 p3 = vec3(a1.zw,h.w);
+
+  // Normalise gradients
+  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+  p0 *= norm.x;
+  p1 *= norm.y;
+  p2 *= norm.z;
+  p3 *= norm.w;
+
+  // Mix final noise value
+  vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+  m = m * m;
+  return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),
+                                dot(p2,x2), dot(p3,x3) ) );
+}
+
+// Classic Perlin noise
+float cnoise(vec3 P)
+{
+  vec3 Pi0 = floor(P); 
+  vec3 Pi1 = Pi0 + vec3(1.0); 
+  
+  vec3 Pf0 = fract(P); 
+  vec3 Pf1 = Pf0 - vec3(1.0); 
+  vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
+  vec4 iy = vec4(Pi0.yy, Pi1.yy);
+  vec4 iz0 = Pi0.zzzz;
+  vec4 iz1 = Pi1.zzzz;
+
+  vec4 ixy = permute(permute(ix) + iy);
+  vec4 ixy0 = permute(ixy + iz0);
+  vec4 ixy1 = permute(ixy + iz1);
+
+  vec4 gx0 = ixy0 * (1.0 / 7.0);
+  vec4 gy0 = fract(floor(gx0) * (1.0 / 7.0)) - 0.5;
+  gx0 = fract(gx0);
+  vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);
+  vec4 sz0 = step(gz0, vec4(0.0));
+  gx0 -= sz0 * (step(0.0, gx0) - 0.5);
+  gy0 -= sz0 * (step(0.0, gy0) - 0.5);
+
+  vec4 gx1 = ixy1 * (1.0 / 7.0);
+  vec4 gy1 = fract(floor(gx1) * (1.0 / 7.0)) - 0.5;
+  gx1 = fract(gx1);
+  vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);
+  vec4 sz1 = step(gz1, vec4(0.0));
+  gx1 -= sz1 * (step(0.0, gx1) - 0.5);
+  gy1 -= sz1 * (step(0.0, gy1) - 0.5);
+
+  vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
+  vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
+  vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
+  vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
+  vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
+  vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
+  vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
+  vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
+
+  vec4 norm0 = taylorInvSqrt(vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
+  g000 *= norm0.x;
+  g010 *= norm0.y;
+  g100 *= norm0.z;
+  g110 *= norm0.w;
+  vec4 norm1 = taylorInvSqrt(vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111)));
+  g001 *= norm1.x;
+  g011 *= norm1.y;
+  g101 *= norm1.z;
+  g111 *= norm1.w;
+
+  float n000 = dot(g000, Pf0);
+  float n100 = dot(g100, vec3(Pf1.x, Pf0.yz));
+  float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z));
+  float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));
+  float n001 = dot(g001, vec3(Pf0.xy, Pf1.z));
+  float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z));
+  float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));
+  float n111 = dot(g111, Pf1);
+
+  vec3 fade_xyz = fade(Pf0);
+  vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
+  vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
+  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
+  return 2.2 * n_xyz;
+}
+`}function ne(){return`
+vec3 saturation(vec3 rgb, float adjustment) {
+    const vec3 W = vec3(0.2125, 0.7154, 0.0721);
+    vec3 intensity = vec3(dot(rgb, W));
+    return mix(intensity, rgb, adjustment);
+}
+`}var Z=class{constructor(){r(this,"elements");this.elements=new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1])}identity(){let e=this.elements;return e[0]=1,e[1]=0,e[2]=0,e[3]=0,e[4]=0,e[5]=1,e[6]=0,e[7]=0,e[8]=0,e[9]=0,e[10]=1,e[11]=0,e[12]=0,e[13]=0,e[14]=0,e[15]=1,this}translate(e,i,s){return this.elements[12]+=this.elements[0]*e+this.elements[4]*i+this.elements[8]*s,this.elements[13]+=this.elements[1]*e+this.elements[5]*i+this.elements[9]*s,this.elements[14]+=this.elements[2]*e+this.elements[6]*i+this.elements[10]*s,this.elements[15]+=this.elements[3]*e+this.elements[7]*i+this.elements[11]*s,this}rotateX(e){let i=Math.cos(e),s=Math.sin(e),o=this.elements[4],t=this.elements[5],c=this.elements[6],n=this.elements[7],f=this.elements[8],_=this.elements[9],w=this.elements[10],p=this.elements[11];return this.elements[4]=i*o+s*f,this.elements[5]=i*t+s*_,this.elements[6]=i*c+s*w,this.elements[7]=i*n+s*p,this.elements[8]=i*f-s*o,this.elements[9]=i*_-s*t,this.elements[10]=i*w-s*c,this.elements[11]=i*p-s*n,this}rotateY(e){let i=Math.cos(e),s=Math.sin(e),o=this.elements[0],t=this.elements[1],c=this.elements[2],n=this.elements[3],f=this.elements[8],_=this.elements[9],w=this.elements[10],p=this.elements[11];return this.elements[0]=i*o-s*f,this.elements[1]=i*t-s*_,this.elements[2]=i*c-s*w,this.elements[3]=i*n-s*p,this.elements[8]=s*o+i*f,this.elements[9]=s*t+i*_,this.elements[10]=s*c+i*w,this.elements[11]=s*n+i*p,this}rotateZ(e){let i=Math.cos(e),s=Math.sin(e),o=this.elements[0],t=this.elements[1],c=this.elements[2],n=this.elements[3],f=this.elements[4],_=this.elements[5],w=this.elements[6],p=this.elements[7];return this.elements[0]=i*o+s*f,this.elements[1]=i*t+s*_,this.elements[2]=i*c+s*w,this.elements[3]=i*n+s*p,this.elements[4]=-s*o+i*f,this.elements[5]=-s*t+i*_,this.elements[6]=-s*c+i*w,this.elements[7]=-s*n+i*p,this}},Q=class{constructor(e,i,s,o,t,c){r(this,"left");r(this,"right");r(this,"top");r(this,"bottom");r(this,"near");r(this,"far");r(this,"position");r(this,"projectionMatrix");r(this,"zoom");this.left=e,this.right=i,this.top=s,this.bottom=o,this.near=t,this.far=c,this.position=[0,0,0],this.zoom=1,this.projectionMatrix=new Z,this.updateProjectionMatrix()}updateProjectionMatrix(){let e=1/(this.right-this.left),i=1/(this.top-this.bottom),s=1/(this.far-this.near),o=(this.right+this.left)*e,t=(this.top+this.bottom)*i,c=(this.far+this.near)*s;this.projectionMatrix.elements=new Float32Array([2*e,0,0,0,0,2*i,0,0,0,0,-2*s,0,-o,-t,-c,1])}};function j(l,e,i,s=50,o=50,t="plane",c=1){l.zoom=c;let n=e/i;if(t==="plane"){let w=e*i/1e6*s*o/1.5,p=Math.sqrt(w*n),h=w/p,g=-s/2,u=Math.min((g+p)/1.5,s/2),m=o/4,A=Math.max((m-h)/2,-o/4);if(n<1){let d=n;g=g*d,u=u*d;let R=1.05;g=g*R,u=u*R,m=m*R,A=A*R}l.left=g,l.right=u,l.top=m,l.bottom=A}else{let f=25;if(t==="sphere"?f=30:t==="torus"?f=35:t==="cylinder"&&(f=30),n>=1)l.left=-f*n,l.right=f*n,l.top=f,l.bottom=-f;else{l.left=-f,l.right=f,l.top=f/n,l.bottom=-f/n;let _=1.05;l.left*=_,l.right*=_,l.top*=_,l.bottom*=_}}l.left/=c,l.right/=c,l.top/=c,l.bottom/=c,l.near=-100,l.far=1e3,l.updateProjectionMatrix()}function se(l,e,i,s){let o=l/2,t=e/2,c=Math.floor(i),n=Math.floor(s),f=c+1,_=n+1,w=l/c,p=e/n,h=[],g=[],u=[],m=[];for(let R=0;R<_;R++){let S=R*p-t;for(let x=0;x<f;x++){let y=x*w-o;g.push(y,-S,0),u.push(0,0,1),m.push(x/c),m.push(1-R/n)}}for(let R=0;R<n;R++)for(let S=0;S<c;S++){let x=S+f*R,y=S+f*(R+1),T=S+1+f*(R+1),F=S+1+f*R;h.push(x,y,F),h.push(y,T,F)}let A=g.length/3>65535,d=[];for(let R=0;R<h.length;R+=3){let S=h[R],x=h[R+1],y=h[R+2];d.push(S,x,x,y,y,S)}return{position:new Float32Array(g),normal:new Float32Array(u),uv:new Float32Array(m),index:A?new Uint32Array(h):new Uint16Array(h),wireframeIndex:A?new Uint32Array(d):new Uint16Array(d)}}function ae(l,e,i){let s=[],o=[],t=[],c=[],n=Math.floor(e),f=Math.floor(i);for(let p=0;p<=f;p++){let h=p/f,g=h*Math.PI;for(let u=0;u<=n;u++){let m=u/n,A=m*Math.PI*2,d=-l*Math.sin(g)*Math.cos(A),R=l*Math.cos(g),S=l*Math.sin(g)*Math.sin(A);s.push(d,R,S);let x=Math.sqrt(d*d+R*R+S*S);o.push(d/x,R/x,S/x),t.push(m,1-h)}}for(let p=0;p<f;p++)for(let h=0;h<n;h++){let g=h+(n+1)*p,u=h+(n+1)*(p+1),m=h+1+(n+1)*(p+1),A=h+1+(n+1)*p;c.push(g,u,A),c.push(u,m,A)}let _=s.length/3>65535,w=[];for(let p=0;p<c.length;p+=3){let h=c[p],g=c[p+1],u=c[p+2];w.push(h,g,g,u,u,h)}return{position:new Float32Array(s),normal:new Float32Array(o),uv:new Float32Array(t),index:_?new Uint32Array(c):new Uint16Array(c),wireframeIndex:_?new Uint32Array(w):new Uint16Array(w)}}function le(l,e,i,s){let o=[],t=[],c=[],n=[],f=Math.floor(i),_=Math.floor(s);for(let h=0;h<=f;h++){let g=h/f*Math.PI*2;for(let u=0;u<=_;u++){let m=u/_*Math.PI*2,A=(l+e*Math.cos(g))*Math.cos(m),d=(l+e*Math.cos(g))*Math.sin(m),R=e*Math.sin(g);o.push(A,d,R);let S=l*Math.cos(m),x=l*Math.sin(m),y=A-S,T=d-x,F=R,v=Math.sqrt(y*y+T*T+F*F);t.push(y/v,T/v,F/v),c.push(u/_,h/f)}}for(let h=1;h<=f;h++)for(let g=1;g<=_;g++){let u=(_+1)*h+g-1,m=(_+1)*(h-1)+g-1,A=(_+1)*(h-1)+g,d=(_+1)*h+g;n.push(u,m,d),n.push(m,A,d)}let w=o.length/3>65535,p=[];for(let h=0;h<n.length;h+=3){let g=n[h],u=n[h+1],m=n[h+2];p.push(g,u,u,m,m,g)}return{position:new Float32Array(o),normal:new Float32Array(t),uv:new Float32Array(c),index:w?new Uint32Array(n):new Uint16Array(n),wireframeIndex:w?new Uint32Array(p):new Uint16Array(p)}}function ue(l,e,i,s,o){let t=[],c=[],n=[],f=[],_=Math.floor(s),w=Math.floor(o),p=i/2;for(let u=0;u<=w;u++){let m=u/w,A=m*i-p,d=m*(e-l)+l;for(let R=0;R<=_;R++){let S=R/_,x=S*Math.PI*2,y=Math.sin(x),T=Math.cos(x);t.push(d*y,-A,d*T),c.push(y,0,T),n.push(S,1-m)}}for(let u=0;u<w;u++)for(let m=0;m<_;m++){let A=m+(_+1)*u,d=m+(_+1)*(u+1),R=m+1+(_+1)*(u+1),S=m+1+(_+1)*u;f.push(A,d,S),f.push(d,R,S)}let h=t.length/3>65535,g=[];for(let u=0;u<f.length;u+=3){let m=f[u],A=f[u+1],d=f[u+2];g.push(m,A,A,d,d,m)}return{position:new Float32Array(t),normal:new Float32Array(c),uv:new Float32Array(n),index:h?new Uint32Array(f):new Uint16Array(f),wireframeIndex:h?new Uint32Array(g):new Uint16Array(g)}}function ce(l,e,i,s,o,t){let c=l/2,n=e/2,f=Math.floor(i),_=Math.floor(s),w=f+1,p=_+1,h=l/f,g=e/_,u=[],m=[],A=[],d=[];for(let x=0;x<p;x++){let y=x*g-n;for(let T=0;T<w;T++){let F=T*h-c,v=F,E=y,P=0,C=0,M=0,L=1;if(Math.abs(o)>.001){let z=l/o,U=F/z;v=z*Math.sin(U),P=z*(1-Math.cos(U)),C=Math.sin(U),L=Math.cos(U)}if(Math.abs(t)>.001){let z=y/e*t,U=Math.cos(z),I=Math.sin(z),B=v*U-P*I,O=v*I+P*U;v=B,P=O;let W=C*U-L*I,X=C*I+L*U;C=W,L=X}u.push(v,-E,P),m.push(C,M,L),A.push(T/f),A.push(1-x/_)}}for(let x=0;x<_;x++)for(let y=0;y<f;y++){let T=y+w*x,F=y+w*(x+1),v=y+1+w*(x+1),E=y+1+w*x;d.push(T,F,E),d.push(F,v,E)}let R=u.length/3>65535,S=[];for(let x=0;x<d.length;x+=3){let y=d[x],T=d[x+1],F=d[x+2];S.push(y,T,T,F,F,y)}return{position:new Float32Array(u),normal:new Float32Array(m),uv:new Float32Array(A),index:R?new Uint32Array(d):new Uint16Array(d),wireframeIndex:R?new Uint32Array(S):new Uint16Array(S)}}var Bt={kty:"EC",crv:"P-256",x:"n9A9jNvLNR6QJaPP4ZdpbXtPFz3ASUfeeQm11Jd53Rg",y:"EoG5ezJ3hr4c62JjpsyabotdFeU-A1LyH-qHyabnKc0",key_ops:["verify"],ext:!0};function ye(l){let e=l.replace(/-/g,"+").replace(/_/g,"/");for(;e.length%4!==0;)e+="=";let i=atob(e),s=new Uint8Array(i.length);for(let o=0;o<i.length;o++)s[o]=i.charCodeAt(o);return s}function Lt(l){if(typeof window=="undefined"||!window.location)return!0;let e=window.location.hostname.toLowerCase(),i=l.toLowerCase();return!!(e==="localhost"||e==="127.0.0.1"||e==="0.0.0.0"||e==="[::1]"||e.endsWith(".localhost")||e===i||e.endsWith("."+i))}async function xe(l){try{if(typeof crypto=="undefined"||!crypto.subtle||typeof crypto.subtle.verify!="function")return{valid:!1,reason:"Web Crypto API not available (page must be served over HTTPS)"};let e=l.trim();if(!e.startsWith("NEAT-"))return{valid:!1,reason:'Key must start with "NEAT-" prefix'};let i=e.slice(5),s=i.indexOf(".");if(s===-1)return{valid:!1,reason:"Invalid key format: missing separator"};let o=i.slice(0,s),t=i.slice(s+1);if(!o||!t)return{valid:!1,reason:"Invalid key format: empty payload or signature"};let n=ye(o).buffer.slice(0),f=new TextDecoder().decode(n),_=JSON.parse(f);if(!_.domain||typeof _.domain!="string")return{valid:!1,reason:"Invalid payload: missing domain"};if(!Lt(_.domain)){let u=typeof window!="undefined"&&window.location?window.location.hostname:"unknown";return{valid:!1,reason:`Domain mismatch: key is for "${_.domain}" but current hostname is "${u}"`}}let p=ye(t).buffer.slice(0),h=await crypto.subtle.importKey("jwk",Bt,{name:"ECDSA",namedCurve:"P-256"},!1,["verify"]);return await crypto.subtle.verify({name:"ECDSA",hash:"SHA-256"},h,p,n)?{valid:!0,payload:_}:{valid:!1,reason:"Signature verification failed"}}catch(e){return{valid:!1,reason:`Unexpected error: ${e instanceof Error?e.message:String(e)}`}}}var we="1.0.2";function Re(){console.info(`%c\u{1F308} Neat Gradients v${we}%c
+
+Licensed under MIT + The Commons Clause.
+Free for personal and commercial use.
+Selling this software or its derivatives is strictly prohibited.
+Get a license key to remove the watermark and this message: https://neat.firecms.co`,"font-weight: bold; font-size: 14px; color: #FF5772;","color: inherit;")}var V=50,Y=80,ee=6,Ut=[["speed","_speed",20,1/20,"u"],["horizontalPressure","_horizontalPressure",4,1/4,"u"],["verticalPressure","_verticalPressure",4,1/4,"u"],["waveFrequencyX","_waveFrequencyX",1/.04,.04,"u"],["waveFrequencyY","_waveFrequencyY",1/.04,.04,"u"],["waveAmplitude","_waveAmplitude",1/.75,.75,"u"],["highlights","_highlights",100,1/100,"u"],["shadows","_shadows",100,1/100,"u"],["colorSaturation","_saturation",10,1/10,"u"],["colorBlending","_colorBlending",10,1/10,"u"],["yOffsetWaveMultiplier","_yOffsetWaveMultiplier",1e3,1/1e3,"u"],["yOffsetColorMultiplier","_yOffsetColorMultiplier",1e3,1/1e3,"u"],["yOffsetFlowMultiplier","_yOffsetFlowMultiplier",1e3,1/1e3,"u"],["colorBrightness","_brightness",1,1,"u"],["grainIntensity","_grainIntensity",1,1,"u"],["grainSparsity","_grainSparsity",1,1,"u"],["grainSpeed","_grainSpeed",1,1,"u"],["wireframe","_wireframe",1,1,"u"],["backgroundAlpha","_backgroundAlpha",1,1,"u"],["flowDistortionA","_flowDistortionA",1,1,"u"],["flowDistortionB","_flowDistortionB",1,1,"u"],["flowScale","_flowScale",1,1,"u"],["flowEase","_flowEase",1,1,"u"],["flowEnabled","_flowEnabled",1,1,"u"],["textureEase","_textureEase",1,1,"u"],["silhouetteFade","_silhouetteFade",1,1,"u"],["cylinderFade","_cylinderFade",1,1,"u"],["ribbonFade","_ribbonFade",1,1,"u"],["flatShading","_flatShading",1,1,"u"],["domainWarpEnabled","_domainWarpEnabled",1,1,"u"],["domainWarpIntensity","_domainWarpIntensity",1,1,"u"],["domainWarpScale","_domainWarpScale",1,1,"u"],["vignetteIntensity","_vignetteIntensity",1,1,"u"],["vignetteRadius","_vignetteRadius",1,1,"u"],["fresnelEnabled","_fresnelEnabled",1,1,"u"],["fresnelPower","_fresnelPower",1,1,"u"],["fresnelIntensity","_fresnelIntensity",1,1,"u"],["iridescenceEnabled","_iridescenceEnabled",1,1,"u"],["iridescenceIntensity","_iridescenceIntensity",1,1,"u"],["iridescenceSpeed","_iridescenceSpeed",1,1,"u"],["bloomIntensity","_bloomIntensity",1,1,"u"],["bloomThreshold","_bloomThreshold",1,1,"u"],["chromaticAberration","_chromaticAberration",1,1,"u"],["shapeRotationX","_shapeRotationX",1,1,"u"],["shapeRotationY","_shapeRotationY",1,1,"u"],["shapeRotationZ","_shapeRotationZ",1,1,"u"],["shapeAutoRotateSpeedX","_shapeAutoRotateSpeedX",1,1,"u"],["shapeAutoRotateSpeedY","_shapeAutoRotateSpeedY",1,1,"u"],["cameraX","_cameraX",1,1,"u"],["cameraY","_cameraY",1,1,"u"],["cameraZ","_cameraZ",1,1,"u"],["cameraRotationX","_cameraRotationX",1,1,"u"],["cameraRotationY","_cameraRotationY",1,1,"u"],["cameraRotationZ","_cameraRotationZ",1,1,"u"],["textureVoidLikelihood","_textureVoidLikelihood",1,1,"t"],["textureVoidWidthMin","_textureVoidWidthMin",1,1,"t"],["textureVoidWidthMax","_textureVoidWidthMax",1,1,"t"],["textureBandDensity","_textureBandDensity",1,1,"t"],["textureColorBlending","_textureColorBlending",1,1,"t"],["textureSeed","_textureSeed",1,1,"t"],["transparentTextureVoid","_transparentTextureVoid",1,1,"t"],["proceduralBackgroundColor","_proceduralBackgroundColor",1,1,"t"],["textureShapeTriangles","_textureShapeTriangles",1,1,"t"],["textureShapeCircles","_textureShapeCircles",1,1,"t"],["textureShapeBars","_textureShapeBars",1,1,"t"],["textureShapeSquiggles","_textureShapeSquiggles",1,1,"t"],["sphereRadius","_sphereRadius",1,1,"g"],["torusRadius","_torusRadius",1,1,"g"],["torusTube","_torusTube",1,1,"g"],["cylinderRadius","_cylinderRadius",1,1,"g"],["cylinderHeight","_cylinderHeight",1,1,"g"],["planeBend","_planeBend",1,1,"g"],["planeTwist","_planeTwist",1,1,"g"]],te=class{constructor(e){r(this,"_ref");r(this,"_licensed",!1);r(this,"_antialias",!1);r(this,"_speed",-1);r(this,"_horizontalPressure",-1);r(this,"_verticalPressure",-1);r(this,"_waveFrequencyX",-1);r(this,"_waveFrequencyY",-1);r(this,"_waveAmplitude",-1);r(this,"_shadows",-1);r(this,"_highlights",-1);r(this,"_saturation",-1);r(this,"_brightness",-1);r(this,"_grainScale",-1);r(this,"_grainIntensity",-1);r(this,"_grainSparsity",-1);r(this,"_grainSpeed",-1);r(this,"_colorBlending",-1);r(this,"_resolution",1);r(this,"_colors",[]);r(this,"_wireframe",!1);r(this,"_backgroundColor","#FFFFFF");r(this,"_backgroundColorRgb",[1,1,1]);r(this,"_backgroundAlpha",1);r(this,"_flowDistortionA",0);r(this,"_flowDistortionB",0);r(this,"_flowScale",1);r(this,"_flowEase",0);r(this,"_flowEnabled",!0);r(this,"glState");r(this,"_enableProceduralTexture",!1);r(this,"_textureVoidLikelihood",.45);r(this,"_textureVoidWidthMin",200);r(this,"_textureVoidWidthMax",486);r(this,"_textureBandDensity",2.15);r(this,"_textureColorBlending",.01);r(this,"_textureSeed",333);r(this,"_textureEase",.5);r(this,"_transparentTextureVoid",!1);r(this,"_domainWarpEnabled",!1);r(this,"_domainWarpIntensity",.5);r(this,"_domainWarpScale",1);r(this,"_vignetteIntensity",.5);r(this,"_vignetteRadius",.8);r(this,"_fresnelEnabled",!1);r(this,"_fresnelPower",2);r(this,"_fresnelIntensity",.5);r(this,"_fresnelColor","#FFFFFF");r(this,"_fresnelColorRgb",[1,1,1]);r(this,"_iridescenceEnabled",!1);r(this,"_iridescenceIntensity",.5);r(this,"_iridescenceSpeed",1);r(this,"_bloomIntensity",0);r(this,"_bloomThreshold",.7);r(this,"_chromaticAberration",0);r(this,"_silhouetteFade",.25);r(this,"_cylinderFade",.08);r(this,"_ribbonFade",.05);r(this,"_flatShading",!0);r(this,"_shapeType","plane");r(this,"_shapeRotationX",0);r(this,"_shapeRotationY",0);r(this,"_shapeRotationZ",0);r(this,"_shapeAutoRotateSpeedX",0);r(this,"_shapeAutoRotateSpeedY",0);r(this,"_sphereRadius",15);r(this,"_torusRadius",15);r(this,"_torusTube",5);r(this,"_cylinderRadius",10);r(this,"_cylinderHeight",40);r(this,"_planeBend",0);r(this,"_planeTwist",0);r(this,"_cameraLock",!1);r(this,"_cameraX",0);r(this,"_cameraY",0);r(this,"_cameraZ",0);r(this,"_cameraRotationX",0);r(this,"_cameraRotationY",0);r(this,"_cameraRotationZ",0);r(this,"_cameraZoom",1);r(this,"_proceduralTexture",null);r(this,"_proceduralBackgroundColor","#000000");r(this,"_textureShapeTriangles",20);r(this,"_textureShapeCircles",15);r(this,"_textureShapeBars",15);r(this,"_textureShapeSquiggles",10);r(this,"requestRef",-1);r(this,"sizeObserver");r(this,"_currentCursor","");r(this,"_initialized",!1);r(this,"_cachedColorRgb",[]);r(this,"_yOffset",0);r(this,"_yOffsetWaveMultiplier",.004);r(this,"_yOffsetColorMultiplier",.004);r(this,"_yOffsetFlowMultiplier",.004);r(this,"_sourceCanvas",null);r(this,"_sourceCtx",null);r(this,"_maskedCanvas",null);r(this,"_maskedCtx",null);r(this,"_resizeTimeoutId",null);r(this,"_textureNeedsUpdate",!1);r(this,"_colorsChanged",!0);r(this,"_uniformsDirty",!0);r(this,"_textureDirty",!0);r(this,"_yOffsetDirty",!1);r(this,"_modelViewMatrix",new Z);r(this,"_isVisible",!0);r(this,"_visibilityObserver",null);r(this,"_visibilityHandler",null);r(this,"_watermarkProgram",null);r(this,"_watermarkTexture",null);r(this,"_watermarkBuffer",null);r(this,"_watermarkTexCoordBuffer",null);r(this,"_watermarkWidth",0);r(this,"_watermarkHeight",0);r(this,"_watermarkMargin",4);r(this,"_wmLocPos",-1);r(this,"_wmLocTc",-1);r(this,"_wmLocTex",null);r(this,"_wmPosData",new Float32Array(8));r(this,"_wmClickHandler",null);r(this,"_wmMoveHandler",null);r(this,"_wmMoveRafPending",!1);r(this,"_wmCachedRect",null);r(this,"_wmRectCacheTime",0);r(this,"_gradientVAO",null);r(this,"_watermarkVAO",null);let{ref:i,speed:s=4,horizontalPressure:o=3,verticalPressure:t=3,waveFrequencyX:c=5,waveFrequencyY:n=5,waveAmplitude:f=3,colors:_,highlights:w=4,shadows:p=4,colorSaturation:h=0,colorBrightness:g=1,colorBlending:u=5,grainScale:m=2,grainIntensity:A=.55,grainSparsity:d=0,grainSpeed:R=.1,wireframe:S=!1,backgroundColor:x="#FFFFFF",backgroundAlpha:y=1,resolution:T=1,seed:F,yOffset:v=0,yOffsetWaveMultiplier:E=4,yOffsetColorMultiplier:P=4,yOffsetFlowMultiplier:C=4,flowDistortionA:M=0,flowDistortionB:L=0,flowScale:z=1,flowEase:U=0,flowEnabled:I=!0,enableProceduralTexture:B=!1,textureVoidLikelihood:O=.45,textureVoidWidthMin:W=200,textureVoidWidthMax:X=486,textureBandDensity:Ae=2.15,textureColorBlending:Se=.01,textureSeed:Te=333,textureEase:Ee=.5,proceduralBackgroundColor:Fe="#000000",transparentTextureVoid:Ce=!1,textureShapeTriangles:Pe=20,textureShapeCircles:Me=15,textureShapeBars:Be=15,textureShapeSquiggles:Le=10,domainWarpEnabled:Ue=!1,domainWarpIntensity:ze=.5,domainWarpScale:Ie=1,vignetteIntensity:De=0,vignetteRadius:Oe=.8,fresnelEnabled:We=!1,fresnelPower:ke=2,fresnelIntensity:Ne=.5,fresnelColor:Ve="#FFFFFF",iridescenceEnabled:Ye=!1,iridescenceIntensity:Xe=.5,iridescenceSpeed:Ge=1,bloomIntensity:He=0,bloomThreshold:qe=.7,chromaticAberration:Ze=0,silhouetteFade:je=.25,cylinderFade:Ke=.08,ribbonFade:$e=.05,flatShading:Je=!0,cameraLock:Qe=!1,cameraX:et=0,cameraY:tt=0,cameraZ:rt=0,cameraRotationX:it=0,cameraRotationY:ot=0,cameraRotationZ:nt=0,cameraZoom:st=1,shapeType:at="plane",shapeRotationX:lt=0,shapeRotationY:ut=0,shapeRotationZ:ct=0,shapeAutoRotateSpeedX:ft=0,shapeAutoRotateSpeedY:_t=0,sphereRadius:ht=15,torusRadius:mt=15,torusTube:dt=5,cylinderRadius:pt=10,cylinderHeight:bt=40,planeBend:vt=0,planeTwist:gt=0,licenseKey:fe,preserveDrawingBuffer:yt=!1,antialias:xt=!1}=e;this._ref=i,this._antialias=xt,this.destroy=this.destroy.bind(this),this._initScene=this._initScene.bind(this),this.speed=s,this.horizontalPressure=o,this.verticalPressure=t,this.waveFrequencyX=c,this.waveFrequencyY=n,this.waveAmplitude=f,this.colorBlending=u,this._resolution=T,this.grainScale=m,this.grainIntensity=A,this.grainSparsity=d,this.grainSpeed=R,this.colors=_,this.shadows=p,this.highlights=w,this.colorSaturation=h,this.colorBrightness=g,this.wireframe=S,this.backgroundColor=x,this.backgroundAlpha=y,this.yOffset=v,this.yOffsetWaveMultiplier=E,this.yOffsetColorMultiplier=P,this.yOffsetFlowMultiplier=C,this.flowDistortionA=M,this.flowDistortionB=L,this.flowScale=z,this.flowEase=U,this.flowEnabled=I,this.enableProceduralTexture=B,this.textureVoidLikelihood=O,this.textureVoidWidthMin=W,this.textureVoidWidthMax=X,this.textureBandDensity=Ae,this.textureColorBlending=Se,this.textureSeed=Te,this.textureEase=Ee,this._proceduralBackgroundColor=Fe,this.transparentTextureVoid=Ce,this._textureShapeTriangles=Pe,this._textureShapeCircles=Me,this._textureShapeBars=Be,this._textureShapeSquiggles=Le,this.domainWarpEnabled=Ue,this.domainWarpIntensity=ze,this.domainWarpScale=Ie,this.vignetteIntensity=De,this.vignetteRadius=Oe,this.fresnelEnabled=We,this.fresnelPower=ke,this.fresnelIntensity=Ne,this.fresnelColor=Ve,this.iridescenceEnabled=Ye,this.iridescenceIntensity=Xe,this.iridescenceSpeed=Ge,this.bloomIntensity=He,this.bloomThreshold=qe,this.chromaticAberration=Ze,this.silhouetteFade=je,this.cylinderFade=Ke,this.ribbonFade=$e,this._flatShading=Je,this._cameraLock=Qe,this._cameraX=et,this._cameraY=tt,this._cameraZ=rt,this._cameraRotationX=it,this._cameraRotationY=ot,this._cameraRotationZ=nt,this._cameraZoom=st,this._shapeType=at,this._shapeRotationX=lt,this._shapeRotationY=ut,this._shapeRotationZ=ct,this._shapeAutoRotateSpeedX=ft,this._shapeAutoRotateSpeedY=_t,this._sphereRadius=ht,this._torusRadius=mt,this._torusTube=dt,this._cylinderRadius=pt,this._cylinderHeight=bt,this._planeBend=vt,this._planeTwist=gt,this.glState=this._initScene(T,yt),this._initWatermark(),It(),fe?xe(fe).then(a=>{this._licensed=a.valid,a.valid||(console.warn(`NEAT license key error: ${a.reason}`),Re())}):Re();let K=F!==void 0?F:zt(),$=performance.now(),H=()=>{let{gl:a,program:k,locations:b,indexCount:G,indexType:q}=this.glState;if(this._initialized){let _e=performance.now();K+=(_e-$)/1e3*this._speed,$=_e,a.useProgram(k),a.uniform1f(b.uniforms.u_time,K);let re=this.glState.camera,N=this._modelViewMatrix;N.identity(),N.translate(-re.position[0]-this._cameraX,-re.position[1]-this._cameraY,-re.position[2]-this._cameraZ),N.translate(0,0,-1),N.rotateX(-this._cameraRotationX),N.rotateY(-this._cameraRotationY),N.rotateZ(-this._cameraRotationZ);let ie=this._shapeRotationX,he=this._shapeRotationY,Rt=this._shapeRotationZ;this._shapeAutoRotateSpeedX!==0&&(ie+=K*this._shapeAutoRotateSpeedX*.1),this._shapeAutoRotateSpeedY!==0&&(he+=K*this._shapeAutoRotateSpeedY*.1),this._shapeType==="plane"||this._shapeType==="ribbon"?N.rotateX(ie-Math.PI/3.5):N.rotateX(ie),N.rotateY(he),N.rotateZ(Rt);let me=b.uniforms.modelViewMatrix;if(me&&a.uniformMatrix4fv(me,!1,N.elements),this._yOffsetDirty&&!this._uniformsDirty&&(a.uniform1f(b.uniforms.u_y_offset,this._yOffset),this._yOffsetDirty=!1),this._uniformsDirty){a.uniform2f(b.uniforms.u_resolution,this._ref.width,this._ref.height),a.uniform2f(b.uniforms.u_color_pressure,this._horizontalPressure,this._verticalPressure),a.uniform1f(b.uniforms.u_wave_frequency_x,this._waveFrequencyX),a.uniform1f(b.uniforms.u_wave_frequency_y,this._waveFrequencyY),a.uniform1f(b.uniforms.u_wave_amplitude,this._waveAmplitude),a.uniform1f(b.uniforms.u_color_blending,this._colorBlending),a.uniform1f(b.uniforms.u_shadows,this._shadows),a.uniform1f(b.uniforms.u_highlights,this._highlights),a.uniform1f(b.uniforms.u_saturation,this._saturation),a.uniform1f(b.uniforms.u_brightness,this._brightness),a.uniform1f(b.uniforms.u_grain_intensity,this._grainIntensity),a.uniform1f(b.uniforms.u_grain_sparsity,this._grainSparsity),a.uniform1f(b.uniforms.u_grain_speed,this._grainSpeed),a.uniform1f(b.uniforms.u_grain_scale,this._grainScale),a.uniform1f(b.uniforms.u_y_offset,this._yOffset),a.uniform1f(b.uniforms.u_y_offset_wave_multiplier,this._yOffsetWaveMultiplier),a.uniform1f(b.uniforms.u_y_offset_color_multiplier,this._yOffsetColorMultiplier),a.uniform1f(b.uniforms.u_y_offset_flow_multiplier,this._yOffsetFlowMultiplier),a.uniform1f(b.uniforms.u_flow_distortion_a,this._flowDistortionA),a.uniform1f(b.uniforms.u_flow_distortion_b,this._flowDistortionB),a.uniform1f(b.uniforms.u_flow_scale,this._flowScale),a.uniform1f(b.uniforms.u_flow_ease,this._flowEase),a.uniform1f(b.uniforms.u_flow_enabled,this._flowEnabled?1:0);let D=0;this._shapeType==="sphere"?D=1:this._shapeType==="torus"?D=2:this._shapeType==="cylinder"?D=3:this._shapeType==="ribbon"&&(D=4),a.uniform1f(b.uniforms.u_shape_type,D),a.uniform1f(b.uniforms.u_enable_procedural_texture,this._enableProceduralTexture?1:0),a.uniform1f(b.uniforms.u_texture_ease,this._textureEase),a.uniform1f(b.uniforms.u_transparent_texture_void,this._transparentTextureVoid?1:0),a.uniform1f(b.uniforms.u_domain_warp_enabled,this._domainWarpEnabled?1:0),a.uniform1f(b.uniforms.u_domain_warp_intensity,this._domainWarpIntensity),a.uniform1f(b.uniforms.u_domain_warp_scale,this._domainWarpScale),a.uniform1f(b.uniforms.u_vignette_intensity,this._vignetteIntensity),a.uniform1f(b.uniforms.u_vignette_radius,this._vignetteRadius),a.uniform1f(b.uniforms.u_fresnel_enabled,this._fresnelEnabled?1:0),a.uniform1f(b.uniforms.u_fresnel_power,this._fresnelPower),a.uniform1f(b.uniforms.u_fresnel_intensity,this._fresnelIntensity),a.uniform3fv(b.uniforms.u_fresnel_color,this._fresnelColorRgb),a.uniform1f(b.uniforms.u_iridescence_enabled,this._iridescenceEnabled?1:0),a.uniform1f(b.uniforms.u_iridescence_intensity,this._iridescenceIntensity),a.uniform1f(b.uniforms.u_iridescence_speed,this._iridescenceSpeed),a.uniform1f(b.uniforms.u_bloom_intensity,this._bloomIntensity),a.uniform1f(b.uniforms.u_bloom_threshold,this._bloomThreshold),a.uniform1f(b.uniforms.u_chromatic_aberration,this._chromaticAberration),a.uniform1f(b.uniforms.u_silhouette_fade,this._silhouetteFade),a.uniform1f(b.uniforms.u_cylinder_fade,this._cylinderFade),a.uniform1f(b.uniforms.u_ribbon_fade,this._ribbonFade),a.uniform1f(b.uniforms.u_flat_shading,this._flatShading?1:0),this._uniformsDirty=!1,this._yOffsetDirty=!1}if(this._textureNeedsUpdate&&this._enableProceduralTexture&&(this._proceduralTexture&&a.deleteTexture(this._proceduralTexture),this._proceduralTexture=this._createProceduralTexture(a),this._textureNeedsUpdate=!1,this._textureDirty=!0),this._textureDirty&&this._proceduralTexture&&(a.activeTexture(a.TEXTURE1),a.bindTexture(a.TEXTURE_2D,this._proceduralTexture),a.uniform1i(b.uniforms.u_procedural_texture,1),this._textureDirty=!1),this._colorsChanged){this._colorsChanged=!1;for(let D=0;D<ee;D++)if(D<this._colors.length){let de=this._colors[D],At=this._cachedColorRgb[D]||[0,0,0];a.uniform1f(b.uniforms[`u_colors[${D}].is_active`],de.enabled?1:0),a.uniform3fv(b.uniforms[`u_colors[${D}].color`],At),a.uniform1f(b.uniforms[`u_colors[${D}].influence`],de.influence||0)}else a.uniform1f(b.uniforms[`u_colors[${D}].is_active`],0);a.uniform1i(b.uniforms.u_colors_count,ee)}}a.clearColor(this._backgroundColorRgb[0],this._backgroundColorRgb[1],this._backgroundColorRgb[2],this._backgroundAlpha),a.clear(a.COLOR_BUFFER_BIT|a.DEPTH_BUFFER_BIT),this._wireframe?(a.bindBuffer(a.ELEMENT_ARRAY_BUFFER,this.glState.buffers.wireframeIndex),a.drawElements(a.LINES,this.glState.wireframeIndexCount,q,0),a.bindBuffer(a.ELEMENT_ARRAY_BUFFER,this.glState.buffers.index)):a.drawElements(a.TRIANGLES,G,q,0),this._licensed||this._renderWatermark(a),this._isVisible&&(this.requestRef=requestAnimationFrame(H))};this._visibilityObserver=new IntersectionObserver(a=>{let k=this._isVisible;this._isVisible=a[0].isIntersecting&&document.visibilityState!=="hidden",this._isVisible&&!k&&($=performance.now(),this.requestRef=requestAnimationFrame(H))},{threshold:0}),this._visibilityObserver.observe(i),this._visibilityHandler=()=>{let a=this._isVisible;document.visibilityState==="hidden"?this._isVisible=!1:(this._isVisible=!0,a||($=performance.now(),this.requestRef=requestAnimationFrame(H)))},document.addEventListener("visibilitychange",this._visibilityHandler);let wt=(a,k)=>{if(this._ref.width===a&&this._ref.height===k)return;let{gl:b,camera:G}=this.glState;this._ref.width=a,this._ref.height=k,b.viewport(0,0,a,k),j(G,a,k,V,Y,this._shapeType,this._cameraZoom);let q=this.glState.locations.uniforms.projectionMatrix;b.useProgram(this.glState.program),q&&b.uniformMatrix4fv(q,!1,G.projectionMatrix.elements),this._uniformsDirty=!0,H()};this.sizeObserver=new ResizeObserver(a=>{let k=a[a.length-1],b=Math.round(k.contentRect.width),G=Math.round(k.contentRect.height);this._resizeTimeoutId!==null&&clearTimeout(this._resizeTimeoutId),this._resizeTimeoutId=window.setTimeout(()=>{wt(b,G),this._resizeTimeoutId=null,this._wmCachedRect=null},100)}),this.sizeObserver.observe(i),H()}destroy(){if(cancelAnimationFrame(this.requestRef),this.sizeObserver.disconnect(),this._visibilityObserver&&(this._visibilityObserver.disconnect(),this._visibilityObserver=null),this._visibilityHandler&&(document.removeEventListener("visibilitychange",this._visibilityHandler),this._visibilityHandler=null),this._resizeTimeoutId!==null&&(clearTimeout(this._resizeTimeoutId),this._resizeTimeoutId=null),this._wmClickHandler&&(document.removeEventListener("click",this._wmClickHandler,!0),this._wmClickHandler=null),this._wmMoveHandler&&(document.removeEventListener("mousemove",this._wmMoveHandler),this._wmMoveHandler=null),this.glState){let e=this.glState.gl;e.deleteProgram(this.glState.program),e.deleteBuffer(this.glState.buffers.position),e.deleteBuffer(this.glState.buffers.normal),e.deleteBuffer(this.glState.buffers.uv),e.deleteBuffer(this.glState.buffers.index),e.deleteBuffer(this.glState.buffers.wireframeIndex),this._watermarkProgram&&e.deleteProgram(this._watermarkProgram),this._watermarkTexture&&e.deleteTexture(this._watermarkTexture),this._watermarkBuffer&&e.deleteBuffer(this._watermarkBuffer),this._watermarkTexCoordBuffer&&e.deleteBuffer(this._watermarkTexCoordBuffer);let i=e;i.deleteVertexArray&&(this._gradientVAO&&i.deleteVertexArray(this._gradientVAO),this._watermarkVAO&&i.deleteVertexArray(this._watermarkVAO))}this._proceduralTexture&&this.glState&&this.glState.gl.deleteTexture(this._proceduralTexture)}get colors(){return this._colors}set colors(e){this._uniformsDirty=!0,this._colors=e,this._cachedColorRgb=e.map(i=>this._hexToRgb(i.color)),this._colorsChanged=!0}get grainScale(){return this._grainScale}set grainScale(e){this._uniformsDirty=!0,this._grainScale=e==0?1:e}get resolution(){return this._resolution}set resolution(e){this._resolution!==e&&(this._resolution=e,this._updateGeometry())}get antialias(){return this._antialias}set antialias(e){this._antialias!==e&&(this._antialias=e,console.warn("NeatGradient: Changing 'antialias' at runtime is not supported because the WebGL context is already created. Recreate the NeatGradient instance to apply this change."))}get backgroundColor(){return this._backgroundColor}set backgroundColor(e){this._uniformsDirty=!0,this._backgroundColor=e,this._backgroundColorRgb=this._hexToRgb(e)}get yOffset(){return this._yOffset}set yOffset(e){this._yOffset!==e&&(this._yOffsetDirty=!0,this._yOffset=e)}get enableProceduralTexture(){return this._enableProceduralTexture}set enableProceduralTexture(e){this._uniformsDirty=!0,this._enableProceduralTexture=e,e&&!this._proceduralTexture&&(this._textureNeedsUpdate=!0)}_updateGeometry(){if(!this.glState)return;let e=this.glState.gl,i=this._resolution||1,s;this._shapeType==="sphere"?s=ae(this._sphereRadius,120*i,120*i):this._shapeType==="torus"?s=le(this._torusRadius,this._torusTube,120*i,120*i):this._shapeType==="cylinder"?s=ue(this._cylinderRadius,this._cylinderRadius,this._cylinderHeight,120*i,120*i):this._shapeType==="ribbon"?s=ce(V,Y,240*i,240*i,this._planeBend,this._planeTwist):s=se(V,Y,240*i,240*i);let{position:o,normal:t,uv:c,index:n,wireframeIndex:f}=s;e.bindBuffer(e.ARRAY_BUFFER,this.glState.buffers.position),e.bufferData(e.ARRAY_BUFFER,o,e.STATIC_DRAW),e.bindBuffer(e.ARRAY_BUFFER,this.glState.buffers.normal),e.bufferData(e.ARRAY_BUFFER,t,e.STATIC_DRAW),e.bindBuffer(e.ARRAY_BUFFER,this.glState.buffers.uv),e.bufferData(e.ARRAY_BUFFER,c,e.STATIC_DRAW),e.bindBuffer(e.ELEMENT_ARRAY_BUFFER,this.glState.buffers.index),e.bufferData(e.ELEMENT_ARRAY_BUFFER,n,e.STATIC_DRAW),e.bindBuffer(e.ELEMENT_ARRAY_BUFFER,this.glState.buffers.wireframeIndex),e.bufferData(e.ELEMENT_ARRAY_BUFFER,f,e.STATIC_DRAW),e.bindBuffer(e.ELEMENT_ARRAY_BUFFER,this.glState.buffers.index),this.glState.indexCount=n.length,this.glState.wireframeIndexCount=f.length,this.glState.indexType=n instanceof Uint32Array?e.UNSIGNED_INT:e.UNSIGNED_SHORT;let _=this._ref.width,w=this._ref.height;j(this.glState.camera,_,w,V,Y,this._shapeType,this._cameraZoom);let p=this.glState.locations.uniforms.projectionMatrix;e.useProgram(this.glState.program),p&&e.uniformMatrix4fv(p,!1,this.glState.camera.projectionMatrix.elements),this._uniformsDirty=!0}_hexToRgb(e){let i=parseInt(e.replace("#",""),16);return[(i>>16&255)/255,(i>>8&255)/255,(i&255)/255]}_initScene(e,i=!1){let s=this._ref.width,o=this._ref.height;(s===0||o===0||s===300&&o===150)&&(s=this._ref.clientWidth||300,o=this._ref.clientHeight||150,this._ref.width=s,this._ref.height=o);let t=this._ref.getContext("webgl2",{alpha:!0,preserveDrawingBuffer:i,antialias:this._antialias})||this._ref.getContext("webgl",{alpha:!0,preserveDrawingBuffer:i,antialias:this._antialias});if(!t)throw new Error("WebGL not supported");let c=t.getExtension("OES_standard_derivatives");t.getExtension("OES_element_index_uint"),t.viewport(0,0,s,o);let n;this._shapeType==="sphere"?n=ae(this._sphereRadius,120*e,120*e):this._shapeType==="torus"?n=le(this._torusRadius,this._torusTube,120*e,120*e):this._shapeType==="cylinder"?n=ue(this._cylinderRadius,this._cylinderRadius,this._cylinderHeight,120*e,120*e):this._shapeType==="ribbon"?n=ce(V,Y,240*e,240*e,this._planeBend,this._planeTwist):n=se(V,Y,240*e,240*e);let{position:f,normal:_,uv:w,index:p,wireframeIndex:h}=n,g=t.createBuffer();t.bindBuffer(t.ARRAY_BUFFER,g),t.bufferData(t.ARRAY_BUFFER,f,t.STATIC_DRAW);let u=t.createBuffer();t.bindBuffer(t.ARRAY_BUFFER,u),t.bufferData(t.ARRAY_BUFFER,_,t.STATIC_DRAW);let m=t.createBuffer();t.bindBuffer(t.ARRAY_BUFFER,m),t.bufferData(t.ARRAY_BUFFER,w,t.STATIC_DRAW);let A=t.createBuffer();t.bindBuffer(t.ELEMENT_ARRAY_BUFFER,A),t.bufferData(t.ELEMENT_ARRAY_BUFFER,p,t.STATIC_DRAW);let d=t.createBuffer();t.bindBuffer(t.ELEMENT_ARRAY_BUFFER,d),t.bufferData(t.ELEMENT_ARRAY_BUFFER,h,t.STATIC_DRAW),t.bindBuffer(t.ELEMENT_ARRAY_BUFFER,A);let R=ve()+`
+`+oe()+`
+`+ne()+`
+`+pe,S=t.createShader(t.VERTEX_SHADER);t.shaderSource(S,R),t.compileShader(S),t.getShaderParameter(S,t.COMPILE_STATUS)||(console.log("VERTEX_SHADER_ERROR_START"),console.log("Vertex shader error: ",t.getShaderInfoLog(S)),console.log("GL Error Code:",t.getError()),console.log("Vertex Shader Source Dump:"),console.log(R.split(`
+`).map((B,O)=>`${O+1}: ${B}`).join(`
+`)),console.log("VERTEX_SHADER_ERROR_END"));let x=ge()+`
+`+ne()+`
+`+oe()+`
+`+be,y=t.createShader(t.FRAGMENT_SHADER);t.shaderSource(y,x),t.compileShader(y),t.getShaderParameter(y,t.COMPILE_STATUS)||(console.log("FRAGMENT_SHADER_ERROR_START"),console.log("Fragment shader error: ",t.getShaderInfoLog(y)),console.log("GL Error Code:",t.getError()),console.log("Fragment Shader Source Dump:"),console.log(x.split(`
+`).map((B,O)=>`${O+1}: ${B}`).join(`
+`)),console.log("FRAGMENT_SHADER_ERROR_END"));let T=t.createProgram();t.attachShader(T,S),t.attachShader(T,y),t.linkProgram(T),t.getProgramParameter(T,t.LINK_STATUS)||(console.log("PROGRAM_LINK_ERROR_START"),console.log("Program linking error: ",t.getProgramInfoLog(T)),console.log("GL Error Code:",t.getError()),console.log("PROGRAM_LINK_ERROR_END")),t.useProgram(T);let F=new Q(0,0,0,0,0,1e3);F.position=[0,0,5],j(F,s,o,V,Y,this._shapeType,this._cameraZoom);let v=t.getAttribLocation(T,"position"),E=t.getAttribLocation(T,"normal"),P=t.getAttribLocation(T,"uv");t.enableVertexAttribArray(v),t.bindBuffer(t.ARRAY_BUFFER,g),t.vertexAttribPointer(v,3,t.FLOAT,!1,0,0),t.enableVertexAttribArray(E),t.bindBuffer(t.ARRAY_BUFFER,u),t.vertexAttribPointer(E,3,t.FLOAT,!1,0,0),t.enableVertexAttribArray(P),t.bindBuffer(t.ARRAY_BUFFER,m),t.vertexAttribPointer(P,2,t.FLOAT,!1,0,0),t.bindBuffer(t.ELEMENT_ARRAY_BUFFER,A);let C=t.getUniformLocation(T,"projectionMatrix");t.uniformMatrix4fv(C,!1,F.projectionMatrix.elements);let M=t.getUniformLocation(T,"u_plane_width");t.uniform1f(M,V);let L=t.getUniformLocation(T,"u_plane_height");t.uniform1f(L,Y);let z=t.getUniformLocation(T,"u_colors_count");t.uniform1i(z,ee);let U=["projectionMatrix","modelViewMatrix","u_time","u_resolution","u_color_pressure","u_wave_frequency_x","u_wave_frequency_y","u_wave_amplitude","u_colors_count","u_plane_width","u_plane_height","u_shadows","u_highlights","u_grain_intensity","u_grain_sparsity","u_grain_scale","u_grain_speed","u_flow_distortion_a","u_flow_distortion_b","u_flow_scale","u_flow_ease","u_flow_enabled","u_y_offset","u_y_offset_wave_multiplier","u_y_offset_color_multiplier","u_y_offset_flow_multiplier","u_procedural_texture","u_enable_procedural_texture","u_texture_ease","u_transparent_texture_void","u_saturation","u_brightness","u_color_blending","u_domain_warp_enabled","u_domain_warp_intensity","u_domain_warp_scale","u_vignette_intensity","u_vignette_radius","u_fresnel_enabled","u_fresnel_power","u_fresnel_intensity","u_fresnel_color","u_iridescence_enabled","u_iridescence_intensity","u_iridescence_speed","u_bloom_intensity","u_bloom_threshold","u_chromatic_aberration","u_shape_type","u_silhouette_fade","u_cylinder_fade","u_ribbon_fade","u_flat_shading"],I={attributes:{position:v,normal:E,uv:P},uniforms:{}};U.forEach(B=>{I.uniforms[B]=t.getUniformLocation(T,B)});for(let B=0;B<ee;B++)I.uniforms[`u_colors[${B}].is_active`]=t.getUniformLocation(T,`u_colors[${B}].is_active`),I.uniforms[`u_colors[${B}].color`]=t.getUniformLocation(T,`u_colors[${B}].color`),I.uniforms[`u_colors[${B}].influence`]=t.getUniformLocation(T,`u_colors[${B}].influence`);return this._initialized=!0,this._uniformsDirty=!0,this._colorsChanged=!0,this._textureDirty=!0,t.enable(t.BLEND),t.blendFunc(t.SRC_ALPHA,t.ONE_MINUS_SRC_ALPHA),t.enable(t.DEPTH_TEST),{gl:t,program:T,buffers:{position:g,normal:u,uv:m,index:A,wireframeIndex:d},locations:I,camera:F,indexCount:p.length,wireframeIndexCount:h.length,indexType:p instanceof Uint32Array?t.UNSIGNED_INT:t.UNSIGNED_SHORT}}_createProceduralTexture(e){this._sourceCanvas||(this._sourceCanvas=document.createElement("canvas"),this._sourceCanvas.width=1024,this._sourceCanvas.height=1024,this._sourceCtx=this._sourceCanvas.getContext("2d"));let s=this._sourceCanvas,o=this._sourceCtx;if(!o)return null;let t=this._textureSeed,c=this._textureSeed;function n(){let v=Math.sin(t++)*1e4;return v-Math.floor(v)}let f=v=>{t=c+v},_=this._colors.filter(v=>v.enabled).map(v=>v.color);if(_.length===0)return null;let w=this._shapeType!=="plane",p=w?[-1,0,1]:[0],h=w?[-1,0,1]:[0];function g(v){let E=parseInt(v.replace("#",""),16);return{r:E>>16&255,g:E>>8&255,b:E&255}}function u(v,E,P){return"#"+((1<<24)+(Math.round(v)<<16)+(Math.round(E)<<8)+Math.round(P)).toString(16).slice(1).padStart(6,"0")}let m=()=>{let v=_[Math.floor(n()*_.length)],E=_[Math.floor(n()*_.length)],P=n()*this._textureColorBlending,C=g(v),M=g(E),L=C.r+(M.r-C.r)*P,z=C.g+(M.g-C.g)*P,U=C.b+(M.b-C.b)*P;return u(L,z,U)},A=this._proceduralBackgroundColor||"#000000";o.fillStyle=A,o.fillRect(0,0,1024,1024);let d=o.createLinearGradient(0,0,0,1024);d.addColorStop(0,m()),d.addColorStop(1,m()),o.fillStyle=d,o.fillRect(0,0,1024,1024);for(let v=0;v<this._textureShapeTriangles;v++){let E=m(),P=n()*1024,C=n()*1024,M=100+n()*300,L=(n()-.5)*M,z=(n()-.5)*M,U=(n()-.5)*M,I=(n()-.5)*M;for(let B of p)for(let O of h){o.fillStyle=E,o.beginPath();let W=P+B*1024,X=C+O*1024;o.moveTo(W,X),o.lineTo(W+L,X+z),o.lineTo(W+U,X+I),o.fill()}}for(let v=0;v<this._textureShapeCircles;v++){let E=m(),P=10+n()*50,C=n()*1024,M=n()*1024,L=50+n()*150;for(let z of p)for(let U of h)o.strokeStyle=E,o.lineWidth=P,o.beginPath(),o.arc(C+z*1024,M+U*1024,L,0,Math.PI*2),o.stroke()}for(let v=0;v<this._textureShapeBars;v++){let E=m(),P=n()*1024,C=n()*1024,M=n()*Math.PI;for(let L of p)for(let z of h)o.fillStyle=E,o.save(),o.translate(P+L*1024,C+z*1024),o.rotate(M),o.fillRect(-150,-25,300,50),o.restore()}o.lineWidth=15,o.lineCap="round";for(let v=0;v<this._textureShapeSquiggles;v++){let E=m(),P=n()*1024,C=n()*1024,M=[],L=0,z=0;for(let U=0;U<4;U++){let I=L+(n()-.5)*300,B=z+(n()-.5)*300;M.push({cx1:L+(n()-.5)*300,cy1:z+(n()-.5)*300,cx2:L+(n()-.5)*300,cy2:z+(n()-.5)*300,ex:I,ey:B}),L=I,z=B}for(let U of p)for(let I of h){o.strokeStyle=E,o.beginPath();let B=P+U*1024,O=C+I*1024;o.moveTo(B,O);for(let W of M)o.bezierCurveTo(B+W.cx1,O+W.cy1,B+W.cx2,O+W.cy2,B+W.ex,O+W.ey);o.stroke()}}f(5e4),this._maskedCanvas||(this._maskedCanvas=document.createElement("canvas"),this._maskedCanvas.width=1024,this._maskedCanvas.height=1024,this._maskedCtx=this._maskedCanvas.getContext("2d"));let R=this._maskedCanvas,S=this._maskedCtx;if(!S)return null;this._transparentTextureVoid?S.clearRect(0,0,1024,1024):(S.fillStyle=A,S.fillRect(0,0,1024,1024));let x=0,y=[];for(;x<1024;)if(n()<this._textureVoidLikelihood){let E=this._textureVoidWidthMin+n()*(this._textureVoidWidthMax-this._textureVoidWidthMin);y.push({type:"void",x,width:E}),x+=E}else{let E=50+n()*200;y.push({type:"matter",x,width:E}),x+=E}for(let v of y)if(v.type==="matter"){let E=v.x,P=Math.min(v.x+v.width,1024),C=E;for(;C<P;){let M=(2+n()*20)/this._textureBandDensity,L=Math.floor(n()*1024);S.drawImage(s,L,0,M,1024,C,0,M,1024),C+=M}}let T=e.createTexture();e.bindTexture(e.TEXTURE_2D,T),e.texImage2D(e.TEXTURE_2D,0,e.RGBA,e.RGBA,e.UNSIGNED_BYTE,R),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_S,e.REPEAT),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_T,e.REPEAT),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MIN_FILTER,e.LINEAR_MIPMAP_LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MAG_FILTER,e.LINEAR),e.generateMipmap(e.TEXTURE_2D);let F=e.getExtension("EXT_texture_filter_anisotropic")||e.getExtension("MOZ_EXT_texture_filter_anisotropic")||e.getExtension("WEBKIT_EXT_texture_filter_anisotropic");if(F){let v=e.getParameter(F.MAX_TEXTURE_MAX_ANISOTROPY_EXT);e.texParameterf(e.TEXTURE_2D,F.TEXTURE_MAX_ANISOTROPY_EXT,Math.min(16,v))}return T}get fresnelColor(){return this._fresnelColor}set fresnelColor(e){this._fresnelColor!==e&&(this._fresnelColor=e,this._fresnelColorRgb=this._hexToRgb(e),this._uniformsDirty=!0)}get shapeType(){return this._shapeType}set shapeType(e){this._shapeType!==e&&(this._shapeType=e,this._updateGeometry())}get cameraLock(){return this._cameraLock}set cameraLock(e){this._cameraLock=e}get cameraZoom(){return this._cameraZoom}set cameraZoom(e){this._cameraZoom!==e&&(this._cameraZoom=e,this._updateCameraFrustum())}_updateCameraFrustum(){if(!this.glState)return;let e=this.glState.gl,i=this._ref.width,s=this._ref.height;j(this.glState.camera,i,s,V,Y,this._shapeType,this._cameraZoom);let o=this.glState.locations.uniforms.projectionMatrix;e.useProgram(this.glState.program),o&&e.uniformMatrix4fv(o,!1,this.glState.camera.projectionMatrix.elements),this._uniformsDirty=!0}_initWatermark(){let e=this.glState.gl,i=e,s=typeof i.createVertexArray=="function",o=e.createShader(e.VERTEX_SHADER);e.shaderSource(o,Dt),e.compileShader(o);let t=e.createShader(e.FRAGMENT_SHADER);e.shaderSource(t,Ot),e.compileShader(t);let c=e.createProgram();e.attachShader(c,o),e.attachShader(c,t),e.linkProgram(c),this._watermarkProgram=c,e.deleteShader(o),e.deleteShader(t);let n=13,f=6,_=5,w=document.createElement("canvas").getContext("2d");w.font=`bold ${n}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;let p=w.measureText("NEAT"),h=Math.ceil(p.width),g=n,u=h+f*2,m=g+_*2;this._watermarkWidth=u,this._watermarkHeight=m;let A=document.createElement("canvas");A.width=u,A.height=m;let d=A.getContext("2d");d.clearRect(0,0,u,m),d.shadowColor="rgba(0,0,0,0.4)",d.shadowBlur=2,d.shadowOffsetX=1,d.shadowOffsetY=1,d.font=`bold ${n}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`,d.textAlign="center",d.textBaseline="middle",d.fillStyle="rgba(255,255,255,0.5)",d.fillText("NEAT",u/2,m/2);let R=e.createTexture();e.activeTexture(e.TEXTURE2),e.bindTexture(e.TEXTURE_2D,R),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_S,e.CLAMP_TO_EDGE),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_T,e.CLAMP_TO_EDGE),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MIN_FILTER,e.LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MAG_FILTER,e.LINEAR),e.pixelStorei(e.UNPACK_PREMULTIPLY_ALPHA_WEBGL,!0),e.texImage2D(e.TEXTURE_2D,0,e.RGBA,e.RGBA,e.UNSIGNED_BYTE,A),e.pixelStorei(e.UNPACK_PREMULTIPLY_ALPHA_WEBGL,!1),this._watermarkTexture=R;let S=e.createBuffer();e.bindBuffer(e.ARRAY_BUFFER,S),e.bufferData(e.ARRAY_BUFFER,new Float32Array([0,1,1,1,0,0,1,0]),e.STATIC_DRAW),this._watermarkTexCoordBuffer=S;let x=e.createBuffer();if(e.bindBuffer(e.ARRAY_BUFFER,x),e.bufferData(e.ARRAY_BUFFER,new Float32Array(8),e.DYNAMIC_DRAW),this._watermarkBuffer=x,this._wmLocPos=e.getAttribLocation(c,"a_wm_position"),this._wmLocTc=e.getAttribLocation(c,"a_wm_texcoord"),this._wmLocTex=e.getUniformLocation(c,"u_wm_texture"),s){this._watermarkVAO=i.createVertexArray(),i.bindVertexArray(this._watermarkVAO),e.enableVertexAttribArray(this._wmLocPos),e.bindBuffer(e.ARRAY_BUFFER,x),e.vertexAttribPointer(this._wmLocPos,2,e.FLOAT,!1,0,0),e.enableVertexAttribArray(this._wmLocTc),e.bindBuffer(e.ARRAY_BUFFER,S),e.vertexAttribPointer(this._wmLocTc,2,e.FLOAT,!1,0,0),this._gradientVAO=i.createVertexArray(),i.bindVertexArray(this._gradientVAO);let y=this.glState.locations.attributes;e.enableVertexAttribArray(y.position),e.bindBuffer(e.ARRAY_BUFFER,this.glState.buffers.position),e.vertexAttribPointer(y.position,3,e.FLOAT,!1,0,0),e.enableVertexAttribArray(y.normal),e.bindBuffer(e.ARRAY_BUFFER,this.glState.buffers.normal),e.vertexAttribPointer(y.normal,3,e.FLOAT,!1,0,0),e.enableVertexAttribArray(y.uv),e.bindBuffer(e.ARRAY_BUFFER,this.glState.buffers.uv),e.vertexAttribPointer(y.uv,2,e.FLOAT,!1,0,0),e.bindBuffer(e.ELEMENT_ARRAY_BUFFER,this.glState.buffers.index),i.bindVertexArray(this._gradientVAO)}this._wmClickHandler=y=>{this._licensed||this._isOverWatermark(y)&&(y.preventDefault(),y.stopPropagation(),window.open("https://neat.firecms.co","_blank","noopener"))},this._wmMoveHandler=y=>{if(this._licensed){this._currentCursor!==""&&(this._currentCursor="",this._ref.style.cursor="",document.body.style.cursor="");return}this._wmMoveRafPending||(this._wmMoveRafPending=!0,requestAnimationFrame(()=>{this._wmMoveRafPending=!1;let T=performance.now();(!this._wmCachedRect||T-this._wmRectCacheTime>500)&&(this._wmCachedRect=this._ref.getBoundingClientRect(),this._wmRectCacheTime=T);let F=this._wmCachedRect,v=y.clientX-F.left,E=y.clientY-F.top,P=F.width,C=F.height,M="";if(v>=0&&E>=0&&v<=P&&E<=C){let L=this._watermarkMargin,z=this._watermarkWidth,U=this._watermarkHeight,I=P-L-z,B=C-L-U;v>=I&&v<=P-L&&E>=B&&E<=C-L&&(M="pointer")}this._currentCursor!==M&&(this._currentCursor=M,this._ref.style.cursor=M,document.body.style.cursor=M)}))},document.addEventListener("click",this._wmClickHandler,!0),document.addEventListener("mousemove",this._wmMoveHandler)}_isOverWatermark(e){this._wmCachedRect||(this._wmCachedRect=this._ref.getBoundingClientRect(),this._wmRectCacheTime=performance.now());let i=this._wmCachedRect,s=e.clientX-i.left,o=e.clientY-i.top,t=i.width,c=i.height;if(s<0||o<0||s>t||o>c)return!1;let n=this._watermarkMargin,f=this._watermarkWidth,_=this._watermarkHeight,w=t-n-f,p=c-n-_;return s>=w&&s<=t-n&&o>=p&&o<=c-n}_renderWatermark(e){let i=this._watermarkProgram,s=this._watermarkTexture,o=this._watermarkBuffer;if(!i||!s||!o)return;let t=this._ref.width,c=this._ref.height;if(t===0||c===0)return;let n=4,f=this._watermarkWidth,_=this._watermarkHeight,w=1-n/t*2,p=w-f/t*2,h=-1+n/c*2,g=h+_/c*2,u=this._wmPosData;u[0]=p,u[1]=h,u[2]=w,u[3]=h,u[4]=p,u[5]=g,u[6]=w,u[7]=g,e.bindBuffer(e.ARRAY_BUFFER,o),e.bufferSubData(e.ARRAY_BUFFER,0,u);let m=e,A=this._watermarkVAO!==null;if(e.useProgram(i),e.disable(e.DEPTH_TEST),e.blendFunc(e.ONE,e.ONE_MINUS_SRC_ALPHA),A?(m.bindVertexArray(this._watermarkVAO),e.bindBuffer(e.ARRAY_BUFFER,o),e.vertexAttribPointer(this._wmLocPos,2,e.FLOAT,!1,0,0)):(e.enableVertexAttribArray(this._wmLocPos),e.bindBuffer(e.ARRAY_BUFFER,o),e.vertexAttribPointer(this._wmLocPos,2,e.FLOAT,!1,0,0),e.enableVertexAttribArray(this._wmLocTc),e.bindBuffer(e.ARRAY_BUFFER,this._watermarkTexCoordBuffer),e.vertexAttribPointer(this._wmLocTc,2,e.FLOAT,!1,0,0)),e.activeTexture(e.TEXTURE2),e.bindTexture(e.TEXTURE_2D,s),e.uniform1i(this._wmLocTex,2),e.drawArrays(e.TRIANGLE_STRIP,0,4),e.enable(e.DEPTH_TEST),e.blendFunc(e.SRC_ALPHA,e.ONE_MINUS_SRC_ALPHA),e.useProgram(this.glState.program),A)m.bindVertexArray(this._gradientVAO);else{let d=this.glState.locations.attributes;e.enableVertexAttribArray(d.position),e.bindBuffer(e.ARRAY_BUFFER,this.glState.buffers.position),e.vertexAttribPointer(d.position,3,e.FLOAT,!1,0,0),e.enableVertexAttribArray(d.normal),e.bindBuffer(e.ARRAY_BUFFER,this.glState.buffers.normal),e.vertexAttribPointer(d.normal,3,e.FLOAT,!1,0,0),e.enableVertexAttribArray(d.uv),e.bindBuffer(e.ARRAY_BUFFER,this.glState.buffers.uv),e.vertexAttribPointer(d.uv,2,e.FLOAT,!1,0,0),e.bindBuffer(e.ELEMENT_ARRAY_BUFFER,this.glState.buffers.index)}}};for(let[l,e,i,s,o]of Ut)Object.defineProperty(te.prototype,l,{get(){return i===1?this[e]:this[e]*i},set(t){let c=s===1?t:t*s;this[e]!==c&&(this[e]=c,this._uniformsDirty=!0,o==="t"&&this._enableProceduralTexture?this._textureNeedsUpdate=!0:o==="g"&&this._updateGeometry())},enumerable:!0,configurable:!0});function zt(){let l=new Date,e=l.getMinutes(),i=l.getSeconds();return e*60+i}function It(){if(document.querySelector('meta[name="generator"][content*="NEAT"]'))return;let l=document.createElement("meta");l.name="generator",l.content="NEAT by FireCMS \u2014 https://neat.firecms.co",document.head.appendChild(l)}var Dt=`
+attribute vec2 a_wm_position;
+attribute vec2 a_wm_texcoord;
+varying vec2 v_wm_texcoord;
+void main() {
+    gl_Position = vec4(a_wm_position, 0.0, 1.0);
+    v_wm_texcoord = a_wm_texcoord;
+}
+`,Ot=`
+precision mediump float;
+varying vec2 v_wm_texcoord;
+uniform sampler2D u_wm_texture;
+void main() {
+    gl_FragColor = texture2D(u_wm_texture, v_wm_texcoord);
+}
+`;return Mt(Wt);})();
+</script>
+<script>
+(function(){
+"use strict";
+var PRESET_DATA = {"flame":{"speed":4,"horizontalPressure":3,"verticalPressure":4,"waveFrequencyX":10,"waveFrequencyY":0,"waveAmplitude":10,"shadows":5,"highlights":10,"colorBrightness":1,"colorSaturation":2,"wireframe":false,"colorBlending":9,"backgroundAlpha":1,"grainScale":2,"grainSparsity":0,"grainIntensity":0.05,"grainSpeed":1,"resolution":0.5,"yOffsetWaveMultiplier":8.5,"yOffsetColorMultiplier":7.8,"yOffsetFlowMultiplier":9,"enableProceduralTexture":false,"textureEase":0.25,"flowEnabled":true,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Flame","_colorSlots":5},"sands":{"speed":1,"horizontalPressure":3,"verticalPressure":10,"waveFrequencyX":2,"waveFrequencyY":4,"waveAmplitude":8,"shadows":1,"highlights":5,"colorBrightness":1,"colorSaturation":7,"wireframe":false,"colorBlending":8,"backgroundAlpha":1,"grainScale":3,"grainSparsity":0,"grainIntensity":0.3,"grainSpeed":5,"resolution":1,"yOffsetWaveMultiplier":2.8,"yOffsetColorMultiplier":3,"yOffsetFlowMultiplier":2.5,"enableProceduralTexture":false,"textureEase":0.55,"flowEnabled":false,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Sands","_colorSlots":5},"prussian":{"speed":4,"horizontalPressure":4,"verticalPressure":3,"waveFrequencyX":0,"waveFrequencyY":0,"waveAmplitude":0,"shadows":2,"highlights":7,"colorBrightness":1,"colorSaturation":8,"wireframe":false,"colorBlending":5,"backgroundAlpha":1,"grainScale":0,"grainSparsity":0,"grainIntensity":0,"grainSpeed":0,"resolution":0.5,"yOffsetWaveMultiplier":1.5,"yOffsetColorMultiplier":1.8,"yOffsetFlowMultiplier":2,"enableProceduralTexture":false,"textureEase":0.75,"flowEnabled":false,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Prussian","_colorSlots":6},"lemon":{"speed":4,"horizontalPressure":4,"verticalPressure":5,"waveFrequencyX":1,"waveFrequencyY":2,"waveAmplitude":10,"shadows":4,"highlights":7,"colorBrightness":1,"colorSaturation":0,"wireframe":false,"colorBlending":7,"backgroundAlpha":1,"grainScale":4,"grainSparsity":0,"grainIntensity":0.2,"grainSpeed":2.2,"resolution":0.65,"yOffsetWaveMultiplier":5,"yOffsetColorMultiplier":4.5,"yOffsetFlowMultiplier":5.5,"enableProceduralTexture":false,"textureEase":0.48,"flowEnabled":true,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Lemon","_colorSlots":5},"bloom":{"speed":4,"horizontalPressure":4,"verticalPressure":6,"waveFrequencyX":1,"waveFrequencyY":1,"waveAmplitude":1,"shadows":3,"highlights":0,"colorBrightness":1.15,"colorSaturation":0,"wireframe":false,"colorBlending":4,"backgroundAlpha":1,"grainScale":0,"grainSparsity":0,"grainIntensity":0,"grainSpeed":0,"resolution":1,"yOffset":7089,"yOffsetWaveMultiplier":3.2,"yOffsetColorMultiplier":3.5,"yOffsetFlowMultiplier":4,"flowDistortionA":3.1,"flowDistortionB":2.4,"flowScale":1.5,"flowEase":0.31,"flowEnabled":true,"enableProceduralTexture":false,"textureVoidLikelihood":0.06,"textureVoidWidthMin":10,"textureVoidWidthMax":500,"textureBandDensity":0.8,"textureColorBlending":0.06,"textureSeed":333,"textureEase":0.65,"proceduralBackgroundColor":"#FFED00","textureShapeTriangles":20,"textureShapeCircles":15,"textureShapeBars":15,"textureShapeSquiggles":10,"domainWarpEnabled":false,"domainWarpIntensity":0.6,"domainWarpScale":3,"vignetteIntensity":0.85,"vignetteRadius":0.65,"fresnelEnabled":true,"fresnelPower":3.7,"fresnelIntensity":0.7,"fresnelColor":"#FF0000","iridescenceEnabled":true,"iridescenceIntensity":0.35,"iridescenceSpeed":3.9,"bloomIntensity":0.8,"bloomThreshold":0.9,"chromaticAberration":4,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Bloom","_colorSlots":5},"forest":{"speed":3,"horizontalPressure":5,"verticalPressure":7,"waveFrequencyX":2,"waveFrequencyY":2,"waveAmplitude":8,"shadows":6,"highlights":8,"colorBrightness":1,"colorSaturation":7,"wireframe":false,"colorBlending":10,"backgroundAlpha":1,"grainScale":3,"grainIntensity":0.3,"grainSpeed":1,"resolution":1,"enableProceduralTexture":false,"flowEnabled":false,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Forest","_colorSlots":5},"bubblegum":{"speed":2.5,"horizontalPressure":2,"verticalPressure":4,"waveFrequencyX":4,"waveFrequencyY":4,"waveAmplitude":6,"shadows":1,"highlights":5,"colorBrightness":1,"colorSaturation":7,"wireframe":false,"colorBlending":4,"backgroundAlpha":1,"grainScale":0,"grainSparsity":0,"grainIntensity":0,"grainSpeed":1,"resolution":0.65,"yOffset":102390,"yOffsetWaveMultiplier":4,"yOffsetColorMultiplier":6.3,"yOffsetFlowMultiplier":4,"flowDistortionA":0,"flowDistortionB":0,"flowScale":1,"flowEase":0,"flowEnabled":false,"enableProceduralTexture":false,"transparentTextureVoid":false,"textureVoidLikelihood":0.45,"textureVoidWidthMin":200,"textureVoidWidthMax":486,"textureBandDensity":2.15,"textureColorBlending":0.01,"textureSeed":333,"textureEase":0.5,"proceduralBackgroundColor":"#000000","textureShapeTriangles":20,"textureShapeCircles":15,"textureShapeBars":15,"textureShapeSquiggles":10,"domainWarpEnabled":false,"domainWarpIntensity":0,"domainWarpScale":3,"vignetteIntensity":0,"vignetteRadius":0.8,"fresnelEnabled":true,"fresnelPower":2,"fresnelIntensity":0.6,"fresnelColor":"#F90707","iridescenceEnabled":false,"iridescenceIntensity":0.5,"iridescenceSpeed":1,"bloomIntensity":0,"bloomThreshold":0.95,"chromaticAberration":1,"shapeType":"sphere","shapeRotationX":0,"shapeRotationY":0,"shapeRotationZ":0,"shapeAutoRotateSpeedX":0,"shapeAutoRotateSpeedY":0,"sphereRadius":15,"torusRadius":15,"torusTube":5,"cylinderRadius":10,"cylinderHeight":40,"planeBend":0,"planeTwist":0,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"flatShading":false,"cameraLock":false,"cameraX":0,"cameraY":-12,"cameraZ":0,"cameraRotationX":0,"cameraRotationY":0,"cameraRotationZ":0,"cameraZoom":4.4,"_label":"Bubble Gum","_colorSlots":6}};
+
+var FEEL = {
+  flame:"Wave frequency pinned to X with Y at zero, amplitude and highlights at maximum. Tall vertical licks.",
+  sands:"Vertical pressure at 10 against a speed of 1. Slow drift, and the grainiest surface of the set.",
+  prussian:"Amplitude and both frequencies are zero, so there are no waves. The only motion is the colour field turning over.",
+  lemon:"Amplitude at 10 on low frequencies, so the swells are big and lazy. Grain and a hard highlight sit on top.",
+  bloom:"Almost flat at amplitude 1, no highlights, brightness pushed up. Carries the heaviest lens fringing of the set.",
+  forest:"Blending at maximum, so the colours never resolve into bands. Deep shadow against a strong highlight.",
+  bubblegum:"Low blending keeps the colours as distinct blobs. The only preset that renders on a sphere rather than a plane."
+};
+var ORDER = ["flame","sands","prussian","lemon","bloom","forest","bubblegum"];
+
+var KITS = {
+  lemnian: {
+    name:"Lemnian Hollow",
+    note:"A cool sweep from mint to mauve over gunmetal. Five named swatches, no accent and no ramp.",
+    swatches:[
+      {name:"Fairy Dust",    hex:"#8BE8CB"},
+      {name:"Cool Steel",    hex:"#7EA2AA"},
+      {name:"Lavender Grey", hex:"#888DA7"},
+      {name:"Dusty Mauve",   hex:"#9C7A97"},
+      {name:"Gunmetal",      hex:"#303633"}
+    ]
+  },
+  ember: {
+    name:"Ember Hollow",
+    note:"A warm editorial burn over cold ash. This is a ui palette, so the chips below are its accent, its ink, and three ramp steps.",
+    swatches:[
+      {name:"Accent",      hex:"#C2410C"},
+      {name:"Accent ink",  hex:"#FFF7ED"},
+      {name:"Neutral 900", hex:"#15171A"},
+      {name:"Neutral 500", hex:"#71777F"},
+      {name:"Neutral 100", hex:"#EDEEF0"}
+    ]
+  }
+};
+
+var NG = window.NeatLib && window.NeatLib.NeatGradient;
+var kitId="lemnian", presetId="flame", playing=true;
+var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function colors(){ return KITS[kitId].swatches.map(function(s){return s.hex;}); }
+function hexToRgb(h){ h=h.replace("#",""); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+  return [parseInt(h.slice(0,2),16)/255,parseInt(h.slice(2,4),16)/255,parseInt(h.slice(4,6),16)/255]; }
+function lum(hex){ var c=hexToRgb(hex);
+  var f=function(v){ return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); };
+  return 0.2126*f(c[0])+0.7152*f(c[1])+0.0722*f(c[2]); }
+function darkest(){ return colors().slice().sort(function(a,b){return lum(a)-lum(b);})[0]; }
+
+/* Build a NeatConfig: the preset verbatim, colours from the kit. */
+function buildConfig(id, resScale){
+  var src = PRESET_DATA[id], cfg = {};
+  for(var k in src){ if(k.charAt(0)!=="_") cfg[k]=src[k]; }
+  cfg.colors = colors().map(function(h){ return {color:h, enabled:true}; });
+  cfg.backgroundColor = darkest();
+  if(resScale) cfg.resolution = Math.max(0.15, (cfg.resolution||1)*resScale);
+  return cfg;
+}
+
+function cfgText(){
+  var cfg = buildConfig(presetId);
+  var lines = ["const config = {", "  colors: ["];
+  cfg.colors.forEach(function(c,i){
+    lines.push('    { color: "'+c.color+'", enabled: true }'+(i<cfg.colors.length-1?",":""));
+  });
+  lines.push("  ],");
+  Object.keys(cfg).forEach(function(k){
+    if(k==="colors"||k==="ref") return;
+    var v=cfg[k];
+    lines.push("  "+k+": "+(typeof v==="string" ? '"'+v+'"' : v)+",");
+  });
+  lines.push("};");
+  return lines.join("\n");
+}
+
+/* chips */
+var chipsEl=document.getElementById("chips");
+function renderChips(){
+  var k=KITS[kitId];
+  chipsEl.innerHTML="";
+  k.swatches.forEach(function(s,i){
+    var d=document.createElement("div");
+    d.className="pchip";
+    d.innerHTML='<div class="field" style="background:'+s.hex+'"></div>'+
+      '<div class="band"><span class="idx">'+k.name+' '+(i+1)+' of '+k.swatches.length+'</span>'+
+      '<span class="nm"></span><span class="hx">'+s.hex+'</span></div>';
+    d.querySelector(".nm").textContent=s.name;
+    chipsEl.appendChild(d);
+  });
+  document.getElementById("kit-name").textContent=k.name;
+  document.getElementById("kit-note").textContent=k.note;
+}
+
+/* gradients */
+var stageEl=document.getElementById("stage");
+var stageGrad=null, thumbGrads=[];
+
+function makeGradient(canvas, id, resScale){
+  if(!NG) return null;
+  try{
+    var cfg=buildConfig(id,resScale);
+    cfg.ref=canvas;
+    return new NG(cfg);
+  }catch(e){ return null; }
+}
+function destroy(g){ if(g && typeof g.destroy==="function"){ try{ g.destroy(); }catch(e){} } }
+
+function rebuildStage(){
+  destroy(stageGrad);
+  stageGrad=makeGradient(stageEl,presetId,1);
+  if(stageGrad && !playing && typeof stageGrad.speed!=="undefined") stageGrad.speed=0;
+}
+function rebuildThumbs(){
+  thumbGrads.forEach(function(t){ destroy(t.g); });
+  thumbGrads.forEach(function(t){ t.g=makeGradient(t.canvas,t.id,0.4); });
+}
+
+var presetsEl=document.getElementById("presets");
+ORDER.forEach(function(id){
+  var b=document.createElement("button");
+  b.type="button"; b.className="pbtn"; b.dataset.preset=id;
+  b.title=PRESET_DATA[id]._label+" movement";
+  b.setAttribute("aria-pressed",String(id===presetId));
+  var cv=document.createElement("canvas");
+  var lb=document.createElement("span");
+  lb.className="plabel"; lb.textContent=PRESET_DATA[id]._label;
+  b.appendChild(cv); b.appendChild(lb);
+  presetsEl.appendChild(b);
+  thumbGrads.push({id:id, canvas:cv, g:null});
+  b.addEventListener("click",function(){
+    presetId=id;
+    Array.prototype.forEach.call(presetsEl.children,function(c){
+      c.setAttribute("aria-pressed",String(c.dataset.preset===presetId));
+    });
+    rebuildStage(); renderCfg();
+  });
+});
+
+function renderCfg(){
+  document.getElementById("cfg").textContent=cfgText();
+  document.getElementById("preset-name").textContent=PRESET_DATA[presetId]._label;
+  document.getElementById("preset-feel").textContent=FEEL[presetId];
+}
+
+/* engine note, written from what actually loaded */
+document.getElementById("engine-note").innerHTML = NG
+  ? 'This page runs the real <code>@firecms/neat</code> engine, bundled from the fork at '+
+    '<code>C-lb/neat</code>, so the geometry, flow field, lighting and post effects are the '+
+    'library’s own rather than an approximation. Preset values come verbatim from '+
+    '<code>editor/src/components/presets.ts</code>; only the colours are swapped for the kit’s. '+
+    'Neat draws its own watermark unless a licence key is supplied, so you will see it in the corner.'
+  : 'The Neat engine did not load in this browser, so the gradient cannot render. '+
+    'The preset values below are still accurate and safe to copy.';
+
+/* kit switch */
+Array.prototype.forEach.call(document.querySelectorAll("[data-kit]"),function(b){
+  b.addEventListener("click",function(){
+    kitId=b.dataset.kit;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-kit]"),function(o){
+      o.setAttribute("aria-pressed",String(o.dataset.kit===kitId));
+    });
+    renderChips(); renderCfg(); rebuildStage(); rebuildThumbs();
+  });
+});
+
+/* pause: drop speed to zero rather than tearing the context down */
+var toggle=document.getElementById("toggle"), tLabel=document.getElementById("toggle-label");
+toggle.addEventListener("click",function(){
+  playing=!playing;
+  tLabel.textContent=playing?"Pause":"Play";
+  toggle.title=playing?"Pause the animation":"Resume the animation";
+  var s=playing?null:0;
+  if(stageGrad){
+    if(playing) stageGrad.speed=buildConfig(presetId).speed;
+    else stageGrad.speed=0;
+  }
+  thumbGrads.forEach(function(t){
+    if(!t.g) return;
+    t.g.speed = playing ? buildConfig(t.id).speed : 0;
+  });
+});
+
+/* copy */
+var copyBtn=document.getElementById("copy-cfg"), cLabel=document.getElementById("copy-label");
+copyBtn.addEventListener("click",function(){
+  navigator.clipboard.writeText(cfgText()).then(function(){
+    cLabel.textContent="Copied"; copyBtn.disabled=true;
+    setTimeout(function(){ cLabel.textContent="Copy config"; copyBtn.disabled=false; },1600);
+  }).catch(function(){
+    cLabel.textContent="Copy failed";
+    setTimeout(function(){ cLabel.textContent="Copy config"; },1600);
+  });
+});
+
+/* vision filter */
+var vBtns=document.querySelectorAll("[data-mode]");
+Array.prototype.forEach.call(vBtns,function(b){
+  b.addEventListener("click",function(){
+    var m=b.dataset.mode;
+    Array.prototype.forEach.call(vBtns,function(o){ o.setAttribute("aria-pressed",String(o===b)); });
+    Array.prototype.forEach.call(document.querySelectorAll(".filterable"),function(t){
+      t.style.filter = (m==="none") ? "" : "url(#"+m+")";
+    });
+  });
+});
+
+renderChips(); renderCfg(); rebuildStage(); rebuildThumbs();
+if(reduce){
+  playing=false; tLabel.textContent="Play";
+  if(stageGrad) stageGrad.speed=0;
+  thumbGrads.forEach(function(t){ if(t.g) t.g.speed=0; });
+}
+})();
+</script>

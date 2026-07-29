@@ -32,6 +32,25 @@ colour and true-colour swatches in the terminal:
                            accent  ink    900    500    100
 ```
 
+## Demo
+
+`docs/demo.html` is a single self-contained page: every kit as Pantone-format chips, then
+the same colours driven through the real Neat gradient engine with its seven named presets
+(Flame, Sands, Prussian, Lemon, Bloom, Forest, Bubble Gum). Open it straight from disk, no
+build step and no network:
+
+```bash
+open docs/demo.html
+```
+
+Switching kit re-skins all seven presets without changing how they move. The preset values
+are Neat's own, carried over unchanged; only the colours are swapped. There is also a
+vision simulator (greyscale, deuteranopia, protanopia) that runs over the chips, which is
+how you can see Lemnian Hollow's three mid-tones collapse into one swatch.
+
+The page inlines a compiled copy of Neat. See [`docs/THIRD-PARTY.md`](docs/THIRD-PARTY.md)
+for attribution and licence.
+
 ## Why
 
 Ask an LLM for colours and you get a fresh invention every time, justified after the fact.

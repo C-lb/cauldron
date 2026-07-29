@@ -9,7 +9,7 @@ to keep it from choosing badly. Nothing else belongs in it — long-form reasoni
 
 1. Append an object to the array in `palettes.json` following the fields below.
 2. Write `theory/<slug>.md` using `theory/ember-hollow.md` as the template.
-3. Run `python3 ~/.claude/skills/skittles/scripts/brew.py <slug>` to see it render, and
+3. Run `python3 ~/.claude/skills/cauldron/scripts/brew.py <slug>` to see it render, and
    `… /brew.py --check <slug>` to get measured contrast ratios.
 4. Paste the measured numbers into `contrast_notes`. Don't estimate them.
 
@@ -139,7 +139,7 @@ probably too generic to earn a slot.
 ### `contrast_notes`
 
 Free text, but it must contain real measured ratios and name what was measured against
-what. `python3 ~/.claude/skills/skittles/scripts/brew.py --check <slug>` prints them.
+what. `python3 ~/.claude/skills/cauldron/scripts/brew.py --check <slug>` prints them.
 
 For a `"kit"`, `--check` also reports the contrast between neighbouring swatches and flags
 any pair under 1.5:1 as near-isoluminant. Record those in `contrast_notes` too. A pair that

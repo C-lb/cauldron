@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render skittles' ASCII art with ANSI truecolor swatches.
+"""Render cauldron's ASCII art with ANSI truecolor swatches.
 
 The art is the point of the skill, so it lives here rather than being pasted into
 SKILL.md — one copy, no drift.
@@ -88,17 +88,17 @@ def load():
         with open(PALETTES) as f:
             return json.load(f)
     except FileNotFoundError:
-        sys.exit(f"skittles: no shelf at {PALETTES}")
+        sys.exit(f"cauldron: no shelf at {PALETTES}")
     except json.JSONDecodeError as e:
         # This file is hand-edited, so a stray comma is the likeliest failure.
-        sys.exit(f"skittles: {PALETTES.name} is not valid JSON — {e}")
+        sys.exit(f"cauldron: {PALETTES.name} is not valid JSON — {e}")
 
 
 def find(slug):
     for p in load():
         if p["slug"] == slug:
             return p
-    sys.exit(f"skittles: no palette '{slug}'. Try --list.")
+    sys.exit(f"cauldron: no palette '{slug}'. Try --list.")
 
 
 def step(neutrals, want):
@@ -114,7 +114,7 @@ def step(neutrals, want):
     # extra named keys, and those must be skipped rather than crash int().
     numeric = {k: v for k, v in neutrals.items() if k.isdigit()}
     if not numeric:
-        sys.exit("skittles: palette neutrals have no numbered steps.")
+        sys.exit("cauldron: palette neutrals have no numbered steps.")
     w = int(want)
 
     # Step 0 is the dark extreme, not a point on the 50-900 light-to-dark run.
@@ -136,7 +136,7 @@ def swatches(palette):
     """Named swatches of a kind:kit palette, as (name, hex) pairs."""
     sw = palette["colors"].get("swatches", [])
     if not sw:
-        sys.exit(f"skittles: '{palette['slug']}' is kind:kit with no swatches.")
+        sys.exit(f"cauldron: '{palette['slug']}' is kind:kit with no swatches.")
     return [(s["name"], s["hex"]) for s in sw]
 
 
@@ -152,7 +152,7 @@ def samples(palette):
     if palette.get("kind") == "data":
         cats = c.get("categorical", [])
         if not cats:
-            sys.exit(f"skittles: '{palette['slug']}' is kind:data with no categorical colours.")
+            sys.exit(f"cauldron: '{palette['slug']}' is kind:data with no categorical colours.")
         return [(str(i + 1), h) for i, h in enumerate(cats[:5])]
     return [
         ("accent", c["accent"]),
@@ -311,10 +311,10 @@ def main():
         return
     if args[0] == "--check":
         if len(args) < 2:
-            sys.exit("skittles: --check needs a slug.")
+            sys.exit("cauldron: --check needs a slug.")
         return check(find(args[1]))
     if args[0].startswith("-"):
-        sys.exit(f"skittles: unknown option '{args[0]}'. Try --help.")
+        sys.exit(f"cauldron: unknown option '{args[0]}'. Try --help.")
     item_get(find(args[0]))
 
 

@@ -14,7 +14,7 @@ Software, so the required notice is reproduced below.
 
 The seven movement presets in the demo (Flame, Sands, Prussian, Lemon, Bloom, Forest,
 Bubble Gum) are Neat's own, from `editor/src/components/presets.ts`. Only the colours are
-replaced with a skittles kit.
+replaced with a cauldron kit.
 
 Neat is free for personal and commercial use, and is sold with licence keys for teams who
 want the watermark removed. If this demo ever ends up inside something commercial, buy one.

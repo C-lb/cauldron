@@ -1,4 +1,6 @@
-<title>skittles reference</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cauldron reference</title>
 
 <style>
 :root{
@@ -136,8 +138,19 @@ section{margin-top:var(--s7)}
 @media (min-width:1024px){ .chips{grid-template-columns:repeat(5,1fr)} }
 .chips>*{min-width:0}
 .pchip{border-radius:var(--r-md); overflow:hidden; background:var(--surface-1);
-  box-shadow:var(--shadow); display:flex; flex-direction:column}
-.pchip .field{aspect-ratio:1/1.18}
+  box-shadow:var(--shadow); display:flex; flex-direction:column;
+  border:0; padding:0; font:inherit; text-align:left; cursor:pointer}
+.pchip:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.pchip .field{aspect-ratio:1/1.18; transition:opacity .15s ease}
+.pchip[aria-pressed="false"] .field{opacity:.22}
+.pchip[aria-pressed="false"] .nm,
+.pchip[aria-pressed="false"] .hx{color:var(--ink-3)}
+@keyframes chip-deny{
+  0%,100%{transform:translateX(0)} 30%{transform:translateX(-3px)} 60%{transform:translateX(3px)}
+}
+@media (prefers-reduced-motion:no-preference){
+  .pchip.deny{animation:chip-deny .22s ease}
+}
 .pchip .band{padding:var(--s3) var(--s3) var(--s4); display:flex; flex-direction:column; gap:var(--s2)}
 .pchip .idx{font-size:var(--t-cap); line-height:var(--lh-tight);
   letter-spacing:var(--tr-eyebrow); color:var(--ink-3); font-weight:500}
@@ -211,12 +224,11 @@ tr:last-child td{border-bottom:0}
 <div class="wrap">
 
   <div class="card">
-    <span class="eyebrow">skittles reference</span>
+    <span class="eyebrow">cauldron reference</span>
     <h1>Kits, chips, and how they move</h1>
     <p class="lead measure">
-      Every kit on the shelf as Pantone-format chips, then the same colours driven through
-      the real Neat gradient engine with its seven named presets. Resize the window to watch
-      the grid go from 12 columns to 4, then to 2.
+      Every kit next to the engine that moves it. Tap a chip to pull that colour from
+      the preview.
     </p>
     <div class="row">
       <span class="badge badge-new">2 kits</span>
@@ -225,15 +237,10 @@ tr:last-child td{border-bottom:0}
     </div>
   </div>
 
-  <!-- ── 1 · CHIPS ──────────────────────────────────────────────────── -->
+  <!-- ── KITS: chips + gradient in one view ─────────────────────────── -->
   <section>
     <div class="sec-head">
-      <span class="eyebrow">Section 1</span>
-      <h3>Chips</h3>
-      <p class="rule-note">
-        Pantone format: a tall colour field over a label band, name and code left-aligned,
-        nothing centred. The band takes the surface token so it works in both themes.
-      </p>
+      <h3>Kits</h3>
     </div>
     <div class="grid">
       <div class="card col-12">
@@ -247,25 +254,9 @@ tr:last-child td{border-bottom:0}
             <button type="button" data-kit="ember" aria-pressed="false" title="Warm accent over a cold neutral ramp">Ember Hollow</button>
           </div>
         </div>
-        <p class="rule-note measure" id="kit-note"></p>
         <div class="chips filterable" id="chips"></div>
       </div>
-    </div>
-  </section>
 
-  <!-- ── 2 · GRADIENT ───────────────────────────────────────────────── -->
-  <section>
-    <div class="sec-head">
-      <span class="eyebrow">Section 2</span>
-      <h3>How the colours move</h3>
-      <p class="rule-note">
-        The kit above, running through Neat itself. Every preset parameter is carried over
-        unchanged, including the flow field, camera and geometry. Only the colours are
-        swapped, so switching kit re-skins all seven without changing how they behave.
-      </p>
-    </div>
-
-    <div class="grid">
       <div class="col-12 stack g4">
         <div class="presets" id="presets" role="group" aria-label="Gradient preset"></div>
 
@@ -277,7 +268,6 @@ tr:last-child td{border-bottom:0}
           <div class="stack g2" style="flex:1 1 320px; min-width:0">
             <span class="eyebrow">Preset</span>
             <span id="preset-name" style="font-weight:600">Flame</span>
-            <p class="rule-note" id="preset-feel"></p>
           </div>
           <div class="row">
             <button class="btn btn-grey" id="toggle" type="button" title="Pause or resume the animation">
@@ -311,16 +301,10 @@ tr:last-child td{border-bottom:0}
     </div>
   </section>
 
-  <!-- ── 3 · VISION ─────────────────────────────────────────────────── -->
+  <!-- ── VISION ─────────────────────────────────────────────────────── -->
   <section>
     <div class="sec-head">
-      <span class="eyebrow">Section 3</span>
       <h3>What survives without hue</h3>
-      <p class="rule-note">
-        Chips and swatches run through this filter. Lemnian Hollow's three mid-tones sit
-        within 1.19:1 of each other, so they vanish into one swatch the moment lightness is
-        all that is left.
-      </p>
     </div>
     <div class="grid">
       <div class="card col-12">
@@ -1021,21 +1005,11 @@ void main() {
 "use strict";
 var PRESET_DATA = {"flame":{"speed":4,"horizontalPressure":3,"verticalPressure":4,"waveFrequencyX":10,"waveFrequencyY":0,"waveAmplitude":10,"shadows":5,"highlights":10,"colorBrightness":1,"colorSaturation":2,"wireframe":false,"colorBlending":9,"backgroundAlpha":1,"grainScale":2,"grainSparsity":0,"grainIntensity":0.05,"grainSpeed":1,"resolution":0.5,"yOffsetWaveMultiplier":8.5,"yOffsetColorMultiplier":7.8,"yOffsetFlowMultiplier":9,"enableProceduralTexture":false,"textureEase":0.25,"flowEnabled":true,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Flame","_colorSlots":5},"sands":{"speed":1,"horizontalPressure":3,"verticalPressure":10,"waveFrequencyX":2,"waveFrequencyY":4,"waveAmplitude":8,"shadows":1,"highlights":5,"colorBrightness":1,"colorSaturation":7,"wireframe":false,"colorBlending":8,"backgroundAlpha":1,"grainScale":3,"grainSparsity":0,"grainIntensity":0.3,"grainSpeed":5,"resolution":1,"yOffsetWaveMultiplier":2.8,"yOffsetColorMultiplier":3,"yOffsetFlowMultiplier":2.5,"enableProceduralTexture":false,"textureEase":0.55,"flowEnabled":false,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Sands","_colorSlots":5},"prussian":{"speed":4,"horizontalPressure":4,"verticalPressure":3,"waveFrequencyX":0,"waveFrequencyY":0,"waveAmplitude":0,"shadows":2,"highlights":7,"colorBrightness":1,"colorSaturation":8,"wireframe":false,"colorBlending":5,"backgroundAlpha":1,"grainScale":0,"grainSparsity":0,"grainIntensity":0,"grainSpeed":0,"resolution":0.5,"yOffsetWaveMultiplier":1.5,"yOffsetColorMultiplier":1.8,"yOffsetFlowMultiplier":2,"enableProceduralTexture":false,"textureEase":0.75,"flowEnabled":false,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Prussian","_colorSlots":6},"lemon":{"speed":4,"horizontalPressure":4,"verticalPressure":5,"waveFrequencyX":1,"waveFrequencyY":2,"waveAmplitude":10,"shadows":4,"highlights":7,"colorBrightness":1,"colorSaturation":0,"wireframe":false,"colorBlending":7,"backgroundAlpha":1,"grainScale":4,"grainSparsity":0,"grainIntensity":0.2,"grainSpeed":2.2,"resolution":0.65,"yOffsetWaveMultiplier":5,"yOffsetColorMultiplier":4.5,"yOffsetFlowMultiplier":5.5,"enableProceduralTexture":false,"textureEase":0.48,"flowEnabled":true,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Lemon","_colorSlots":5},"bloom":{"speed":4,"horizontalPressure":4,"verticalPressure":6,"waveFrequencyX":1,"waveFrequencyY":1,"waveAmplitude":1,"shadows":3,"highlights":0,"colorBrightness":1.15,"colorSaturation":0,"wireframe":false,"colorBlending":4,"backgroundAlpha":1,"grainScale":0,"grainSparsity":0,"grainIntensity":0,"grainSpeed":0,"resolution":1,"yOffset":7089,"yOffsetWaveMultiplier":3.2,"yOffsetColorMultiplier":3.5,"yOffsetFlowMultiplier":4,"flowDistortionA":3.1,"flowDistortionB":2.4,"flowScale":1.5,"flowEase":0.31,"flowEnabled":true,"enableProceduralTexture":false,"textureVoidLikelihood":0.06,"textureVoidWidthMin":10,"textureVoidWidthMax":500,"textureBandDensity":0.8,"textureColorBlending":0.06,"textureSeed":333,"textureEase":0.65,"proceduralBackgroundColor":"#FFED00","textureShapeTriangles":20,"textureShapeCircles":15,"textureShapeBars":15,"textureShapeSquiggles":10,"domainWarpEnabled":false,"domainWarpIntensity":0.6,"domainWarpScale":3,"vignetteIntensity":0.85,"vignetteRadius":0.65,"fresnelEnabled":true,"fresnelPower":3.7,"fresnelIntensity":0.7,"fresnelColor":"#FF0000","iridescenceEnabled":true,"iridescenceIntensity":0.35,"iridescenceSpeed":3.9,"bloomIntensity":0.8,"bloomThreshold":0.9,"chromaticAberration":4,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Bloom","_colorSlots":5},"forest":{"speed":3,"horizontalPressure":5,"verticalPressure":7,"waveFrequencyX":2,"waveFrequencyY":2,"waveAmplitude":8,"shadows":6,"highlights":8,"colorBrightness":1,"colorSaturation":7,"wireframe":false,"colorBlending":10,"backgroundAlpha":1,"grainScale":3,"grainIntensity":0.3,"grainSpeed":1,"resolution":1,"enableProceduralTexture":false,"flowEnabled":false,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"shapeType":"plane","cameraLock":true,"_label":"Forest","_colorSlots":5},"bubblegum":{"speed":2.5,"horizontalPressure":2,"verticalPressure":4,"waveFrequencyX":4,"waveFrequencyY":4,"waveAmplitude":6,"shadows":1,"highlights":5,"colorBrightness":1,"colorSaturation":7,"wireframe":false,"colorBlending":4,"backgroundAlpha":1,"grainScale":0,"grainSparsity":0,"grainIntensity":0,"grainSpeed":1,"resolution":0.65,"yOffset":102390,"yOffsetWaveMultiplier":4,"yOffsetColorMultiplier":6.3,"yOffsetFlowMultiplier":4,"flowDistortionA":0,"flowDistortionB":0,"flowScale":1,"flowEase":0,"flowEnabled":false,"enableProceduralTexture":false,"transparentTextureVoid":false,"textureVoidLikelihood":0.45,"textureVoidWidthMin":200,"textureVoidWidthMax":486,"textureBandDensity":2.15,"textureColorBlending":0.01,"textureSeed":333,"textureEase":0.5,"proceduralBackgroundColor":"#000000","textureShapeTriangles":20,"textureShapeCircles":15,"textureShapeBars":15,"textureShapeSquiggles":10,"domainWarpEnabled":false,"domainWarpIntensity":0,"domainWarpScale":3,"vignetteIntensity":0,"vignetteRadius":0.8,"fresnelEnabled":true,"fresnelPower":2,"fresnelIntensity":0.6,"fresnelColor":"#F90707","iridescenceEnabled":false,"iridescenceIntensity":0.5,"iridescenceSpeed":1,"bloomIntensity":0,"bloomThreshold":0.95,"chromaticAberration":1,"shapeType":"sphere","shapeRotationX":0,"shapeRotationY":0,"shapeRotationZ":0,"shapeAutoRotateSpeedX":0,"shapeAutoRotateSpeedY":0,"sphereRadius":15,"torusRadius":15,"torusTube":5,"cylinderRadius":10,"cylinderHeight":40,"planeBend":0,"planeTwist":0,"silhouetteFade":0.25,"cylinderFade":0.08,"ribbonFade":0.05,"flatShading":false,"cameraLock":false,"cameraX":0,"cameraY":-12,"cameraZ":0,"cameraRotationX":0,"cameraRotationY":0,"cameraRotationZ":0,"cameraZoom":4.4,"_label":"Bubble Gum","_colorSlots":6}};
 
-var FEEL = {
-  flame:"Wave frequency pinned to X with Y at zero, amplitude and highlights at maximum. Tall vertical licks.",
-  sands:"Vertical pressure at 10 against a speed of 1. Slow drift, and the grainiest surface of the set.",
-  prussian:"Amplitude and both frequencies are zero, so there are no waves. The only motion is the colour field turning over.",
-  lemon:"Amplitude at 10 on low frequencies, so the swells are big and lazy. Grain and a hard highlight sit on top.",
-  bloom:"Almost flat at amplitude 1, no highlights, brightness pushed up. Carries the heaviest lens fringing of the set.",
-  forest:"Blending at maximum, so the colours never resolve into bands. Deep shadow against a strong highlight.",
-  bubblegum:"Low blending keeps the colours as distinct blobs. The only preset that renders on a sphere rather than a plane."
-};
 var ORDER = ["flame","sands","prussian","lemon","bloom","forest","bubblegum"];
 
 var KITS = {
   lemnian: {
     name:"Lemnian Hollow",
-    note:"A cool sweep from mint to mauve over gunmetal. Five named swatches, no accent and no ramp.",
     swatches:[
       {name:"Fairy Dust",    hex:"#8BE8CB"},
       {name:"Cool Steel",    hex:"#7EA2AA"},
@@ -1046,7 +1020,6 @@ var KITS = {
   },
   ember: {
     name:"Ember Hollow",
-    note:"A warm editorial burn over cold ash. This is a ui palette, so the chips below are its accent, its ink, and three ramp steps.",
     swatches:[
       {name:"Accent",      hex:"#C2410C"},
       {name:"Accent ink",  hex:"#FFF7ED"},
@@ -1061,7 +1034,14 @@ var NG = window.NeatLib && window.NeatLib.NeatGradient;
 var kitId="lemnian", presetId="flame", playing=true;
 var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function colors(){ return KITS[kitId].swatches.map(function(s){return s.hex;}); }
+/* per-kit set of swatch indices pulled out of the preview */
+var off = { lemnian:{}, ember:{} };
+function enabledCount(){ return KITS[kitId].swatches.filter(function(s,i){return !off[kitId][i];}).length; }
+function colors(){
+  return KITS[kitId].swatches
+    .filter(function(s,i){ return !off[kitId][i]; })
+    .map(function(s){ return s.hex; });
+}
 function hexToRgb(h){ h=h.replace("#",""); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
   return [parseInt(h.slice(0,2),16)/255,parseInt(h.slice(2,4),16)/255,parseInt(h.slice(4,6),16)/255]; }
 function lum(hex){ var c=hexToRgb(hex);
@@ -1095,22 +1075,39 @@ function cfgText(){
   return lines.join("\n");
 }
 
-/* chips */
+/* chips: each one is a toggle that pulls its colour from the preview */
 var chipsEl=document.getElementById("chips");
+function chipTitle(on, name){
+  return on ? "Remove "+name+" from the preview" : "Return "+name+" to the preview";
+}
 function renderChips(){
   var k=KITS[kitId];
   chipsEl.innerHTML="";
   k.swatches.forEach(function(s,i){
-    var d=document.createElement("div");
+    var on = !off[kitId][i];
+    var d=document.createElement("button");
+    d.type="button";
     d.className="pchip";
+    d.setAttribute("aria-pressed",String(on));
+    d.title=chipTitle(on, s.name);
     d.innerHTML='<div class="field" style="background:'+s.hex+'"></div>'+
       '<div class="band"><span class="idx">'+k.name+' '+(i+1)+' of '+k.swatches.length+'</span>'+
       '<span class="nm"></span><span class="hx">'+s.hex+'</span></div>';
     d.querySelector(".nm").textContent=s.name;
+    d.addEventListener("click",function(){
+      var isOn = !off[kitId][i];
+      if(isOn && enabledCount()<=1){
+        d.classList.remove("deny"); void d.offsetWidth; d.classList.add("deny");
+        return;
+      }
+      if(isOn) off[kitId][i]=true; else delete off[kitId][i];
+      d.setAttribute("aria-pressed",String(!isOn));
+      d.title=chipTitle(!isOn, s.name);
+      renderCfg(); rebuildStage(); rebuildThumbs();
+    });
     chipsEl.appendChild(d);
   });
   document.getElementById("kit-name").textContent=k.name;
-  document.getElementById("kit-note").textContent=k.note;
 }
 
 /* gradients */
@@ -1161,7 +1158,6 @@ ORDER.forEach(function(id){
 function renderCfg(){
   document.getElementById("cfg").textContent=cfgText();
   document.getElementById("preset-name").textContent=PRESET_DATA[presetId]._label;
-  document.getElementById("preset-feel").textContent=FEEL[presetId];
 }
 
 /* engine note, written from what actually loaded */

@@ -1,9 +1,9 @@
 ---
-name: skittles
+name: cauldron
 description: Picks a brand colour palette from a curated library and explains the colour theory behind the pick. Use this when a project needs a colour direction it does not have yet — starting a new app, site, brand or UI from scratch — and use it even when the user doesn't say "palette", including phrasings like "what colours should this use", "pick a scheme", "give it a look", or "how should this feel". Do NOT use it when colours are already chosen: restyling an existing UI, making a built screen feel more premium, or changing one specific colour is anti-vibecode's job, not this one.
 ---
 
-# skittles
+# cauldron
 
 A shelf of curated brand palettes. Given a brief, pick **one** outright, hand it over with
 the item-get art, and explain why it's right. No candidate menus — an argued pick the user
@@ -26,10 +26,10 @@ generation.
 
 ## Boundary with anti-vibecode
 
-`skittles` chooses **which** colours. `anti-vibecode` governs **how they're applied** —
+`cauldron` chooses **which** colours. `anti-vibecode` governs **how they're applied** —
 flat buttons, one accent, no gradients, semantic colours carrying meaning only.
 
-They don't overlap and shouldn't argue. If both are active, skittles supplies the hexes
+They don't overlap and shouldn't argue. If both are active, cauldron supplies the hexes
 and then gets out of the way. Every `kind: "ui"` palette here is already shaped to
 anti-vibecode's rules (exactly one accent over a neutral ramp), so handing one over never
 puts the two skills in conflict.
@@ -72,7 +72,7 @@ the actual harmony, the perceptual reasoning, and the failure modes.
 **5. Render the art.**
 
 ```bash
-python3 ~/.claude/skills/skittles/scripts/brew.py <slug>
+python3 ~/.claude/skills/cauldron/scripts/brew.py <slug>
 ```
 
 Absolute path on purpose — the working directory during a project kickoff is the project,
@@ -135,6 +135,6 @@ point at `references/SCHEMA.md` for adding one.
 the shelf, `--check` prints measured contrast ratios for a new entry:
 
 ```bash
-python3 ~/.claude/skills/skittles/scripts/brew.py --list
-python3 ~/.claude/skills/skittles/scripts/brew.py --check <slug>
+python3 ~/.claude/skills/cauldron/scripts/brew.py --list
+python3 ~/.claude/skills/cauldron/scripts/brew.py --check <slug>
 ```

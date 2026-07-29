@@ -1,4 +1,4 @@
-# skittles
+# cauldron
 
 A Claude Code skill. A shelf of hand-curated brand colour palettes: given a brief, Claude
 picks **one** outright, hands it over with item-get ASCII art, and explains the colour
@@ -68,13 +68,13 @@ Claude reads only the one it picked.
 Clone into your Claude Code skills directory:
 
 ```bash
-git clone https://github.com/C-lb/skittles.git ~/.claude/skills/skittles
+git clone https://github.com/C-lb/cauldron.git ~/.claude/skills/cauldron
 ```
 
 That's it. No dependencies. `brew.py` is Python 3 standard library only.
 
 Note that the skill's documented commands use the absolute path
-`~/.claude/skills/skittles/scripts/brew.py`. If you install elsewhere, update the paths in
+`~/.claude/skills/cauldron/scripts/brew.py`. If you install elsewhere, update the paths in
 `SKILL.md` and `references/SCHEMA.md`. A relative path fails silently from a project
 working directory, which is exactly when the skill runs.
 
@@ -91,9 +91,9 @@ Short version:
    estimate them.
 
 ```bash
-python3 ~/.claude/skills/skittles/scripts/brew.py --list            # what's on the shelf
-python3 ~/.claude/skills/skittles/scripts/brew.py <slug>            # render the item-get
-python3 ~/.claude/skills/skittles/scripts/brew.py --check <slug>    # measured WCAG ratios
+python3 ~/.claude/skills/cauldron/scripts/brew.py --list            # what's on the shelf
+python3 ~/.claude/skills/cauldron/scripts/brew.py <slug>            # render the item-get
+python3 ~/.claude/skills/cauldron/scripts/brew.py --check <slug>    # measured WCAG ratios
 ```
 
 `--check` output:
@@ -153,7 +153,7 @@ flourish; the text is the contract.
 
 ## Relationship to anti-vibecode
 
-`skittles` chooses **which** colours. [`anti-vibecode`](https://github.com/C-lb/anti-vibecode)
+`cauldron` chooses **which** colours. [`anti-vibecode`](https://github.com/C-lb/anti-vibecode)
 governs **how they're applied**: flat buttons, one accent, no gradients, semantic colours
 carrying meaning only.
 

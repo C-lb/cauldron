@@ -133,6 +133,34 @@ section{margin-top:var(--s7)}
 .badge-warn{background:var(--warn-soft); color:var(--warn)}
 .badge-danger{background:var(--danger-soft); color:var(--danger)}
 
+/* your colours */
+.hexin{flex:1 1 260px; min-width:0; font:inherit; font-size:var(--t-body);
+  line-height:var(--lh-flat); color:var(--ink); background:var(--surface-2);
+  border:0; border-radius:var(--r-sm); padding:12px var(--s4)}
+.hexin::placeholder{color:var(--ink-3)}
+.hexin:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+input.pick{appearance:none; -webkit-appearance:none; width:41px; height:41px; flex:none;
+  border:0; padding:0; border-radius:var(--r-sm); background:var(--surface-2); cursor:pointer}
+input.pick::-webkit-color-swatch-wrapper{padding:8px}
+input.pick::-webkit-color-swatch{border:none; border-radius:6px}
+input.pick:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.err{color:var(--danger)}
+
+/* wheel + lightness */
+.wheelrow{display:flex; flex-wrap:wrap; gap:var(--s6); align-items:flex-start}
+.wheelrow>*{min-width:0}
+canvas.wheel{width:240px; height:240px; flex:none}
+.lcol{flex:1 1 280px}
+.lrow{display:flex; align-items:center; gap:var(--s3)}
+.lrow .dot{width:.9em; height:.9em; margin-right:0}
+.lname{font-size:var(--t-cap); line-height:var(--lh-tight); color:var(--ink-2);
+  flex:0 0 7.5em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.ltrack{flex:1 1 0; min-width:0; height:12px; border-radius:6px; background:var(--surface-2)}
+.lfill{height:100%; border-radius:6px}
+.lratio{font-family:var(--mono); font-size:var(--t-cap); line-height:var(--lh-flat);
+  color:var(--ink-3); font-variant-numeric:tabular-nums; flex:none; min-width:5.5ch; text-align:right}
+.lratio.bad{color:var(--danger); font-weight:600}
+
 /* kit dropdown */
 .kitdd{position:relative}
 .strip{display:flex; width:64px; height:14px; border-radius:6px; overflow:hidden; flex:none}
@@ -268,8 +296,34 @@ pre.cfg[hidden],.notice[hidden]{display:none}
     <h1>Try a kit before you commit</h1>
     <p class="lead measure">
       Pick a kit from the dropdown, tap a chip to pull that colour out of the mix,
-      and scroll on the preview to zoom.
+      and scroll on the preview to zoom. Or paste your own hexes below.
     </p>
+  </div>
+
+  <!-- ── YOUR COLOURS: ad-hoc kit from pasted hexes ─────────────────── -->
+  <div class="card" style="margin-top:var(--gap)">
+    <h3>Your colours</h3>
+    <div class="row">
+      <input class="hexin" id="hex-input" type="text" spellcheck="false" autocomplete="off"
+             placeholder="#8BE8CB, Fairy Dust #7EA2AA, 888DA7"
+             aria-label="Hex codes, comma separated, names optional">
+      <input class="pick" id="hex-pick" type="color" value="#8BE8CB"
+             title="Pick a colour and add it to the list" aria-label="Colour picker">
+      <button class="btn btn-accent" id="hex-apply" type="button"
+              title="Build a kit from these colours and load it into the preview">
+        Use these colours
+      </button>
+      <button class="btn btn-grey" id="copy-entry" type="button" disabled
+              title="Copy a ready palettes.json entry with measured contrast notes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2"/>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+        </svg>
+        <span id="entry-label">Copy palette entry</span>
+      </button>
+    </div>
+    <p class="cap err" id="hex-err" hidden></p>
   </div>
 
   <!-- ── KITS: chips + gradient in one view ─────────────────────────── -->
@@ -295,6 +349,17 @@ pre.cfg[hidden],.notice[hidden]{display:none}
           </div>
         </div>
         <div class="chips filterable" id="chips"></div>
+
+        <div class="wheelrow">
+          <div class="stack g3">
+            <span class="eyebrow">Harmony, OKLCH hue and chroma</span>
+            <canvas id="wheel" class="wheel" aria-label="Colour wheel of the kit's swatches"></canvas>
+          </div>
+          <div class="stack g3 lcol">
+            <span class="eyebrow">Lightness, ranked</span>
+            <div id="lightness" class="stack g3"></div>
+          </div>
+        </div>
 
         <div class="presets" id="presets" role="group" aria-label="Gradient preset"></div>
 
@@ -1117,6 +1182,36 @@ function lum(hex){ var c=hexToRgb(hex);
   var f=function(v){ return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); };
   return 0.2126*f(c[0])+0.7152*f(c[1])+0.0722*f(c[2]); }
 function darkest(){ return colors().slice().sort(function(a,b){return lum(a)-lum(b);})[0]; }
+function ratio(hexA,hexB){
+  var a=lum(hexA), b=lum(hexB), hi=Math.max(a,b), lo=Math.min(a,b);
+  return (hi+0.05)/(lo+0.05);
+}
+
+/* OKLCH: perceptual space, so equal distances look equal. L carries the
+   survives-in-greyscale story, C is radius on the wheel, h is the angle. */
+function srgbToLinear(v){ return v<=0.04045 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); }
+function linearToSrgb(v){ return v<=0.0031308 ? v*12.92 : 1.055*Math.pow(v,1/2.4)-0.055; }
+function hexToOklch(hex){
+  var c=hexToRgb(hex), r=srgbToLinear(c[0]), g=srgbToLinear(c[1]), b=srgbToLinear(c[2]);
+  var l=Math.cbrt(0.4122214708*r+0.5363325363*g+0.0514459929*b);
+  var m=Math.cbrt(0.2119034982*r+0.6806995451*g+0.1073969566*b);
+  var s=Math.cbrt(0.0883024619*r+0.2817188376*g+0.6299787005*b);
+  var L=0.2104542553*l+0.7936177850*m-0.0040720468*s;
+  var A=1.9779984951*l-2.4285922050*m+0.4505937099*s;
+  var B=0.0259040371*l+0.7827717662*m-0.8086757660*s;
+  return { L:L, C:Math.sqrt(A*A+B*B), h:(Math.atan2(B,A)*180/Math.PI+360)%360 };
+}
+function oklchToRgb(L,C,h){
+  var A=C*Math.cos(h*Math.PI/180), B=C*Math.sin(h*Math.PI/180);
+  var l=Math.pow(L+0.3963377774*A+0.2158037573*B,3);
+  var m=Math.pow(L-0.1055613458*A-0.0638541728*B,3);
+  var s=Math.pow(L-0.0894841775*A-1.2914855480*B,3);
+  var r=+4.0767416621*l-3.3077115913*m+0.2309699292*s;
+  var g=-1.2684380046*l+2.6097574011*m-0.3413193965*s;
+  var b=-0.0041960863*l-0.7034186147*m+1.7076147010*s;
+  var f=function(v){ return Math.round(255*Math.min(1,Math.max(0,linearToSrgb(v)))); };
+  return "rgb("+f(r)+","+f(g)+","+f(b)+")";
+}
 
 /* Build a NeatConfig: the preset verbatim, colours from the kit. */
 function buildConfig(id, resScale){
@@ -1171,11 +1266,96 @@ function renderChips(){
       if(isOn) off[kitId][i]=true; else delete off[kitId][i];
       d.setAttribute("aria-pressed",String(!isOn));
       d.title=chipTitle(!isOn, s.name);
-      renderCfg(); rebuildStage(); rebuildThumbs();
+      renderCfg(); rebuildStage(); rebuildThumbs(); renderWheel();
     });
     chipsEl.appendChild(d);
   });
   document.getElementById("kit-name").textContent=k.name;
+}
+
+/* wheel + lightness: harmony as an angle, survival as a ranking */
+var wheelEl=document.getElementById("wheel");
+var lightEl=document.getElementById("lightness");
+function enabledSwatches(){
+  return KITS[kitId].swatches.filter(function(s,i){ return !off[kitId][i]; });
+}
+function cssVar(name){
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+var CMAX=0.25; /* chroma at the wheel rim; brand colours rarely exceed it */
+function renderWheel(){
+  var dpr=window.devicePixelRatio||1, size=240;
+  wheelEl.width=size*dpr; wheelEl.height=size*dpr;
+  var ctx=wheelEl.getContext("2d");
+  ctx.scale(dpr,dpr);
+  var cx=size/2, cy=size/2, R=size/2-14, rim=R, inner=R-10;
+  /* hue ring, drawn in OKLCH so the angles match the dots */
+  for(var a=0;a<360;a+=3){
+    ctx.beginPath();
+    ctx.strokeStyle=oklchToRgb(0.7,0.12,a);
+    ctx.lineWidth=10;
+    ctx.arc(cx,cy,rim-5,(a-90)*Math.PI/180,(a-87.2)*Math.PI/180);
+    ctx.stroke();
+  }
+  /* faint chroma grid */
+  var grid=cssVar("--line")||"rgba(128,128,128,.15)";
+  ctx.strokeStyle=grid; ctx.lineWidth=1;
+  [0.35,0.7].forEach(function(f){
+    ctx.beginPath(); ctx.arc(cx,cy,(inner-8)*f,0,Math.PI*2); ctx.stroke();
+  });
+  var sw=enabledSwatches();
+  var pts=sw.map(function(s){
+    var o=hexToOklch(s.hex);
+    var r=Math.min(o.C/CMAX,1)*(inner-8);
+    var rad=(o.h-90)*Math.PI/180;
+    return { x:cx+r*Math.cos(rad), y:cy+r*Math.sin(rad), s:s, o:o };
+  });
+  /* the sweep, in kit order */
+  if(pts.length>1){
+    ctx.strokeStyle=cssVar("--ink-3")||"#888"; ctx.globalAlpha=0.5; ctx.lineWidth=1.5;
+    ctx.beginPath();
+    pts.forEach(function(p,i){ if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); });
+    ctx.stroke(); ctx.globalAlpha=1;
+  }
+  var inkLabel=cssVar("--ink-2")||"#777";
+  ctx.font="500 10px "+(cssVar("--font")||"sans-serif");
+  pts.forEach(function(p){
+    ctx.beginPath();
+    ctx.fillStyle=p.s.hex;
+    ctx.arc(p.x,p.y,6,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle=cssVar("--surface-1")||"#fff"; ctx.lineWidth=2; ctx.stroke();
+    /* label pushed outward from centre so it clears the dot */
+    var dx=p.x-cx, dy=p.y-cy, d=Math.sqrt(dx*dx+dy*dy)||1;
+    var lx=p.x+dx/d*12, ly=p.y+dy/d*12;
+    ctx.fillStyle=inkLabel;
+    ctx.textAlign = lx<cx-4 ? "right" : lx>cx+4 ? "left" : "center";
+    ctx.textBaseline = ly<cy ? "bottom" : "top";
+    ctx.fillText(p.s.name,lx,ly);
+  });
+  renderLightness(sw);
+}
+function renderLightness(sw){
+  var ranked=sw.slice().sort(function(a,b){ return lum(b.hex)-lum(a.hex); });
+  lightEl.innerHTML="";
+  ranked.forEach(function(s,i){
+    var row=document.createElement("div");
+    row.className="lrow";
+    var okL=Math.round(hexToOklch(s.hex).L*100);
+    var r=i>0 ? ratio(ranked[i-1].hex,s.hex) : null;
+    row.innerHTML='<span class="dot" style="background:'+s.hex+'"></span>'+
+      '<span class="lname"></span>'+
+      '<div class="ltrack"><div class="lfill" style="width:'+okL+'%;background:'+s.hex+'"></div></div>'+
+      '<span class="lratio'+(r!==null&&r<1.5?' bad':'')+'" title="'+
+      (r===null?'Lightest swatch in the mix'
+        : r<1.5 ? 'Only '+r.toFixed(2)+':1 against the swatch above: near-isoluminant, collapses in greyscale'
+        : r.toFixed(2)+':1 against the swatch above')+'">'+
+      (r===null?'':r.toFixed(2)+':1')+'</span>';
+    row.querySelector(".lname").textContent=s.name;
+    lightEl.appendChild(row);
+  });
+}
+if(window.matchMedia){
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(){ renderWheel(); });
 }
 
 /* gradients */
@@ -1265,7 +1445,7 @@ function renderDD(){
       closeDD();
       if(id===kitId) return;
       kitId=id;
-      renderDD(); renderChips(); renderCfg(); rebuildStage(); rebuildThumbs();
+      renderDD(); renderChips(); renderCfg(); rebuildStage(); rebuildThumbs(); renderWheel();
     });
     ddMenu.appendChild(o);
   });
@@ -1319,6 +1499,71 @@ toggle.addEventListener("click",function(){
   });
 });
 
+/* your colours: paste hexes, get a kit */
+var hexInput=document.getElementById("hex-input");
+var hexPick=document.getElementById("hex-pick");
+var hexApply=document.getElementById("hex-apply");
+var hexErr=document.getElementById("hex-err");
+var copyEntry=document.getElementById("copy-entry");
+var entryLabel=document.getElementById("entry-label");
+
+function parseHexList(text){
+  var tokens=text.split(/[\n,;]+/).map(function(t){return t.trim();}).filter(Boolean);
+  var good=[], bad=[];
+  tokens.forEach(function(t){
+    var m=t.match(/^(?:(.*?)\s+)?#?([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/);
+    if(!m){ bad.push(t); return; }
+    var hex=m[2];
+    if(hex.length===3) hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    good.push({ name:(m[1]||"Colour "+(good.length+1)).trim(), hex:"#"+hex.toUpperCase() });
+  });
+  return { good:good, bad:bad };
+}
+function fail(msg){ hexErr.textContent=msg; hexErr.hidden=false; }
+function applyOwn(){
+  hexErr.hidden=true;
+  var res=parseHexList(hexInput.value);
+  if(res.bad.length) return fail("Couldn't read: "+res.bad.join(" · "));
+  if(!res.good.length) return fail("Paste at least one hex, like #8BE8CB.");
+  if(res.good.length>6) return fail("Neat takes at most 6 colours and you gave "+res.good.length+". Trim the list.");
+  KITS.custom={ name:"Your colours", swatches:res.good };
+  off.custom={};
+  kitId="custom";
+  renderDD(); renderChips(); renderCfg(); rebuildStage(); rebuildThumbs(); renderWheel();
+  copyEntry.disabled=false;
+  location.hash="kit="+res.good.map(function(s){
+    return encodeURIComponent(s.name)+":"+s.hex.slice(1);
+  }).join(",");
+}
+hexApply.addEventListener("click",applyOwn);
+hexInput.addEventListener("keydown",function(e){ if(e.key==="Enter") applyOwn(); });
+hexPick.addEventListener("change",function(){
+  var v=hexInput.value.trim();
+  hexInput.value = v ? v.replace(/[,\s]+$/,"")+", "+hexPick.value.toUpperCase() : hexPick.value.toUpperCase();
+  hexInput.focus();
+});
+copyEntry.addEventListener("click",function(){
+  var sw=(KITS.custom||{}).swatches||[];
+  var notes=sw.slice(1).map(function(s,i){
+    var r=ratio(sw[i].hex,s.hex);
+    return sw[i].name+" / "+s.name+" "+r.toFixed(2)+":1"+(r<1.5?" (near-isoluminant)":"");
+  }).join("; ");
+  var entry={
+    slug:"your-colours", name:"Your colours",
+    tagline:"", kind:"kit", mood:[], fits:[], avoid:[],
+    colors:{ swatches:sw },
+    theory:"your-colours.md",
+    contrast_notes:"Neighbouring swatches: "+notes
+  };
+  navigator.clipboard.writeText(JSON.stringify(entry,null,2)).then(function(){
+    entryLabel.textContent="Copied"; copyEntry.disabled=true;
+    setTimeout(function(){ entryLabel.textContent="Copy palette entry"; copyEntry.disabled=false; },1600);
+  }).catch(function(){
+    entryLabel.textContent="Copy failed";
+    setTimeout(function(){ entryLabel.textContent="Copy palette entry"; },1600);
+  });
+});
+
 /* disclosure toggles: config and disclaimer stay parked until asked for */
 function disclosure(btnId, panelId){
   var b=document.getElementById(btnId), p=document.getElementById(panelId);
@@ -1355,7 +1600,20 @@ Array.prototype.forEach.call(vBtns,function(b){
   });
 });
 
-renderDD(); renderChips(); renderCfg(); rebuildStage(); rebuildThumbs();
+renderDD(); renderChips(); renderCfg(); rebuildStage(); rebuildThumbs(); renderWheel();
+
+/* a #kit= hash restores a pasted palette, so a trial kit survives reload */
+if(location.hash.indexOf("#kit=")===0){
+  try{
+    hexInput.value=location.hash.slice(5).split(",").map(function(pair){
+      var i=pair.lastIndexOf(":");
+      if(i<0) return "#"+pair;
+      return decodeURIComponent(pair.slice(0,i))+" #"+pair.slice(i+1);
+    }).join(", ");
+    applyOwn();
+  }catch(e){}
+}
+
 if(reduce){
   playing=false; tLabel.textContent="Play";
   if(stageGrad) stageGrad.speed=0;

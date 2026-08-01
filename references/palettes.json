@@ -169,5 +169,55 @@
     },
     "theory": "matcha-ceremony.md",
     "contrast_notes": "On Forest Brew (anchor): Bamboo Beige 9.82:1, Tea Mist 9.07:1, Matcha Lime 7.41:1 — all three clear AAA body. Bamboo Beige/Tea Mist (1.08:1) and Tea Mist/Matcha Lime (1.22:1) are both near-isoluminant — the three light swatches read as one soft band and only separate from each other by hue, not lightness."
+  },
+  {
+    "slug": "basement-amethyst",
+    "name": "Basement Amethyst",
+    "tagline": "a violet signal in concrete and sodium light",
+    "kind": "ui",
+    "mood": [
+      "high-contrast",
+      "utilitarian",
+      "nocturnal",
+      "unsentimental"
+    ],
+    "fits": [
+      "field and operations tools",
+      "logistics and dispatch",
+      "high-density dashboards",
+      "enterprise admin",
+      "dark-first interfaces"
+    ],
+    "avoid": [
+      "light-first marketing sites",
+      "consumer lifestyle brands",
+      "long-form reading",
+      "children and family brands"
+    ],
+    "colors": {
+      "accent": "#9147E0",
+      "accent_ink": "#FFFFFF",
+      "neutrals": {
+        "0": "#0B0C0E",
+        "50": "#F7F8F9",
+        "100": "#E9EBEE",
+        "200": "#D3D7DD",
+        "300": "#B2B8C1",
+        "400": "#8C939E",
+        "500": "#6B727D",
+        "600": "#525862",
+        "700": "#3A3F47",
+        "800": "#24272C",
+        "900": "#15171A"
+      },
+      "semantic": {
+        "info": "#5B9DFF",
+        "success": "#3DD68C",
+        "warning": "#FFB020",
+        "danger": "#FF6B6B"
+      }
+    },
+    "theory": "basement-amethyst.md",
+    "contrast_notes": "accent_ink on accent = 5.02:1 (AA body), which is the number that matters: the accent is a button fill, not text. accent on neutral-50 = 4.72:1 (AA body). accent on neutral-0 = 3.90:1 — large text and UI chrome only, never accent-coloured body copy on dark. neutral-100 on neutral-0 = 16.38:1, neutral-700 on neutral-50 = 9.97:1. No single accent can be AA body on both a near-black and a near-white canvas; the two luminance windows do not overlap, so do not go looking for one. The semantics are tuned for the DARK canvas: info 7.19:1, success 10.43:1, warning 10.70:1, danger 7.05:1 on neutral-0. On the light canvas substitute info #2563EB (4.86:1), success #15803D (4.72:1), warning #B45309 (4.72:1), danger #B91C1C (6.08:1); the dark-tuned set measures 1.7-2.6:1 there and is unusable. warning and danger sit 39 degrees apart in hue at a 1.52:1 luminance ratio, so they must never be the only thing distinguishing two states."
   }
 ]

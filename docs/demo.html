@@ -515,24 +515,11 @@ pre.cfg[hidden],.notice[hidden]{display:none}
             <button type="button" data-mode="f-prot" aria-pressed="false" title="Red-green deficiency, red-blind form">Protanopia</button>
           </div>
         </div>
-        <div class="ramp filterable">
-          <div style="background:#8BE8CB"></div><div style="background:#7EA2AA"></div>
-          <div style="background:#888DA7"></div><div style="background:#9C7A97"></div>
-          <div style="background:#303633"></div>
-        </div>
+        <div class="ramp filterable" id="vision-ramp"></div>
         <div class="scroll">
           <table>
             <thead><tr><th scope="col">Neighbouring pair</th><th scope="col">Ratio</th><th scope="col">Reading</th></tr></thead>
-            <tbody>
-              <tr><td><span class="dot" style="background:#8BE8CB"></span>Fairy Dust / Cool Steel</td>
-                  <td class="num">1.90:1</td><td><span class="badge badge-new">Separable</span></td></tr>
-              <tr><td><span class="dot" style="background:#7EA2AA"></span>Cool Steel / Lavender Grey</td>
-                  <td class="num">1.19:1</td><td><span class="badge badge-danger" title="Two colours so close in perceived brightness that they read as one shade in greyscale, in a low-quality print, at a glance, or for a colour-blind viewer, even when their hues are far apart.">Near-isoluminant</span></td></tr>
-              <tr><td><span class="dot" style="background:#888DA7"></span>Lavender Grey / Dusty Mauve</td>
-                  <td class="num">1.14:1</td><td><span class="badge badge-danger" title="Two colours so close in perceived brightness that they read as one shade in greyscale, in a low-quality print, at a glance, or for a colour-blind viewer, even when their hues are far apart.">Near-isoluminant</span></td></tr>
-              <tr><td><span class="dot" style="background:#9C7A97"></span>Dusty Mauve / Gunmetal</td>
-                  <td class="num">3.32:1</td><td><span class="badge badge-new">Separable</span></td></tr>
-            </tbody>
+            <tbody id="vision-tbody"></tbody>
           </table>
         </div>
       </div>
@@ -1289,12 +1276,14 @@ var NG = window.NeatLib && window.NeatLib.NeatGradient;
 var kitId="lemnian", presetId="flame", playing=true;
 var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* per-kit set of swatch indices pulled out of the preview */
-var off = { lemnian:{}, ember:{}, larkspur:{}, amber:{} };
-function enabledCount(){ return KITS[kitId].swatches.filter(function(s,i){return !off[kitId][i];}).length; }
+/* per-kit set of swatch indices pulled out of the preview. Lazily keyed so a
+   new kit never needs a matching entry added here by hand. */
+var off = {};
+function offFor(id){ return off[id] || (off[id]={}); }
+function enabledCount(){ return KITS[kitId].swatches.filter(function(s,i){return !offFor(kitId)[i];}).length; }
 function colors(){
   return KITS[kitId].swatches
-    .filter(function(s,i){ return !off[kitId][i]; })
+    .filter(function(s,i){ return !offFor(kitId)[i]; })
     .map(function(s){ return s.hex; });
 }
 function hexToRgb(h){ h=h.replace("#",""); if(h.length===3) h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
@@ -1369,7 +1358,7 @@ function renderChips(){
   var k=KITS[kitId];
   chipsEl.innerHTML="";
   k.swatches.forEach(function(s,i){
-    var on = !off[kitId][i];
+    var on = !offFor(kitId)[i];
     var d=document.createElement("button");
     d.type="button";
     d.className="pchip";
@@ -1379,12 +1368,12 @@ function renderChips(){
       '<div class="band"><span class="nm"></span><span class="hx">'+s.hex+'</span></div>';
     d.querySelector(".nm").textContent=s.name;
     d.addEventListener("click",function(){
-      var isOn = !off[kitId][i];
+      var isOn = !offFor(kitId)[i];
       if(isOn && enabledCount()<=1){
         d.classList.remove("deny"); void d.offsetWidth; d.classList.add("deny");
         return;
       }
-      if(isOn) off[kitId][i]=true; else delete off[kitId][i];
+      if(isOn) offFor(kitId)[i]=true; else delete offFor(kitId)[i];
       d.setAttribute("aria-pressed",String(!isOn));
       d.title=chipTitle(!isOn, s.name);
       renderCfg(); rebuildStage(); rebuildThumbs(); renderWheel();
@@ -1398,7 +1387,7 @@ function renderChips(){
 var wheelEl=document.getElementById("wheel");
 var lightEl=document.getElementById("lightness");
 function enabledSwatches(){
-  return KITS[kitId].swatches.filter(function(s,i){ return !off[kitId][i]; });
+  return KITS[kitId].swatches.filter(function(s,i){ return !offFor(kitId)[i]; });
 }
 function cssVar(name){
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -1454,6 +1443,34 @@ function renderWheel(){
     ctx.fillText(p.s.name,lx,ly);
   });
   renderLightness(sw);
+  renderVision(sw);
+}
+/* "What survives without hue": ramp + neighbouring-pair table, rebuilt
+   from whichever kit and swatches are currently in the preview */
+var visionRamp=document.getElementById("vision-ramp");
+var visionTbody=document.getElementById("vision-tbody");
+var NEAR_ISO_TITLE="Two colours so close in perceived brightness that they read as one "+
+  "shade in greyscale, in a low-quality print, at a glance, or for a colour-blind viewer, "+
+  "even when their hues are far apart.";
+function renderVision(sw){
+  visionRamp.innerHTML=sw.map(function(s){ return '<div style="background:'+s.hex+'"></div>'; }).join("");
+  visionTbody.innerHTML="";
+  if(sw.length<2){
+    var row=document.createElement("tr");
+    row.innerHTML='<td colspan="3" class="cap">Pick at least two colours to compare neighbours.</td>';
+    visionTbody.appendChild(row);
+    return;
+  }
+  for(var i=1;i<sw.length;i++){
+    var a=sw[i-1], b=sw[i], r=ratio(a.hex,b.hex);
+    var row=document.createElement("tr");
+    row.innerHTML='<td><span class="dot" style="background:'+a.hex+'"></span>'+a.name+' / '+b.name+'</td>'+
+      '<td class="num">'+r.toFixed(2)+':1</td>'+
+      '<td>'+(r<1.5
+        ? '<span class="badge badge-danger" title="'+NEAR_ISO_TITLE+'">Near-isoluminant</span>'
+        : '<span class="badge badge-new">Separable</span>')+'</td>';
+    visionTbody.appendChild(row);
+  }
 }
 function renderLightness(sw){
   var ranked=sw.slice().sort(function(a,b){ return lum(b.hex)-lum(a.hex); });

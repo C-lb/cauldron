@@ -277,6 +277,12 @@ pre.cfg[hidden],.notice[hidden]{display:none}
 @media (prefers-reduced-motion:reduce){ *{transition:none !important} }
 
 /* mix and match */
+.mm-head{width:100%; background:transparent; border:0; padding:0; margin:0; cursor:pointer;
+  font:inherit; color:inherit; display:flex; align-items:center; justify-content:space-between;
+  gap:var(--s4); text-align:left}
+.mm-head:hover h3{color:var(--ink)}
+.mm-head:focus-visible{outline:2px solid var(--accent); outline-offset:4px; border-radius:var(--r-sm)}
+#mm-panel[hidden]{display:none}
 .mm-menu{display:flex; flex-wrap:wrap; gap:var(--s3)}
 .swpick{position:relative; width:44px; height:44px; border-radius:var(--r-pill); flex:none;
   border:0; padding:0; cursor:pointer; box-shadow:var(--shadow);
@@ -347,19 +353,42 @@ pre.cfg[hidden],.notice[hidden]{display:none}
     <p class="cap err" id="hex-err" hidden></p>
   </div>
 
-  <!-- ── MIX AND MATCH: build a kit by clicking swatches from every kit ── -->
+  <!-- ── MIX AND MATCH: accordion, build a kit by clicking swatches ───── -->
   <div class="card" style="margin-top:var(--gap)">
-    <h3>Mix and match</h3>
-    <p class="cap measure">
-      Click a colour to add it to your mix, click it again to take it back out.
-      The preview below updates as you go, up to 6 colours.
-    </p>
-    <div class="mm-menu" id="mm-menu" role="group" aria-label="Every colour across every kit"></div>
-    <div class="row between">
-      <span class="eyebrow">Your mix</span>
-      <span class="cap mono" id="mm-count">0 of 6</span>
+    <button type="button" class="mm-head" id="mm-toggle" aria-expanded="true" aria-controls="mm-panel">
+      <span class="stack g2">
+        <span class="eyebrow">Build your own</span>
+        <h3>Mix and match</h3>
+      </span>
+      <span class="row g3">
+        <span class="strip" id="mm-strip" aria-hidden="true" style="display:none"></span>
+        <span class="cap mono" id="mm-count-badge">0 of 6</span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </span>
+    </button>
+    <div class="stack g4" id="mm-panel">
+      <p class="cap measure">
+        Click a colour to add it to your mix, click it again to take it back out.
+        The preview below updates as you go, up to 6 colours.
+      </p>
+      <div class="row between">
+        <span class="eyebrow">Sort by</span>
+        <div class="seg" id="mm-sort" role="group" aria-label="Sort colours">
+          <button type="button" data-sort="hue" aria-pressed="true" title="Group colours by hue, like a colour wheel">Hue</button>
+          <button type="button" data-sort="lightness" aria-pressed="false" title="Order colours light to dark">Lightness</button>
+          <button type="button" data-sort="kit" aria-pressed="false" title="Order colours by the kit they belong to">Kit order</button>
+        </div>
+      </div>
+      <div class="mm-menu" id="mm-menu" role="group" aria-label="Every colour across every kit"></div>
+      <div class="row between">
+        <span class="eyebrow">Your mix</span>
+        <span class="cap mono" id="mm-count">0 of 6</span>
+      </div>
+      <div class="mm-mix" id="mm-mix"></div>
     </div>
-    <div class="mm-mix" id="mm-mix"></div>
   </div>
 
   <!-- ── KITS: chips + gradient in one view ─────────────────────────── -->
@@ -1659,9 +1688,12 @@ copyEntry.addEventListener("click",function(){
    live-updates the preview, no "apply" button needed */
 var MIX_LIMIT = 6;
 var mix = [];
+var mmSort = "hue";
 var mmMenu = document.getElementById("mm-menu");
 var mmMix = document.getElementById("mm-mix");
 var mmCount = document.getElementById("mm-count");
+var mmStrip = document.getElementById("mm-strip");
+var mmCountBadge = document.getElementById("mm-count-badge");
 
 function plusIcon(){
   return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '+
@@ -1686,8 +1718,33 @@ function allSwatches(){
   });
   return out;
 }
+/* group by hue like a colour wheel; near-greyscale swatches have no
+   meaningful hue, so they're pulled out and ranked light-to-dark instead */
+function sortSwatches(list){
+  if(mmSort==="kit") return list;
+  var withOklch=list.map(function(s){ return { s:s, o:hexToOklch(s.hex) }; });
+  if(mmSort==="lightness"){
+    withOklch.sort(function(a,b){ return b.o.L-a.o.L; });
+    return withOklch.map(function(x){ return x.s; });
+  }
+  var chromatic=withOklch.filter(function(x){ return x.o.C>=0.02; });
+  var neutral=withOklch.filter(function(x){ return x.o.C<0.02; });
+  chromatic.sort(function(a,b){ return a.o.h-b.o.h; });
+  neutral.sort(function(a,b){ return b.o.L-a.o.L; });
+  return chromatic.concat(neutral).map(function(x){ return x.s; });
+}
 function inMix(hex){
   return mix.some(function(s){ return s.hex.toUpperCase()===hex.toUpperCase(); });
+}
+function renderMixHeader(){
+  mmCountBadge.textContent=mix.length+" of "+MIX_LIMIT;
+  if(mix.length){
+    mmStrip.style.display="flex";
+    mmStrip.innerHTML=mix.map(function(s){ return '<i style="background:'+s.hex+'"></i>'; }).join("");
+  } else {
+    mmStrip.style.display="none";
+    mmStrip.innerHTML="";
+  }
 }
 function toggleMix(s){
   if(inMix(s.hex)){
@@ -1697,6 +1754,7 @@ function toggleMix(s){
     mix.push({name:s.name, hex:s.hex});
   }
   mmCount.textContent=mix.length+" of "+MIX_LIMIT;
+  renderMixHeader();
   if(mix.length){
     KITS.custom={ name:"Your mix", swatches:mix.slice() };
     off.custom={};
@@ -1708,7 +1766,7 @@ function toggleMix(s){
 }
 function renderMenu(){
   mmMenu.innerHTML="";
-  allSwatches().forEach(function(s){
+  sortSwatches(allSwatches()).forEach(function(s){
     var on=inMix(s.hex), full=!on && mix.length>=MIX_LIMIT;
     var b=document.createElement("button");
     b.type="button"; b.className="swpick"; b.style.background=s.hex;
@@ -1741,7 +1799,17 @@ function renderMixRow(){
     mmMix.appendChild(b);
   });
 }
-renderMenu(); renderMixRow();
+/* sort filter: re-orders the menu only, the mix itself keeps pick order */
+var mmSortBtns=document.querySelectorAll("#mm-sort [data-sort]");
+Array.prototype.forEach.call(mmSortBtns,function(b){
+  b.addEventListener("click",function(){
+    mmSort=b.dataset.sort;
+    Array.prototype.forEach.call(mmSortBtns,function(o){ o.setAttribute("aria-pressed",String(o===b)); });
+    renderMenu();
+  });
+});
+
+renderMenu(); renderMixRow(); renderMixHeader();
 
 /* disclosure toggles: config and disclaimer stay parked until asked for */
 function disclosure(btnId, panelId){
@@ -1754,6 +1822,7 @@ function disclosure(btnId, panelId){
 }
 disclosure("show-cfg","cfg");
 disclosure("show-note","engine-notice");
+disclosure("mm-toggle","mm-panel");
 
 /* copy */
 var copyBtn=document.getElementById("copy-cfg"), cLabel=document.getElementById("copy-label");

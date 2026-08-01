@@ -275,6 +275,27 @@ pre.cfg[hidden],.notice[hidden]{display:none}
 
 .filterable{transition:filter .2s ease}
 @media (prefers-reduced-motion:reduce){ *{transition:none !important} }
+
+/* mix and match */
+.mm-menu{display:flex; flex-wrap:wrap; gap:var(--s3)}
+.swpick{position:relative; width:44px; height:44px; border-radius:var(--r-pill); flex:none;
+  border:0; padding:0; cursor:pointer; box-shadow:var(--shadow);
+  transition:transform .15s ease, box-shadow .15s ease}
+.swpick:hover{transform:translateY(-2px); box-shadow:var(--shadow-pop)}
+.swpick:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.swpick .ov{position:absolute; inset:0; border-radius:inherit; display:flex;
+  align-items:center; justify-content:center; background:rgba(0,0,0,.34);
+  opacity:0; transition:opacity .15s ease}
+.swpick:hover .ov,.swpick:focus-visible .ov{opacity:1}
+.swpick .ov svg{width:1.15em; height:1.15em; color:#fff}
+.swpick[aria-pressed="true"]{box-shadow:0 0 0 2px var(--surface-1),0 0 0 4px var(--accent)}
+.swpick[disabled]{cursor:not-allowed; opacity:.35}
+.swpick[disabled]:hover{transform:none; box-shadow:var(--shadow)}
+.mm-mix{display:flex; flex-wrap:wrap; gap:var(--s3); align-items:center; min-height:44px}
+.mm-empty{color:var(--ink-3)}
+
+/* jargon, explained on hover without a second click */
+.term{text-decoration:underline dotted; text-underline-offset:3px; cursor:help}
 </style>
 
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
@@ -324,6 +345,21 @@ pre.cfg[hidden],.notice[hidden]{display:none}
       </button>
     </div>
     <p class="cap err" id="hex-err" hidden></p>
+  </div>
+
+  <!-- ── MIX AND MATCH: build a kit by clicking swatches from every kit ── -->
+  <div class="card" style="margin-top:var(--gap)">
+    <h3>Mix and match</h3>
+    <p class="cap measure">
+      Click a colour to add it to your mix, click it again to take it back out.
+      The preview below updates as you go, up to 6 colours.
+    </p>
+    <div class="mm-menu" id="mm-menu" role="group" aria-label="Every colour across every kit"></div>
+    <div class="row between">
+      <span class="eyebrow">Your mix</span>
+      <span class="cap mono" id="mm-count">0 of 6</span>
+    </div>
+    <div class="mm-mix" id="mm-mix"></div>
   </div>
 
   <!-- ── KITS: chips + gradient in one view ─────────────────────────── -->
@@ -433,6 +469,11 @@ pre.cfg[hidden],.notice[hidden]{display:none}
   <section>
     <div class="sec-head">
       <h3>What survives without hue</h3>
+      <p class="cap measure">
+        <span class="term" title="Two colours so close in perceived brightness that they read as one shade in greyscale, in a low-quality print, at a glance, or for a colour-blind viewer, even when their hues are far apart.">Near-isoluminant</span>
+        pairs differ in hue but sit at nearly the same lightness, so they collapse into one
+        shade the moment hue stops being visible. Hover a badge below for the definition.
+      </p>
     </div>
     <div class="grid">
       <div class="card col-12">
@@ -457,9 +498,9 @@ pre.cfg[hidden],.notice[hidden]{display:none}
               <tr><td><span class="dot" style="background:#8BE8CB"></span>Fairy Dust / Cool Steel</td>
                   <td class="num">1.90:1</td><td><span class="badge badge-new">Separable</span></td></tr>
               <tr><td><span class="dot" style="background:#7EA2AA"></span>Cool Steel / Lavender Grey</td>
-                  <td class="num">1.19:1</td><td><span class="badge badge-danger">Near-isoluminant</span></td></tr>
+                  <td class="num">1.19:1</td><td><span class="badge badge-danger" title="Two colours so close in perceived brightness that they read as one shade in greyscale, in a low-quality print, at a glance, or for a colour-blind viewer, even when their hues are far apart.">Near-isoluminant</span></td></tr>
               <tr><td><span class="dot" style="background:#888DA7"></span>Lavender Grey / Dusty Mauve</td>
-                  <td class="num">1.14:1</td><td><span class="badge badge-danger">Near-isoluminant</span></td></tr>
+                  <td class="num">1.14:1</td><td><span class="badge badge-danger" title="Two colours so close in perceived brightness that they read as one shade in greyscale, in a low-quality print, at a glance, or for a colour-blind viewer, even when their hues are far apart.">Near-isoluminant</span></td></tr>
               <tr><td><span class="dot" style="background:#9C7A97"></span>Dusty Mauve / Gunmetal</td>
                   <td class="num">3.32:1</td><td><span class="badge badge-new">Separable</span></td></tr>
             </tbody>
@@ -1175,6 +1216,43 @@ var KITS = {
       {name:"Persian Orange", hex:"#C99379"},
       {name:"Earth Yellow",   hex:"#FBB45E"}
     ]
+  },
+  lupine: {
+    name:"Lupine Twilight",
+    swatches:[
+      {name:"Laurel Green",      hex:"#A0AE91"},
+      {name:"Rhythm",            hex:"#766DA7"},
+      {name:"Camouflage Green",  hex:"#7A9663"},
+      {name:"Ebony",             hex:"#556842"},
+      {name:"Eerie Black",       hex:"#15191E"}
+    ]
+  },
+  strawberry: {
+    name:"Strawberry Bramble",
+    swatches:[
+      {name:"Whiskey",       hex:"#D59A7A"},
+      {name:"Willow Grove",  hex:"#6B7F64"},
+      {name:"Tamarillo",     hex:"#9C0D0F"},
+      {name:"Kelp",          hex:"#3D402F"}
+    ]
+  },
+  paprika: {
+    name:"Paprika Bazaar",
+    swatches:[
+      {name:"Crumpet",     hex:"#F5E2CE"},
+      {name:"Biscuit",     hex:"#DFBC94"},
+      {name:"Honeycomb",   hex:"#E5A657"},
+      {name:"Hot Paprika", hex:"#B53324"}
+    ]
+  },
+  matcha: {
+    name:"Matcha Ceremony",
+    swatches:[
+      {name:"Bamboo Beige", hex:"#E6D4A6"},
+      {name:"Tea Mist",     hex:"#C8D2A6"},
+      {name:"Matcha Lime",  hex:"#A9C632"},
+      {name:"Forest Brew",  hex:"#1D2E1B"}
+    ]
   }
 };
 
@@ -1576,6 +1654,94 @@ copyEntry.addEventListener("click",function(){
     setTimeout(function(){ entryLabel.textContent="Copy palette entry"; },1600);
   });
 });
+
+/* mix and match: click circular swatches to build a custom kit that
+   live-updates the preview, no "apply" button needed */
+var MIX_LIMIT = 6;
+var mix = [];
+var mmMenu = document.getElementById("mm-menu");
+var mmMix = document.getElementById("mm-mix");
+var mmCount = document.getElementById("mm-count");
+
+function plusIcon(){
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '+
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
+    '<path d="M12 5v14"/><path d="M5 12h14"/></svg>';
+}
+function xIcon(){
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '+
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
+    '<path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>';
+}
+/* every swatch across every kit, deduped by hex, first name wins */
+function allSwatches(){
+  var seen={}, out=[];
+  Object.keys(KITS).forEach(function(id){
+    if(id==="custom") return;
+    KITS[id].swatches.forEach(function(s){
+      var key=s.hex.toUpperCase();
+      if(seen[key]) return;
+      seen[key]=true; out.push(s);
+    });
+  });
+  return out;
+}
+function inMix(hex){
+  return mix.some(function(s){ return s.hex.toUpperCase()===hex.toUpperCase(); });
+}
+function toggleMix(s){
+  if(inMix(s.hex)){
+    mix=mix.filter(function(m){ return m.hex.toUpperCase()!==s.hex.toUpperCase(); });
+  } else {
+    if(mix.length>=MIX_LIMIT) return;
+    mix.push({name:s.name, hex:s.hex});
+  }
+  mmCount.textContent=mix.length+" of "+MIX_LIMIT;
+  if(mix.length){
+    KITS.custom={ name:"Your mix", swatches:mix.slice() };
+    off.custom={};
+    kitId="custom";
+    renderDD(); renderChips(); renderCfg(); rebuildStage(); rebuildThumbs(); renderWheel();
+  }
+  renderMenu();
+  renderMixRow();
+}
+function renderMenu(){
+  mmMenu.innerHTML="";
+  allSwatches().forEach(function(s){
+    var on=inMix(s.hex), full=!on && mix.length>=MIX_LIMIT;
+    var b=document.createElement("button");
+    b.type="button"; b.className="swpick"; b.style.background=s.hex;
+    b.setAttribute("aria-pressed",String(on));
+    b.disabled=full;
+    b.title = full ? "Mix is full ("+MIX_LIMIT+" max)"
+      : on ? "Remove "+s.name+" — "+s.hex+" from your mix"
+      : s.name+" — "+s.hex;
+    b.innerHTML='<span class="ov">'+(on?xIcon():plusIcon())+'</span>';
+    b.addEventListener("click",function(){ toggleMix(s); });
+    mmMenu.appendChild(b);
+  });
+}
+function renderMixRow(){
+  mmMix.innerHTML="";
+  if(!mix.length){
+    var p=document.createElement("p");
+    p.className="cap mm-empty";
+    p.textContent="Pick colours above to start a mix.";
+    mmMix.appendChild(p);
+    return;
+  }
+  mix.forEach(function(s){
+    var b=document.createElement("button");
+    b.type="button"; b.className="swpick"; b.style.background=s.hex;
+    b.setAttribute("aria-pressed","true");
+    b.title="Remove "+s.name+" — "+s.hex+" from your mix";
+    b.innerHTML='<span class="ov">'+xIcon()+'</span>';
+    b.addEventListener("click",function(){ toggleMix(s); });
+    mmMix.appendChild(b);
+  });
+}
+renderMenu(); renderMixRow();
 
 /* disclosure toggles: config and disclaimer stay parked until asked for */
 function disclosure(btnId, panelId){

@@ -92,5 +92,82 @@
     },
     "theory": "amber-tideline.md",
     "contrast_notes": "On Licorice (anchor): Earth Yellow 10.05:1 (AAA body), Persian Orange 6.76:1 (AA body), Taupe Gray 4.05:1 (large text / UI only), Delft Blue 1.63:1 (fails — Delft Blue sits almost as dark as the anchor itself). Persian Orange/Earth Yellow are near-isoluminant at 1.49:1 — the two warm swatches at the bright end read as one band, not two distinct steps."
+  },
+  {
+    "slug": "lupine-twilight",
+    "name": "Lupine Twilight",
+    "tagline": "a violet bloom over near-black foliage",
+    "kind": "kit",
+    "mood": ["moody", "botanical", "nocturnal", "elegant"],
+    "fits": ["botanical brands", "editorial", "apparel", "packaging", "photography portfolios"],
+    "avoid": ["fintech", "dense data tables", "status and alerting UI", "children's products"],
+    "colors": {
+      "swatches": [
+        { "name": "Laurel Green", "hex": "#A0AE91" },
+        { "name": "Rhythm", "hex": "#766DA7" },
+        { "name": "Camouflage Green", "hex": "#7A9663" },
+        { "name": "Ebony", "hex": "#556842" },
+        { "name": "Eerie Black", "hex": "#15191E" }
+      ]
+    },
+    "theory": "lupine-twilight.md",
+    "contrast_notes": "On Eerie Black (anchor): Laurel Green 7.53:1 (AAA body), Camouflage Green 5.35:1 (AA body), Rhythm 3.80:1 (large text / UI only), Ebony 2.90:1 (fails). Rhythm/Camouflage Green sit at 1.41:1 — near-isoluminant, the purple and the mid green read as one step despite the hue jump."
+  },
+  {
+    "slug": "strawberry-bramble",
+    "name": "Strawberry Bramble",
+    "tagline": "sage leaves and tart red over dark kelp",
+    "kind": "kit",
+    "mood": ["earthy", "rustic", "juicy", "grounded"],
+    "fits": ["food and drink", "farm-to-table brands", "packaging", "organic goods", "editorial"],
+    "avoid": ["fintech", "medical", "high-density dashboards", "tech and SaaS"],
+    "colors": {
+      "swatches": [
+        { "name": "Whiskey", "hex": "#D59A7A" },
+        { "name": "Willow Grove", "hex": "#6B7F64" },
+        { "name": "Tamarillo", "hex": "#9C0D0F" },
+        { "name": "Kelp", "hex": "#3D402F" }
+      ]
+    },
+    "theory": "strawberry-bramble.md",
+    "contrast_notes": "On Kelp (anchor): Whiskey 4.43:1 (large text / UI only), Willow Grove 2.46:1 (fails), Tamarillo 1.26:1 (fails, near-isoluminant with Kelp — the red and the anchor sit at nearly the same depth). Only Whiskey clears anything on this anchor; the kit has no swatch that clears AA body against Kelp."
+  },
+  {
+    "slug": "paprika-bazaar",
+    "name": "Paprika Bazaar",
+    "tagline": "paprika and honey fading into pale crumpet",
+    "kind": "kit",
+    "mood": ["warm", "spiced", "inviting", "rich"],
+    "fits": ["food and drink", "hospitality", "bakery and cafe brands", "packaging", "travel"],
+    "avoid": ["fintech", "medical", "dense data tables", "cool minimalist tech"],
+    "colors": {
+      "swatches": [
+        { "name": "Crumpet", "hex": "#F5E2CE" },
+        { "name": "Biscuit", "hex": "#DFBC94" },
+        { "name": "Honeycomb", "hex": "#E5A657" },
+        { "name": "Hot Paprika", "hex": "#B53324" }
+      ]
+    },
+    "theory": "paprika-bazaar.md",
+    "contrast_notes": "On Hot Paprika (anchor): Crumpet 4.81:1 (AA body), Biscuit 3.39:1 (large text / UI only), Honeycomb 2.87:1 (fails). Crumpet/Biscuit (1.42:1) and Biscuit/Honeycomb (1.18:1) are both near-isoluminant — the three warm neutrals read as one cream-to-tan wash rather than three steps."
+  },
+  {
+    "slug": "matcha-ceremony",
+    "name": "Matcha Ceremony",
+    "tagline": "bright matcha settling into pale bamboo",
+    "kind": "kit",
+    "mood": ["fresh", "calm", "natural", "clean"],
+    "fits": ["tea and cafe brands", "wellness", "packaging", "organic goods", "editorial"],
+    "avoid": ["fintech", "medical alerting", "dense data tables", "high-contrast dark UI"],
+    "colors": {
+      "swatches": [
+        { "name": "Bamboo Beige", "hex": "#E6D4A6" },
+        { "name": "Tea Mist", "hex": "#C8D2A6" },
+        { "name": "Matcha Lime", "hex": "#A9C632" },
+        { "name": "Forest Brew", "hex": "#1D2E1B" }
+      ]
+    },
+    "theory": "matcha-ceremony.md",
+    "contrast_notes": "On Forest Brew (anchor): Bamboo Beige 9.82:1, Tea Mist 9.07:1, Matcha Lime 7.41:1 — all three clear AAA body. Bamboo Beige/Tea Mist (1.08:1) and Tea Mist/Matcha Lime (1.22:1) are both near-isoluminant — the three light swatches read as one soft band and only separate from each other by hue, not lightness."
   }
 ]

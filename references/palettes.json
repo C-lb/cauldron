@@ -52,5 +52,45 @@
     },
     "theory": "lemnian-hollow.md",
     "contrast_notes": "On Gunmetal: Fairy Dust 8.53:1 (AAA body), Cool Steel 4.49:1 (large text / UI only, a hair under AA), Lavender Grey 3.77:1, Dusty Mauve 3.32:1 — all three mid-tones are large-text-and-chrome only. The three mid-tones sit within 1.14–1.35:1 of each other, so they are effectively isoluminant and must never be the only thing distinguishing two elements. Fairy Dust is 1.45:1 on white and unusable as a light-surface text colour."
+  },
+  {
+    "slug": "larkspur-orchard",
+    "name": "Larkspur Orchard",
+    "tagline": "cream and meadow-green pierced by one cornflower blue",
+    "kind": "kit",
+    "mood": ["soft", "organic", "wholesome", "cheerful"],
+    "fits": ["kids and family brands", "packaging", "farm and garden", "editorial illustration", "craft goods"],
+    "avoid": ["fintech", "dense data tables", "status and alerting UI", "high-contrast dark UI"],
+    "colors": {
+      "swatches": [
+        { "name": "Ivory", "hex": "#FBFCEE" },
+        { "name": "Vanilla", "hex": "#F6E6A5" },
+        { "name": "Tea Green", "hex": "#C8D69B" },
+        { "name": "Celtic Blue", "hex": "#3971B8" },
+        { "name": "Drab Dark Brown", "hex": "#343B1B" }
+      ]
+    },
+    "theory": "larkspur-orchard.md",
+    "contrast_notes": "On Drab Dark Brown (anchor): Ivory 11.34:1, Vanilla 9.39:1, Tea Green 7.58:1 (all AAA body), Celtic Blue 2.37:1 (fails — chrome/large-text only, and marginal even there). Ivory/Vanilla and Vanilla/Tea Green are both near-isoluminant at 1.21:1 and 1.24:1 — the cream-to-green run reads as one soft band, not three distinct steps."
+  },
+  {
+    "slug": "amber-tideline",
+    "name": "Amber Tideline",
+    "tagline": "a sunset burning down into near-black tide",
+    "kind": "kit",
+    "mood": ["warm", "cinematic", "moody", "coastal"],
+    "fits": ["travel and hospitality", "photography portfolios", "editorial", "event and film branding"],
+    "avoid": ["fintech", "medical", "dense data tables", "high-density dashboards"],
+    "colors": {
+      "swatches": [
+        { "name": "Licorice", "hex": "#251211" },
+        { "name": "Delft Blue", "hex": "#353B56" },
+        { "name": "Taupe Gray", "hex": "#7D7585" },
+        { "name": "Persian Orange", "hex": "#C99379" },
+        { "name": "Earth Yellow", "hex": "#FBB45E" }
+      ]
+    },
+    "theory": "amber-tideline.md",
+    "contrast_notes": "On Licorice (anchor): Earth Yellow 10.05:1 (AAA body), Persian Orange 6.76:1 (AA body), Taupe Gray 4.05:1 (large text / UI only), Delft Blue 1.63:1 (fails — Delft Blue sits almost as dark as the anchor itself). Persian Orange/Earth Yellow are near-isoluminant at 1.49:1 — the two warm swatches at the bright end read as one band, not two distinct steps."
   }
 ]

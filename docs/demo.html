@@ -1155,6 +1155,26 @@ var KITS = {
       {name:"Neutral 500", hex:"#71777F"},
       {name:"Neutral 100", hex:"#EDEEF0"}
     ]
+  },
+  larkspur: {
+    name:"Larkspur Orchard",
+    swatches:[
+      {name:"Ivory",           hex:"#FBFCEE"},
+      {name:"Vanilla",         hex:"#F6E6A5"},
+      {name:"Tea Green",       hex:"#C8D69B"},
+      {name:"Celtic Blue",     hex:"#3971B8"},
+      {name:"Drab Dark Brown", hex:"#343B1B"}
+    ]
+  },
+  amber: {
+    name:"Amber Tideline",
+    swatches:[
+      {name:"Licorice",       hex:"#251211"},
+      {name:"Delft Blue",     hex:"#353B56"},
+      {name:"Taupe Gray",     hex:"#7D7585"},
+      {name:"Persian Orange", hex:"#C99379"},
+      {name:"Earth Yellow",   hex:"#FBB45E"}
+    ]
   }
 };
 
@@ -1163,7 +1183,7 @@ var kitId="lemnian", presetId="flame", playing=true;
 var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* per-kit set of swatch indices pulled out of the preview */
-var off = { lemnian:{}, ember:{} };
+var off = { lemnian:{}, ember:{}, larkspur:{}, amber:{} };
 function enabledCount(){ return KITS[kitId].swatches.filter(function(s,i){return !off[kitId][i];}).length; }
 function colors(){
   return KITS[kitId].swatches

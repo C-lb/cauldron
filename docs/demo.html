@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>cauldron reference</title>
+<title>Cauldron</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍲</text></svg>">
 
 <style>
 :root{
@@ -318,84 +319,10 @@ pre.cfg[hidden],.notice[hidden]{display:none}
 
 <div class="wrap">
 
-  <div class="card">
-    <span class="eyebrow">cauldron reference</span>
-    <h1>Try a kit before you commit</h1>
-    <p class="lead measure">
-      Pick a kit from the dropdown, tap a chip to pull that colour out of the mix,
-      and scroll on the preview to zoom. Or paste your own hexes below.
-    </p>
-  </div>
-
-  <!-- ── YOUR COLOURS: ad-hoc kit from pasted hexes ─────────────────── -->
-  <div class="card" style="margin-top:var(--gap)">
-    <h3>Your colours</h3>
-    <div class="row">
-      <input class="hexin" id="hex-input" type="text" spellcheck="false" autocomplete="off"
-             placeholder="#8BE8CB, Fairy Dust #7EA2AA, 888DA7"
-             aria-label="Hex codes, comma separated, names optional">
-      <input class="pick" id="hex-pick" type="color" value="#8BE8CB"
-             title="Pick a colour and add it to the list" aria-label="Colour picker">
-      <button class="btn btn-accent" id="hex-apply" type="button"
-              title="Build a kit from these colours and load it into the preview">
-        Use these colours
-      </button>
-      <button class="btn btn-grey" id="copy-entry" type="button" disabled
-              title="Copy a ready palettes.json entry with measured contrast notes">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="9" y="9" width="13" height="13" rx="2"/>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-        </svg>
-        <span id="entry-label">Copy palette entry</span>
-      </button>
-    </div>
-    <p class="cap err" id="hex-err" hidden></p>
-  </div>
-
-  <!-- ── MIX AND MATCH: accordion, build a kit by clicking swatches ───── -->
-  <div class="card" style="margin-top:var(--gap)">
-    <button type="button" class="mm-head" id="mm-toggle" aria-expanded="true" aria-controls="mm-panel">
-      <span class="stack g2">
-        <span class="eyebrow">Build your own</span>
-        <h3>Mix and match</h3>
-      </span>
-      <span class="row g3">
-        <span class="strip" id="mm-strip" aria-hidden="true" style="display:none"></span>
-        <span class="cap mono" id="mm-count-badge">0 of 6</span>
-        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m6 9 6 6 6-6"/>
-        </svg>
-      </span>
-    </button>
-    <div class="stack g4" id="mm-panel">
-      <p class="cap measure">
-        Click a colour to add it to your mix, click it again to take it back out.
-        The preview below updates as you go, up to 6 colours.
-      </p>
-      <div class="row between">
-        <span class="eyebrow">Sort by</span>
-        <div class="seg" id="mm-sort" role="group" aria-label="Sort colours">
-          <button type="button" data-sort="hue" aria-pressed="true" title="Group colours by hue, like a colour wheel">Hue</button>
-          <button type="button" data-sort="lightness" aria-pressed="false" title="Order colours light to dark">Lightness</button>
-          <button type="button" data-sort="kit" aria-pressed="false" title="Order colours by the kit they belong to">Kit order</button>
-        </div>
-      </div>
-      <div class="mm-menu" id="mm-menu" role="group" aria-label="Every colour across every kit"></div>
-      <div class="row between">
-        <span class="eyebrow">Your mix</span>
-        <span class="cap mono" id="mm-count">0 of 6</span>
-      </div>
-      <div class="mm-mix" id="mm-mix"></div>
-    </div>
-  </div>
+  <h1>Cauldron</h1>
 
   <!-- ── KITS: chips + gradient in one view ─────────────────────────── -->
   <section>
-    <div class="sec-head">
-      <h3>Kits</h3>
-    </div>
     <div class="grid">
       <div class="card col-12">
         <div class="row between">
@@ -493,6 +420,70 @@ pre.cfg[hidden],.notice[hidden]{display:none}
       </div>
     </div>
   </section>
+
+  <!-- ── MIX AND MATCH: accordion, build a kit by clicking swatches ───── -->
+  <div class="card" style="margin-top:var(--gap)">
+    <button type="button" class="mm-head" id="mm-toggle" aria-expanded="true" aria-controls="mm-panel">
+      <span class="stack g2">
+        <span class="eyebrow">Build your own</span>
+        <h3>Mix and match</h3>
+      </span>
+      <span class="row g3">
+        <span class="strip" id="mm-strip" aria-hidden="true" style="display:none"></span>
+        <span class="cap mono" id="mm-count-badge">0 of 6</span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </span>
+    </button>
+    <div class="stack g4" id="mm-panel">
+      <p class="cap measure">
+        Click a colour to add it to your mix, click it again to take it back out.
+        The preview below updates as you go, up to 6 colours.
+      </p>
+      <div class="row between">
+        <span class="eyebrow">Sort by</span>
+        <div class="seg" id="mm-sort" role="group" aria-label="Sort colours">
+          <button type="button" data-sort="hue" aria-pressed="true" title="Group colours by hue, like a colour wheel">Hue</button>
+          <button type="button" data-sort="lightness" aria-pressed="false" title="Order colours light to dark">Lightness</button>
+          <button type="button" data-sort="kit" aria-pressed="false" title="Order colours by the kit they belong to">Kit order</button>
+        </div>
+      </div>
+      <div class="mm-menu" id="mm-menu" role="group" aria-label="Every colour across every kit"></div>
+      <div class="row between">
+        <span class="eyebrow">Your mix</span>
+        <span class="cap mono" id="mm-count">0 of 6</span>
+      </div>
+      <div class="mm-mix" id="mm-mix"></div>
+    </div>
+  </div>
+
+  <!-- ── YOUR COLOURS: ad-hoc kit from pasted hexes ─────────────────── -->
+  <div class="card" style="margin-top:var(--gap)">
+    <h3>Your colours</h3>
+    <div class="row">
+      <input class="hexin" id="hex-input" type="text" spellcheck="false" autocomplete="off"
+             placeholder="#8BE8CB, Fairy Dust #7EA2AA, 888DA7"
+             aria-label="Hex codes, comma separated, names optional">
+      <input class="pick" id="hex-pick" type="color" value="#8BE8CB"
+             title="Pick a colour and add it to the list" aria-label="Colour picker">
+      <button class="btn btn-accent" id="hex-apply" type="button"
+              title="Build a kit from these colours and load it into the preview">
+        Use these colours
+      </button>
+      <button class="btn btn-grey" id="copy-entry" type="button" disabled
+              title="Copy a ready palettes.json entry with measured contrast notes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2"/>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+        </svg>
+        <span id="entry-label">Copy palette entry</span>
+      </button>
+    </div>
+    <p class="cap err" id="hex-err" hidden></p>
+  </div>
 
   <!-- ── VISION ─────────────────────────────────────────────────────── -->
   <section>

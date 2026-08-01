@@ -8,7 +8,7 @@ to keep it from choosing badly. Nothing else belongs in it — long-form reasoni
 ## Adding a palette, short version
 
 1. Append an object to the array in `palettes.json` following the fields below.
-2. Write `theory/<slug>.md` using `theory/ember-hollow.md` as the template.
+2. Write `theory/<slug>.md` using `theory/silver-gelatin.md` as the template.
 3. Run `python3 ~/.claude/skills/cauldron/scripts/brew.py <slug>` to see it render, and
    `… /brew.py --check <slug>` to get measured contrast ratios.
 4. Paste the measured numbers into `contrast_notes`. Don't estimate them.

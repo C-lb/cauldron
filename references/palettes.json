@@ -219,5 +219,50 @@
     },
     "theory": "basement-amethyst.md",
     "contrast_notes": "accent_ink on accent = 5.02:1 (AA body), which is the number that matters: the accent is a button fill, not text. accent on neutral-50 = 4.72:1 (AA body). accent on neutral-0 = 3.90:1 — large text and UI chrome only, never accent-coloured body copy on dark. neutral-100 on neutral-0 = 16.38:1, neutral-700 on neutral-50 = 9.97:1. No single accent can be AA body on both a near-black and a near-white canvas; the two luminance windows do not overlap, so do not go looking for one. The semantics are tuned for the DARK canvas: info 7.19:1, success 10.43:1, warning 10.70:1, danger 7.05:1 on neutral-0. On the light canvas substitute info #2563EB (4.86:1), success #15803D (4.72:1), warning #B45309 (4.72:1), danger #B91C1C (6.08:1); the dark-tuned set measures 1.7-2.6:1 there and is unusable. warning and danger sit 39 degrees apart in hue at a 1.52:1 luminance ratio, so they must never be the only thing distinguishing two states."
+  },
+  {
+    "slug": "satsuma-letterpress",
+    "name": "Satsuma Letterpress",
+    "tagline": "satsuma ink and cornflower on warm paper",
+    "kind": "ui",
+    "mood": ["warm", "playful", "editorial", "optimistic", "crafted"],
+    "fits": [
+      "chat and assistant UIs",
+      "light-first reading interfaces",
+      "consumer and prosumer apps",
+      "B2B products that refuse the enterprise look",
+      "editorial brand sites"
+    ],
+    "avoid": [
+      "dark-first ops dashboards",
+      "dense data tables",
+      "medical and safety alerting",
+      "austere corporate fintech"
+    ],
+    "colors": {
+      "accent": "#B54B0C",
+      "accent_ink": "#FFF7EE",
+      "neutrals": {
+        "0": "#100F0C",
+        "50": "#FAF7F0",
+        "100": "#F1ECE0",
+        "200": "#E2DBC9",
+        "300": "#C8BFA7",
+        "400": "#A59B80",
+        "500": "#82785F",
+        "600": "#615A47",
+        "700": "#454033",
+        "800": "#2A261E",
+        "900": "#191612"
+      },
+      "semantic": {
+        "info": "#3160C9",
+        "success": "#43682B",
+        "warning": "#8A6200",
+        "danger": "#B3271E"
+      }
+    },
+    "theory": "satsuma-letterpress.md",
+    "contrast_notes": "Light-first. accent_ink on accent = 4.98:1 (AA body). accent on neutral-50 = 4.94:1 (AA body). neutral-700 on neutral-50 = 9.65:1 (AAA body), neutral-900 on neutral-50 = 16.85:1. Semantics are tuned for the LIGHT canvas: info 5.38:1, success 6.03:1, warning 5.13:1, danger 6.08:1 on neutral-50 — all AA body. accent on neutral-0 = 3.63:1, large text and UI chrome only; for dark-canvas chrome use lifted satsuma #E8834A (7.10:1 on neutral-0) and never accent-coloured body copy — the two luminance windows do not overlap. On the dark canvas substitute info #5B9DFF (7.04:1), success #3DD68C (10.22:1), warning #FFB020 (10.48:1), danger #FF6B6B (6.91:1). warning sits near the accent in hue at a 1.04:1 luminance ratio — near-isoluminant — so warning states must carry an icon or label, never orange colour alone. neutral-100 on neutral-0 = 16.26:1."
   }
 ]
